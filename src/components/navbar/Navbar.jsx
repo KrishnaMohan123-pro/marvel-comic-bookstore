@@ -1,11 +1,20 @@
 import React from "react";
+import SignOutLinks from "./signoutLinks/SignOutLinks";
+import SignInLinks from "./signinLinks/SignInLinks";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const data = useSelector((state) => state);
+  const loggedIn = !data.firebase.auth.isEmpty;
+  const links = loggedIn ? <SignInLinks /> : <SignOutLinks />;
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">
-        Marvel
-      </a>
+    <nav className="navbar navbar-expand-lg navbar-light">
+      <Link to="/">
+        <span className="navbar-brand" href="#">
+          Marvel
+        </span>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -19,33 +28,7 @@ export default function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              LOGIN <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              SIGNUP <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              SIGNOUT <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              CART <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              ACCOUNT <span class="sr-only">(current)</span>
-            </a>
-          </li>
-        </ul>
+        <ul className="navbar-nav ml-auto">{links}</ul>
       </div>
     </nav>
   );

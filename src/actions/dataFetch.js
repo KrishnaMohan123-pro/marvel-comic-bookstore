@@ -15,7 +15,7 @@ export const fetchComicsByCharacterId = async (id) => {
 };
 
 export const fetchComicsByComicsId = async (id) => {
-  const endPoint = `comics/${id}`;
+  const endPoint = `comics/${id}?`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;

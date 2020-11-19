@@ -16,5 +16,9 @@ export default function Carousel(props) {
       </div>
     );
   }
-  return <CarouselList id={data} />;
+  return (
+    <div className="container d-flex justify-content-center">
+      <CarouselList id={data} />
+    </div>
+  );
 }

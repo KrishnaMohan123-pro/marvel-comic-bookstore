@@ -7,6 +7,7 @@ import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import firebase from "./services/firebase/index";
 import { createFirestoreInstance } from "redux-firestore";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const rrfProps = {
   firebase,

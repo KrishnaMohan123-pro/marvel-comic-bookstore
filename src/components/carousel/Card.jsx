@@ -3,7 +3,7 @@ import BookCard from "../bookCard/bookCard";
 
 export default function Card(props) {
   return (
-    <section>
+    <section className="book-card">
       <BookCard
         img={props.img}
         title={props.title}

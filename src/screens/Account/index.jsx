@@ -1,11 +1,22 @@
 import React from "react";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { useSelector } from "react-redux";
+import ProfileCard from "../../components/profileCard/ProfileCard";
+
 export default function Account() {
-  useFirestoreConnect(() => [{ collection: "test", doc: "01" }]);
+  const doc = useSelector((state) => state);
+  const userID = doc.firebase.auth.uid;
+  useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
   const data = useSelector(
-    ({ firestore: { data } }) => data.test && data.test["01"]
+    ({ firestore: { data } }) => data.users && data.users[userID]
   );
+  if (doc.firebase.auth.isEmpty) {
+    return (
+      <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
+        Please LOGIN or SIGNUP first...
+      </p>
+    );
+  }
   if (!isLoaded(data)) {
     return (
       <div class="spinner-grow text-warning" role="status">
@@ -17,11 +28,13 @@ export default function Account() {
   console.log(data);
   return (
     <div>
-      <p>{data.fname}</p>
-      <p>{data.lname}</p>
-      <p>{data.email}</p>
-      <p>{data.phone}</p>
-      <p>{data.address}</p>
+      <ProfileCard
+        fname={data.fname}
+        lname={data.lname}
+        email={data.email}
+        address={data.address}
+        phone={data.phone}
+      />
     </div>
   );
 }

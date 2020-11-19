@@ -1,0 +1,36 @@
+#home-message {
+  background-image: linear-gradient(to right, blue, red);
+  color: white;
+}
+#home-message .row {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.secondary-col {
+  font-family: "Sacramento", sans-serif;
+  font-size: 5rem;
+}
+.primary-col {
+  font-family: "Goldman", sans-serif;
+  font-size: 10rem;
+}
+
+#links .container {
+  background-color: honeydew;
+}
+
+#links .col-4 {
+  background-color: black;
+  color: white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border: solid honeydew 5px;
+  border-bottom-left-radius: 25%;
+  border-top-right-radius: 25%;
+}
+.link-text {
+  font-size: 1.1rem;
+}
+#links a {
+  text-decoration: none;
+}

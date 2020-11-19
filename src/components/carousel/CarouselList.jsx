@@ -14,16 +14,44 @@ export default function CarouselList(props) {
       </div>
     );
   }
-  //   data.map((item) => console.log(item.thumbnail.extension));
+  // let slideCounts = 3;
+  // console.log(window.screen.width);
+  // if (window.screen.width >= 1024) {
+  //   slideCounts = 3;
+  // } else if (window.screen.width >= 768) {
+  //   slideCounts = 2;
+  // } else {
+  //   slideCounts = 1;
+  // }
   return (
     // <div>Show books</div>
-    <Carousel slidesToShow={2}>
+    <Carousel
+      slidesToShow={3}
+      speed={1000}
+      dragging={false}
+      autoplay={true}
+      autoplayInterval={2000}
+      autoGenerateStyleTag={true}
+      pauseOnHover={true}
+      wrapAround={true}
+      width={"100%"}
+      scrollMode={"page"}
+      defaultControlsConfig={{
+        nextButtonText: ">",
+        // <i class="fas fa-caret-right fa-3x"></i>
+        prevButtonText: "<",
+        // <i class="fas fa-caret-left fa-3x"></i>
+        pagingDotsStyle: {
+          fill: "gold",
+        },
+      }}
+    >
       {data.map((item) => (
         <Card
           id={item.id}
           key={item.id}
           img={item.thumbnail.path + "." + item.thumbnail.extension}
-          price={item.prices.price}
+          price={item.prices[0].price}
           title={item.title}
         />
       ))}
