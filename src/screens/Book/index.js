@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import "./styles.css";
+import { toast } from "react-toastify";
+import NotLoginPage from "./notLoginPage";
 
 export default function Book(props) {
   const dispatch = useDispatch();
@@ -29,15 +31,26 @@ export default function Book(props) {
       </Fragment>
     );
   }
+
   let info = data.data.results[0];
   let creators = info.creators.items;
   let characters = info.characters.items;
-  console.log(
-    info.id,
-    info.prices[0].price,
-    info.thumbnail.path + "." + info.thumbnail.extension,
-    info.title
-  );
+  if (doc.firebase.auth.isEmpty) {
+    return (
+      <NotLoginPage
+        title={info.title}
+        img={info.thumbnail.path + "." + info.thumbnail.extension}
+        description={info.description}
+        date={info.dates[0].date}
+        price={info.prices[0].price}
+        creators={creators}
+        characters={characters}
+      />
+    );
+  }
+  if (!isLoaded(firestoreData)) {
+    return <p>loading</p>;
+  }
   const cartItemIds = [];
   firestoreData.cart.forEach((item) => cartItemIds.push(item.id));
   console.log(cartItemIds);
@@ -54,6 +67,7 @@ export default function Book(props) {
   function handleRemove() {
     dispatch(removeFromCart({ id: info.id }));
   }
+
   let button = !cartItemIds.includes(info.id) ? (
     <button className="btn btn-primary" onClick={handleAdd}>
       Add to cart
@@ -86,6 +100,7 @@ export default function Book(props) {
                 ? "No Description Available"
                 : info.description}
             </p>
+            <p style={{ fontFamily: "Goldman" }}>PUBLISHED ON -</p>
             <p>{info.dates[0].date.slice(0, 10)}</p>
           </div>
           <div className="col-3">

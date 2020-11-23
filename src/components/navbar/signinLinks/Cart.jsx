@@ -25,8 +25,8 @@ export default function Cart() {
       <Link to="/cart">
         <li className="nav-item active">
           <span className="nav-link position-relative" type="button">
-            {/* <i className="fas fa-shopping-cart"></i> */}
-            CART
+            <i className="fas fa-shopping-cart"></i>
+            {/* CART */}
             <span
               className="badge badge-danger"
               style={{

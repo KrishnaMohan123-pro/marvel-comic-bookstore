@@ -41,7 +41,7 @@ export default function SignInForm() {
     <form onSubmit={handleSubmit}>
       <input type="email" name="email" onChange={handleChange} />
       <input type="password" name="password" onChange={handleChange} />
-      <button id="hideModal" type="submit">
+      <button className="btn btn-primary" id="hideModal" type="submit">
         Submit
       </button>
     </form>

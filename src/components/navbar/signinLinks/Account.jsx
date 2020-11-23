@@ -6,8 +6,8 @@ export default function Account() {
     <Link to="/account">
       <li className="nav-item active">
         <span className="nav-link" type="button">
-          {/* <i className="fas fa-user"></i> */}
-          ACCOUNT
+          <i className="fas fa-user"></i>
+          {/* ACCOUNT */}
           <span className="sr-only">(current)</span>
         </span>
       </li>

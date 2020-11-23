@@ -37,10 +37,8 @@ export default function CarouselList(props) {
       width={"100%"}
       scrollMode={"page"}
       defaultControlsConfig={{
-        nextButtonText: ">",
-        // <i class="fas fa-caret-right fa-3x"></i>
-        prevButtonText: "<",
-        // <i class="fas fa-caret-left fa-3x"></i>
+        nextButtonText: <i class="fas fa-caret-right fa-3x"></i>,
+        prevButtonText: <i class="fas fa-caret-left fa-3x"></i>,
         pagingDotsStyle: {
           fill: "gold",
         },
