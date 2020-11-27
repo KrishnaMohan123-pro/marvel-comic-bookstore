@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function Home() {
   const data = useSelector((state) => state);
-  console.log(data.firebase.auth);
   return (
-    <section className="home-body">
+    <section className="home-body" style={{ marginTop: "4.25%" }}>
       <section id="home-message">
         <div className="row no-gutters">
           <div className="secondary-col col-5">

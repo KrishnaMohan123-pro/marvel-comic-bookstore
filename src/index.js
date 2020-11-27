@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import store from "./reducers/store/store";
 import { Provider } from "react-redux";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import firebase from "./services/firebase/index";
 import { createFirestoreInstance } from "redux-firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { PersistGate } from "redux-persist/integration/react";
+import firebase from "./services/firebase/index";
+import { store, persistor } from "./reducers/store/store";
+import App from "./App";
 
 const rrfProps = {
   firebase,
@@ -20,7 +21,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <App />
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
         <ToastContainer />
       </ReactReduxFirebaseProvider>
     </Provider>

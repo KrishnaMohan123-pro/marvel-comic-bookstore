@@ -24,8 +24,11 @@ export default function Book(props) {
   if (Object.keys(data).length === 0) {
     return (
       <Fragment>
-        <p style={{ fontSize: "1.5rem", fontFamily: "Goldman" }}>Loading...</p>
-        <div class="spinner-grow text-warning" role="status">
+        <div
+          class="spinner-grow text-warning"
+          role="status"
+          style={{ marginTop: "25%" }}
+        >
           <span class="sr-only">Loading...</span>
         </div>
       </Fragment>
@@ -79,7 +82,7 @@ export default function Book(props) {
   );
 
   return (
-    <div className="book-details">
+    <div className="book-details" style={{ marginTop: "5%" }}>
       <p
         className="book-title"
         style={{ fontSize: "3rem", fontFamily: "Goldman" }}

@@ -13,9 +13,12 @@ export default function Cart() {
   const data = useSelector(
     ({ firestore: { data } }) => data.users && data.users[userID]
   );
-  if (doc.firebase.auth.isEmpty) {
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  if (!loggedIn) {
     return (
-      <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
+      <p
+        style={{ fontFamily: "Goldman", fontSize: "2rem", marginTop: "4.25%" }}
+      >
         Please Login First
       </p>
     );
@@ -42,7 +45,7 @@ export default function Cart() {
   }
   console.log(total);
   return (
-    <div>
+    <div style={{ marginTop: "6%" }}>
       <h1>Cart Items</h1>
       {Items.map((Item) => {
         return (

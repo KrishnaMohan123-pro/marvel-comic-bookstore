@@ -16,7 +16,7 @@ export function signUp(creds) {
           cart: [],
           address: "",
         });
-        dispatch({ type: "SIGN_IN" });
+        dispatch({ type: "SIGN_IN", payload: { user: creds } });
       })
       .catch((err) => {
         dispatch({ type: "SIGN_IN_ERR", payload: { error: err } });
@@ -31,7 +31,7 @@ export function login(creds) {
       .auth()
       .signInWithEmailAndPassword(creds.email, creds.password)
       .then(() => {
-        dispatch({ type: "LOG_IN" });
+        dispatch({ type: "LOG_IN", payload: { user: creds } });
       })
       .catch((err) => {
         dispatch({ type: "LOG_IN_ERR", payload: { error: err } });

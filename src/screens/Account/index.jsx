@@ -12,7 +12,9 @@ export default function Account() {
   );
   if (doc.firebase.auth.isEmpty) {
     return (
-      <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
+      <p
+        style={{ fontFamily: "Goldman", fontSize: "2rem", marginTop: "4.25%" }}
+      >
         Please LOGIN or SIGNUP first...
       </p>
     );

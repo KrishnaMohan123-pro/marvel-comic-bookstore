@@ -22,7 +22,14 @@ export const fetchComicsByComicsId = async (id) => {
 };
 
 export const fetchSeriesByName = async (name) => {
-  const endPoint = `series?title=${name}?`;
+  const endPoint = `series?title=${name}`;
+  const response = await fetchApi(endPoint);
+  const json = await response.json();
+  return json;
+};
+
+export const fetchSeriesBySeriesID = async (id) => {
+  const endPoint = `series/${id}?`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;

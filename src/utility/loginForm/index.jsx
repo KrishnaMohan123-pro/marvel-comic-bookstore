@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/authActions";
 export default function SignInForm() {
@@ -39,9 +40,21 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="email" name="email" onChange={handleChange} />
-      <input type="password" name="password" onChange={handleChange} />
-      <button className="btn btn-primary" id="hideModal" type="submit">
+      <input
+        className="mt-2"
+        type="email"
+        name="email"
+        placeholder="Email"
+        onChange={handleChange}
+      />
+      <input
+        className="mt-2"
+        type="password"
+        name="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
+      <button className="btn btn-primary mt-2" id="hideModal" type="submit">
         Submit
       </button>
     </form>

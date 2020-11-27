@@ -1,7 +1,7 @@
 import React from "react";
 export default function ProfileCard(props) {
   return (
-    <div className="profile">
+    <div className="profile" style={{ marginTop: "4.3%" }}>
       <div
         className="profile-pic"
         style={{
