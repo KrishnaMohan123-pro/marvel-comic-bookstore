@@ -23,12 +23,12 @@ export default function Bookcard(props) {
     return (
       <div class="card">
         <Link to={"/book/" + props.id}>
-          <h5 class="card-title">{title}</h5>
-        </Link>
-        <Link to={"/book/" + props.id}>
           <img src={props.img} class="card-img-top" alt="..." />
         </Link>
         <div class="card-body">
+          <Link to={"/book/" + props.id}>
+            <h5 class="card-title">{title}</h5>
+          </Link>
           <p class="card-text">Price: ${props.price}</p>
           <button
             onClick={() => {
