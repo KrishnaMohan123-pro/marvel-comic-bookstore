@@ -34,3 +34,17 @@ export const fetchSeriesBySeriesID = async (id) => {
   const json = await response.json();
   return json;
 };
+
+export const fetchWithStartName = async (name) => {
+  const endPoint = `characters?nameStartsWith=${name}&limit=100`;
+  const response = await fetchApi(endPoint);
+  const json = await response.json();
+  return json;
+};
+
+export const fetchCharacterByCharacterId = async (id) => {
+  const endPoint = `characters/${id}?`;
+  const response = await fetchApi(endPoint);
+  const json = await response.json();
+  return json;
+};

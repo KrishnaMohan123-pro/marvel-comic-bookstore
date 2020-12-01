@@ -21,7 +21,7 @@ export default function Series(props) {
   return (
     <section id="series-description" style={{ marginTop: "5%" }}>
       <div className="series-title">{result.title}</div>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{ marginTop: "2rem" }}>
         <Grid item lg={4}>
           <img
             src={result.thumbnail.path + "." + result.thumbnail.extension}
@@ -53,7 +53,14 @@ export default function Series(props) {
           </Typography>
         </Grid>
         <Grid item lg={3}>
-          <Typography color="wheat" style={{ margin: "2px auto" }}>
+          <Typography
+            color="wheat"
+            style={{
+              margin: "2px auto",
+              fontFamily: "Goldman",
+              fontSize: "1.15rem",
+            }}
+          >
             Characters
           </Typography>
           <div
@@ -65,9 +72,16 @@ export default function Series(props) {
           </div>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{ marginTop: "2rem" }}>
         <Grid item lg={3}>
-          <Typography color="wheat" style={{ margin: "2px auto" }}>
+          <Typography
+            color="wheat"
+            style={{
+              margin: "2px auto",
+              fontFamily: "Goldman",
+              fontSize: "1.15rem",
+            }}
+          >
             Creators
           </Typography>
           <div
@@ -81,7 +95,14 @@ export default function Series(props) {
           </div>
         </Grid>
         <Grid item lg={4}>
-          <Typography color="wheat" style={{ margin: "2px auto" }}>
+          <Typography
+            color="wheat"
+            style={{
+              margin: "2px auto",
+              fontFamily: "Goldman",
+              fontSize: "1.15rem",
+            }}
+          >
             Comics
           </Typography>
           <div

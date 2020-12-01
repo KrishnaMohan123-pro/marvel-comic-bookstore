@@ -2,17 +2,14 @@ import React, { useState, useEffect } from "react";
 import Carousel from "nuka-carousel";
 import Card from "./Card";
 import { fetchComicsByCharacterId } from "../../actions/dataFetch";
+import Loader from "../Loader/loader";
 export default function CarouselList(props) {
   const [data, setData] = useState([]);
   useEffect(() => {
     fetchComicsByCharacterId(props.id).then((doc) => setData(doc.data.results));
   }, []);
   if (data.length === 0) {
-    return (
-      <div class="spinner-grow text-warning" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    );
+    return <Loader />;
   }
   // let slideCounts = 3;
   // console.log(window.screen.width);

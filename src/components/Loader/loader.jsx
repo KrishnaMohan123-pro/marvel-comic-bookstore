@@ -2,5 +2,5 @@ import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Loader() {
-  return <CircularProgress color="secondary" />;
+  return <CircularProgress color="secondary" style={{ marginTop: "25%" }} />;
 }

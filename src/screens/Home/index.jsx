@@ -28,11 +28,15 @@ export default function Home() {
               </Link>
             </div>
             <div className="col-4">
-              <Link>
+              <Link to="/characters">
                 <p>
                   <i className="fas fa-user fa-3x"></i>
                 </p>
-                <p className="link-text">New to website?? SIGN UP</p>
+                <p className="link-text">
+                  Any favourite Character?
+                  <br />
+                  Try me.....
+                </p>
               </Link>
             </div>
             <div className="col-4">
@@ -40,7 +44,7 @@ export default function Home() {
                 <p>
                   <i className="fas fa-search fa-3x"></i>
                 </p>
-                <p className="link-text">Search for your favourite character</p>
+                <p className="link-text">Search for your favourite series</p>
               </Link>
             </div>
           </div>

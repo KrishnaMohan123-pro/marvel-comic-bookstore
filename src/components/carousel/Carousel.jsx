@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchIdByName } from "../../actions/dataFetch";
 import CarouselList from "./CarouselList";
+import Loader from "../Loader/loader";
 
 export default function Carousel(props) {
   const [data, setData] = useState(0);
@@ -10,11 +11,7 @@ export default function Carousel(props) {
     });
   }, []);
   if (data === 0) {
-    return (
-      <div class="spinner-grow text-warning" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    );
+    return <Loader />;
   }
   return (
     <div className="container d-flex justify-content-center">

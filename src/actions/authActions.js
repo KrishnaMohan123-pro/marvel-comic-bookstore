@@ -34,7 +34,10 @@ export function login(creds) {
         dispatch({ type: "LOG_IN", payload: { user: creds } });
       })
       .catch((err) => {
-        dispatch({ type: "LOG_IN_ERR", payload: { error: err } });
+        dispatch({
+          type: "LOG_IN_ERR",
+          payload: { error: "Incorrect Email or Password" },
+        });
       });
   };
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { Link } from "react-router-dom";
 
 export default function CartCard(props) {
   const dispatch = useDispatch();
@@ -43,10 +44,14 @@ export default function CartCard(props) {
     <div className="container">
       <div className="cart-item row">
         <div className="book col-4">
-          <img className="book-image" src={props.img} />
+          <Link to={"/book/" + props.id}>
+            <img className="book-image" src={props.img} />
+          </Link>
         </div>
         <div className="book book-title col-5 align-self-center">
-          <p>{props.title}</p>
+          <Link to={"/book/" + props.id}>
+            <p>{props.title}</p>
+          </Link>
         </div>
         <div className="book book-price col-3">
           <p>{"$ " + props.price}</p>

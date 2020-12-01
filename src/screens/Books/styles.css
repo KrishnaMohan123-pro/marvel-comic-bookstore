@@ -1,7 +1,7 @@
 .card {
   width: 18rem;
   text-align: center;
-  height: 30rem;
+  height: 28rem;
   background-image: linear-gradient(blue, red);
   margin-left: 10% !important;
 }

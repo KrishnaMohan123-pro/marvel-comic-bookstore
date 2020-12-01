@@ -14,7 +14,7 @@ export default function authReducer(state = initialState, action) {
       toast("Login Successful");
       return { user: action.payload.user, loggedIn: true };
     case "LOG_IN_ERR":
-      toast("Error while logging in :" + action.payload.error);
+      toast("Cannot Login :: " + action.payload.error);
       return state;
     case "SIGNED_OUT":
       toast("User Signed Out");
