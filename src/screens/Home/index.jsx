@@ -3,7 +3,8 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function Home() {
-  const data = useSelector((state) => state);
+  const auth = useSelector((state) => state.auth);
+  console.log(auth);
   return (
     <section className="home-body" style={{ marginTop: "4.25%" }}>
       <section id="home-message">

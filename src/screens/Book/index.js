@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
+import Button from "@material-ui/core/Button";
 import { fetchComicsByComicsId } from "../../actions/dataFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import "./styles.css";
-import { toast } from "react-toastify";
+import Loader from "../../components/Loader/loader";
 import NotLoginPage from "./notLoginPage";
 
 export default function Book(props) {
@@ -22,17 +23,7 @@ export default function Book(props) {
     });
   }, []);
   if (Object.keys(data).length === 0) {
-    return (
-      <Fragment>
-        <div
-          class="spinner-grow text-warning"
-          role="status"
-          style={{ marginTop: "25%" }}
-        >
-          <span class="sr-only">Loading...</span>
-        </div>
-      </Fragment>
-    );
+    return <Loader />;
   }
 
   let info = data.data.results[0];
@@ -72,13 +63,13 @@ export default function Book(props) {
   }
 
   let button = !cartItemIds.includes(info.id) ? (
-    <button className="btn btn-primary" onClick={handleAdd}>
+    <Button variant="contained" color="primary" onClick={handleAdd}>
       Add to cart
-    </button>
+    </Button>
   ) : (
-    <button className="btn btn-warning" onClick={handleRemove}>
+    <Button variant="contained" color="secondary" onClick={handleRemove}>
       Remove from cart
-    </button>
+    </Button>
   );
 
   return (
