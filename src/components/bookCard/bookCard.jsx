@@ -16,13 +16,15 @@ const useStyles = makeStyles({
     width: "250px",
     margin: "5px auto",
     paddingBottom: "5%",
+    backgroundImage: "linear-gradient(#9ad3bc,#fbf6f0)",
   },
   bullet: {
     display: "inline-block",
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: "Goldman",
   },
   pos: {
     marginBottom: 12,
@@ -32,29 +34,18 @@ const useStyles = makeStyles({
 export default function Bookcard(props) {
   const dispatch = useDispatch();
   const doc = useSelector((state) => state);
-  const userID = doc.firebase.auth.uid;
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const userID = useSelector((state) => state.firebase.auth.uid);
   useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
   const data = useSelector(
     ({ firestore: { data } }) => data.users && data.users[userID]
   );
   const classes = useStyles();
-  let title =
-    props.title.length > 20 ? props.title.slice(0, 20) + "..." : props.title;
-  if (doc.firebase.auth.isEmpty) {
+
+  if (!loggedIn) {
     return (
       <Card className={classes.root}>
         <CardContent>
-          <Link to={"/book/" + props.id}>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {props.title.length > 20
-                ? props.title.slice(0, 20) + "..."
-                : props.title}
-            </Typography>
-          </Link>
           <div className="series-image">
             <Link to={"/book/" + props.id}>
               <img
@@ -63,6 +54,23 @@ export default function Bookcard(props) {
               />
             </Link>
           </div>
+          <Link to={"/book/" + props.id}>
+            <Typography
+              className={classes.title}
+              color="textPrimary"
+              gutterBottom
+            >
+              <b>
+                {" "}
+                {props.title.length > 20
+                  ? props.title.slice(0, 20) + "..."
+                  : props.title}
+              </b>
+            </Typography>
+          </Link>
+          <Typography className={classes.title} color="textPrimary">
+            <b> Price - ${props.price}</b>
+          </Typography>
         </CardContent>
         <CardActions>
           <Button
@@ -71,6 +79,7 @@ export default function Bookcard(props) {
             onClick={() => {
               toast("Please login or Signup first");
             }}
+            size="small"
             style={{ margin: "0 auto" }}
           >
             Add to cart
@@ -108,6 +117,7 @@ export default function Bookcard(props) {
       color="primary"
       onClick={handleAdd}
       style={{ margin: "0px auto" }}
+      size="small"
     >
       Add to cart
     </Button>
@@ -117,6 +127,7 @@ export default function Bookcard(props) {
       color="secondary"
       onClick={handleRemove}
       style={{ margin: "0px auto" }}
+      size="small"
     >
       Remove from cart
     </Button>
@@ -125,23 +136,32 @@ export default function Bookcard(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Link to={"/book/" + props.id}>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            {props.title.length > 20
-              ? props.title.slice(0, 20) + "..."
-              : props.title}
-          </Typography>
-        </Link>
         <div className="series-image">
           <Link to={"/book/" + props.id}>
             {" "}
-            <img src={props.img} style={{ width: "200px", height: "200px" }} />
+            <img
+              src={props.img}
+              style={{ width: "200px", height: "200px", marginBottom: "5px" }}
+            />
           </Link>
         </div>
+        <Link to={"/book/" + props.id}>
+          <Typography
+            className={classes.title}
+            color="textPrimary"
+            gutterBottom
+          >
+            <b>
+              {" "}
+              {props.title.length > 20
+                ? props.title.slice(0, 20) + "..."
+                : props.title}
+            </b>
+          </Typography>
+        </Link>
+        <Typography className={classes.title} color="textPrimary">
+          <b> Price - ${props.price}</b>
+        </Typography>
       </CardContent>
       <CardActions>{button}</CardActions>
     </Card>

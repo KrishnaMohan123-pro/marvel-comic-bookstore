@@ -11,23 +11,11 @@ export default function CarouselList(props) {
   if (data.length === 0) {
     return <Loader />;
   }
-  // let slideCounts = 3;
-  // console.log(window.screen.width);
-  // if (window.screen.width >= 1024) {
-  //   slideCounts = 3;
-  // } else if (window.screen.width >= 768) {
-  //   slideCounts = 2;
-  // } else {
-  //   slideCounts = 1;
-  // }
   return (
-    // <div>Show books</div>
     <Carousel
       slidesToShow={3}
       speed={1000}
       dragging={false}
-      autoplay={true}
-      autoplayInterval={2000}
       autoGenerateStyleTag={true}
       pauseOnHover={true}
       wrapAround={true}

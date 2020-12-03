@@ -111,7 +111,7 @@ export default function Book(props) {
                 textAlign: "left",
                 color: "wheat",
                 overflowY: "scroll",
-                height: "20rem",
+                height: "15rem",
               }}
             >
               <tr>
@@ -128,7 +128,10 @@ export default function Book(props) {
               })}
             </table>
           </div>
-          <div className="col-6 charactors">
+          <div
+            className="col-6 characters"
+            style={{ height: "15rem", overflowY: "scroll" }}
+          >
             <p className="column-heading">Charactors</p>
             {characters.map((character) => {
               return <p key={character.name}>{character.name}</p>;

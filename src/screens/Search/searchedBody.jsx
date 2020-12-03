@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { fetchSeriesByName } from "../../actions/dataFetch";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
-import SeriesCard from "../../components/seriesCard/SeriresCard";
+import SeriesCard from "../../components/seriesCard/SeriesCard";
 
 export default function SearchedBody() {
   const name = useSelector((state) => state.search.name);

@@ -3,12 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { login } from "../../actions/authActions";
+import { login, signUp } from "../../actions/authActions";
+import firebase from "../../services/firebase/index";
+
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export default function LoginForm() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const User = useSelector((state) => state.auth.user);
+  console.log(User);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ email: "", password: "" });
+  console.log(User);
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(login(user));
@@ -71,7 +77,24 @@ export default function LoginForm() {
       </form>
       <p style={{ margin: "1rem auto" }}>---OR---</p>
       <ButtonGroup>
-        <Button color="secondary" variant="contained">
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={(e) => {
+            e.preventDefault();
+            firebase
+              .auth()
+              .signInWithPopup(googleProvider)
+              .then((result) => {
+                console.log(result.user);
+                dispatch(signUp(user));
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            if (loggedIn) dispatch({ type: "CLOSE_MODAL" });
+          }}
+        >
           <i class="fab fa-google mr-1"></i>Google
         </Button>
         <Button color="primary" variant="contained">

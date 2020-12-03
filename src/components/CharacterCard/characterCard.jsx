@@ -11,13 +11,16 @@ const useStyles = makeStyles({
   root: {
     width: "250px",
     margin: "5px auto",
+    backgroundImage: "linear-gradient(#9ad3bc,#fbf6f0)",
+    paddingBottom: "4%",
   },
   bullet: {
     display: "inline-block",
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: "Goldman",
   },
   pos: {
     marginBottom: 12,
@@ -25,25 +28,27 @@ const useStyles = makeStyles({
 });
 export default function SimpleCard(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {props.name}
-        </Typography>
         <div className="series-image">
-          <img src={props.img} style={{ width: "200px", height: "200px" }} />
+          <img
+            src={props.img}
+            style={{ width: "200px", height: "200px", marginBottom: "5px" }}
+          />
         </div>
+        <Typography className={classes.title} color="textPrimary">
+          {props.name.length > 15
+            ? props.name.slice(0, 15) + "..."
+            : props.name}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Link to={"/character/" + props.id}>
-          <Button size="small">Know More</Button>
+        <Link to={"/character/" + props.id} style={{ margin: "0px auto" }}>
+          <Button size="small" variant="contained" color="primary">
+            Know More
+          </Button>
         </Link>
       </CardActions>
     </Card>
