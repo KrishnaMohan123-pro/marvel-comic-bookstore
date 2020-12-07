@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const initialState = {};
+const initialState = { cart: [] };
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {

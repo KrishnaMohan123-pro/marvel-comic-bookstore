@@ -8,7 +8,7 @@ export function addToCart(book) {
         .doc(creds.uid)
         .get()
         .then((doc) => {
-          let cartData = doc.data().cart;
+          var cartData = doc.data().cart;
           cartData.push(book);
           // totalAmount=totalAmount+book_id
           firebase

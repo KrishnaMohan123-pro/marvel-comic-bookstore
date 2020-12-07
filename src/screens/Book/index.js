@@ -7,15 +7,11 @@ import { addToCart, removeFromCart } from "../../actions/cartActions";
 import "./styles.css";
 import Loader from "../../components/Loader/loader";
 import NotLoginPage from "./notLoginPage";
+import CartButton from "../../components/CartButton/CartButton";
 
 export default function Book(props) {
   const dispatch = useDispatch();
-  const doc = useSelector((state) => state);
-  const userID = doc.firebase.auth.uid;
-  useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
-  const firestoreData = useSelector(
-    ({ firestore: { data } }) => data.users && data.users[userID]
-  );
+
   const [data, setData] = useState({});
   useEffect(() => {
     fetchComicsByComicsId(props.id).then((doc) => {
@@ -29,48 +25,6 @@ export default function Book(props) {
   let info = data.data.results[0];
   let creators = info.creators.items;
   let characters = info.characters.items;
-  if (doc.firebase.auth.isEmpty) {
-    return (
-      <NotLoginPage
-        title={info.title}
-        img={info.thumbnail.path + "." + info.thumbnail.extension}
-        description={info.description}
-        date={info.dates[0].date}
-        price={info.prices[0].price}
-        creators={creators}
-        characters={characters}
-      />
-    );
-  }
-  if (!isLoaded(firestoreData)) {
-    return <p>loading</p>;
-  }
-  const cartItemIds = [];
-  firestoreData.cart.forEach((item) => cartItemIds.push(item.id));
-  console.log(cartItemIds);
-  function handleAdd() {
-    dispatch(
-      addToCart({
-        id: info.id,
-        price: info.prices[0].price,
-        img: info.thumbnail.path + "." + info.thumbnail.extension,
-        title: info.title,
-      })
-    );
-  }
-  function handleRemove() {
-    dispatch(removeFromCart({ id: info.id }));
-  }
-
-  let button = !cartItemIds.includes(info.id) ? (
-    <Button variant="contained" color="primary" onClick={handleAdd}>
-      Add to cart
-    </Button>
-  ) : (
-    <Button variant="contained" color="secondary" onClick={handleRemove}>
-      Remove from cart
-    </Button>
-  );
 
   return (
     <div className="book-details" style={{ marginTop: "5%" }}>
@@ -99,7 +53,12 @@ export default function Book(props) {
           </div>
           <div className="col-3">
             <p>{"$ " + info.prices[0].price}</p>
-            {button}
+            <CartButton
+              id={info.id}
+              price={info.prices[0].price}
+              img={info.thumbnail.path + "." + info.thumbnail.extension}
+              title={info.title}
+            />
           </div>
         </div>
         <div className="row mt-5">

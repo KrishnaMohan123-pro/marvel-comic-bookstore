@@ -1,10 +1,11 @@
 import React from "react";
-import BookCard from "../bookCard/bookCard";
+import ProductCard from "../ProductCard/ProductCard";
 
 export default function Card(props) {
   return (
     <section className="book-card">
-      <BookCard
+      <ProductCard
+        type="book"
         img={props.img}
         title={props.title}
         price={props.price}

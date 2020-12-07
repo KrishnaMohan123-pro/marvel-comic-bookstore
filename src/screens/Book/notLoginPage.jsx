@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { toast } from "react-toastify";
+import CartButton from "../../components/CartButton/CartButton";
 
 export default function NotLoginPage(props) {
   return (
@@ -27,15 +28,7 @@ export default function NotLoginPage(props) {
           </div>
           <div className="col-3">
             <p>{"$ " + props.price}</p>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                toast("Please Login or Signup first");
-              }}
-            >
-              Add to cart
-            </Button>
+            <CartButton />
           </div>
         </div>
         <div className="row mt-5">

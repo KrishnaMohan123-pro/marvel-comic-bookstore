@@ -3,16 +3,14 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function Home() {
-  const auth = useSelector((state) => state.auth);
-  console.log(auth);
   return (
     <section className="home-body" style={{ marginTop: "4.25%" }}>
       <section id="home-message">
         <div className="row no-gutters">
-          <div className="secondary-col col-5">
+          <div className="secondary-col col-xl-5 col-lg-12">
             <p>Welcome to the world of comics</p>
           </div>
-          <div className="primary-col col-7">
+          <div className="primary-col col-xl-7 col-lg-12">
             <p>MARVEL</p>
           </div>
         </div>

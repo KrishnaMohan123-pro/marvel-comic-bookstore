@@ -33,10 +33,10 @@ export default function Cart() {
   let Items = data.cart;
   if (Items.length === 0) {
     return (
-      <Fragment>
+      <div style={{ marginTop: "25%" }}>
         <p>Ooops.....No items in cart</p>
         <Link to="/books">Lets go to the world of comics</Link>
-      </Fragment>
+      </div>
     );
   }
   let total = 0;

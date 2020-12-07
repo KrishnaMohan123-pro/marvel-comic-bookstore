@@ -16,7 +16,14 @@ export function signUp(creds) {
           cart: [],
           address: "",
         });
-        dispatch({ type: "SIGN_IN", payload: { user: creds } });
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.user.uid)
+          .get()
+          .then((data) => {
+            dispatch({ type: "SIGN_IN", payload: { user: data.data() } });
+          });
       })
       .catch((err) => {
         dispatch({ type: "SIGN_IN_ERR", payload: { error: err } });
@@ -30,8 +37,16 @@ export function login(creds) {
     firebase
       .auth()
       .signInWithEmailAndPassword(creds.email, creds.password)
-      .then(() => {
-        dispatch({ type: "LOG_IN", payload: { user: creds } });
+      .then((user) => {
+        console.log(user.user.uid);
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.user.uid)
+          .get()
+          .then((data) => {
+            dispatch({ type: "LOG_IN", payload: { user: data.data() } });
+          });
       })
       .catch((err) => {
         dispatch({

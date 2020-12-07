@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { fetchWithStartName } from "../../actions/dataFetch";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
-import CharacterCard from "../../components/CharacterCard/characterCard";
+
+import ProductCard from "../../components/ProductCard/ProductCard";
 
 export default function SearchedBody() {
   const name = useSelector((state) => state.search.name);
@@ -26,11 +27,12 @@ export default function SearchedBody() {
         {items.map((item) => {
           return (
             <Grid item key={item.id} xl={3} lg={4} md={6} sm={12} xs={12}>
-              <CharacterCard
+              <ProductCard
+                type="character"
                 endYear={item.endYear}
                 id={item.id}
                 img={item.thumbnail.path + "." + item.thumbnail.extension}
-                name={item.name}
+                title={item.name}
                 startYear={item.startYear}
               />
             </Grid>
