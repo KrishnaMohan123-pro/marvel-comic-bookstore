@@ -41,7 +41,7 @@ export default function CartButton(props) {
       toast("Login to add items to cart");
     }
     dispatch(
-      addToCart({
+      addToCart(userId,{
         id: props.id,
         img: props.img,
         price: props.price,
@@ -50,7 +50,7 @@ export default function CartButton(props) {
     );
   }
   function handleRemove() {
-    dispatch(removeFromCart({ id: props.id }));
+    dispatch(removeFromCart(userId,{ id: props.id }));
   }
   function onButtonClick() {
     if (included) handleRemove();

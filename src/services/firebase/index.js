@@ -12,5 +12,7 @@ const fbConfig = {
   appId: "1:809045215571:web:fa28089b8b9df8c0d239a6",
   measurementId: "G-8X8Y7Y4J1B",
 };
-firebase.initializeApp(fbConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(fbConfig);
+}
 export default firebase;

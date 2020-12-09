@@ -14,7 +14,6 @@ export default function SearchedBody() {
   if (Object.keys(data).length === 0) {
     return <CircularProgress color="secondary" />;
   }
-  console.log(name, data.data.results);
   let items = data.data.results;
   return (
     <div>

@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
   const modalVisible = useSelector((state) => state.modal);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const userID = useSelector((state) => state.firebase.auth.uid);

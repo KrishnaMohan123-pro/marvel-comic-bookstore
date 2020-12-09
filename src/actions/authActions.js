@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
@@ -7,7 +6,6 @@ export function signUp(creds) {
       .auth()
       .createUserWithEmailAndPassword(creds.email, creds.password)
       .then((user) => {
-        // console.log(user.user.uid);
         firebase.firestore().collection("users").doc(user.user.uid).set({
           fname: creds.fname,
           lname: creds.lname,
@@ -63,7 +61,6 @@ export function logout() {
       .auth()
       .signOut()
       .then(() => {
-        toast("User Signed Out");
         dispatch({ type: "SIGNED_OUT" });
       })
       .catch((err) => {

@@ -18,7 +18,6 @@ export default function SearchedBody() {
   if (data.data.count === 0) {
     return <p style={{ marginTop: "20%" }}>No Character Available</p>;
   }
-  console.log(name, data);
   let items = data.data.results;
   return (
     // <p>search body</p>

@@ -23,7 +23,6 @@ export default function Character(props) {
       </p>
     );
   }
-  console.log(data);
   let result = data.data.results[0];
 
   return (

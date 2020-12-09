@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 export default function Cart() {
   const doc = useSelector((state) => state);
   const userID = doc.firebase.auth.uid;
-  console.log(userID);
   useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
   const data = useSelector(
     ({ firestore: { data } }) => data.users && data.users[userID]

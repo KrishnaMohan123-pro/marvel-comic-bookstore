@@ -11,10 +11,8 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 export default function LoginForm() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const User = useSelector((state) => state.auth.user);
-  console.log(User);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ email: "", password: "" });
-  console.log(User);
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(login(user));
@@ -86,7 +84,6 @@ export default function LoginForm() {
               .auth()
               .signInWithPopup(googleProvider)
               .then((result) => {
-                console.log(result.user);
                 dispatch(signUp(user));
               })
               .catch((err) => {

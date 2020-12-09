@@ -27,7 +27,6 @@ export default function Account() {
     );
   }
 
-  console.log(data);
   return (
     <div>
       <ProfileCard
