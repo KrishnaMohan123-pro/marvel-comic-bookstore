@@ -11,7 +11,10 @@ export default function CartLink() {
   );
   if (!isLoaded(data)) return "CART";
   return (
-    <Badge badgeContent={data.cart.length} color="primary">
+    <Badge
+      badgeContent={data.cart.length === 0 ? "0" : data.cart.length}
+      color="primary"
+    >
       CART
     </Badge>
   );

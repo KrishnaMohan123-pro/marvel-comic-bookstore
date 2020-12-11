@@ -53,7 +53,7 @@ export default function ProductCard(props) {
                 : props.title}
             </b>
           </Typography>
-          {props.price && (
+          {props.type === "book" && (
             <Typography className={classes.title} color="textPrimary">
               <b> Price - ${props.price}</b>
             </Typography>

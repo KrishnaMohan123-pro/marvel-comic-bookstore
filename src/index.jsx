@@ -24,7 +24,17 @@ ReactDOM.render(
         <PersistGate persistor={persistor}>
           <App />
         </PersistGate>
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-left"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+        />
       </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,

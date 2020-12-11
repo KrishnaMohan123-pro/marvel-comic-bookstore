@@ -14,3 +14,6 @@ a:hover {
   color: gold;
   text-decoration: none;
 }
+button:focus {
+  outline: none;
+}

@@ -143,6 +143,18 @@ export default function SignupForm() {
           <i class="fab fa-facebook mr-1"></i>Facebook
         </Button>
       </ButtonGroup>
+      <br />
+      <Button
+        onClick={() => {
+          dispatch({ type: "CLOSE_MODAL" });
+          setTimeout(() => {
+            dispatch({ type: "OPEN_LOGIN_MODAL" });
+          }, 200);
+        }}
+        style={{ marginTop: "6px" }}
+      >
+        Have an account?
+      </Button>
     </section>
   );
 }

@@ -6,21 +6,25 @@ import { toast } from "react-toastify";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 
 export default function CartButton(props) {
+  const cartItems = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-  const isEmpty = useSelector((state) => state.firebase.auth.isEmpty);
+  // const isEmpty = useSelector((state) => state.firebase.auth.isEmpty);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
-  const userId = useSelector((state) => state.firebase.auth.uid);
-  useFirestoreConnect(() => [{ collection: "users", doc: userId }]);
-  const data = useSelector(
-    ({ firestore: { data } }) => data.users && data.users[userId]
-  );
+  // const userId = useSelector((state) => state.firebase.auth.uid);
+  // useFirestoreConnect(() => [{ collection: "users", doc: userId }]);
+  // const data = useSelector(
+  //   ({ firestore: { data } }) => data.users && data.users[userId]
+  // );
   if (!loggedIn) {
     return (
       <Button
         variant="contained"
         color="primary"
         onClick={() => {
-          toast("Log in to add item in the cart");
+          toast.warning("Log in to add item in the cart");
+          setTimeout(() => {
+            dispatch({ type: "OPEN_SIGNUP_MODAL" });
+          }, 400);
         }}
         style={{ margin: "0px auto" }}
       >
@@ -28,18 +32,17 @@ export default function CartButton(props) {
       </Button>
     );
   }
-  if (!isLoaded(data)) {
-    return <p>Loading</p>;
-  }
+  // if (!isLoaded(data)) {
+  //   return <p>Loading</p>;
+  // }
   const cartItemsIds = [];
-  data.cart.forEach((item) => cartItemsIds.push(item.id));
+  // data.cart.forEach((item) => cartItemsIds.push(item.id));
+  cartItems.forEach((item) => cartItemsIds.push(item.id));
   let included = false;
+  // if (cartItemsIds.includes(props.id)) included = true;
   if (cartItemsIds.includes(props.id)) included = true;
 
   function handleAdd() {
-    if (isEmpty) {
-      toast("Login to add items to cart");
-    }
     dispatch(
       addToCart({
         id: props.id,

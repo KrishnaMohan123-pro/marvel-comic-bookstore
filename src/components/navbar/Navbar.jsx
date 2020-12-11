@@ -63,11 +63,11 @@ export default function Navbar() {
                   dispatch(logout());
                 }}
               >
-                SignOut
+                SIGNOUT
               </Button>
               <Link to="/account" style={{ color: "inherit" }}>
                 <Button color="inherit" variant="text">
-                  Account
+                  ACCOUNT
                 </Button>
               </Link>
             </Fragment>

@@ -4,12 +4,16 @@ const initialState = { cart: [] };
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
+    case "INITIALISE_CART":
+      return { cart: action.payload.cart };
     case "ADDED_TO_CART":
-      toast("Item added to cart");
-      return state;
+      toast.success("Item added to cart");
+      return { cart: action.payload.cart };
     case "REMOVED_FROM_CART":
-      toast("Item removed from cart");
-      return state;
+      toast.error("Item removed from cart");
+      return { cart: action.payload.cart };
+    case "CLEAR_CART":
+      return initialState;
     default:
       return state;
   }

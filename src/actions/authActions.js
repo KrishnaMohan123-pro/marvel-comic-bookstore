@@ -7,7 +7,6 @@ export function signUp(creds) {
       .auth()
       .createUserWithEmailAndPassword(creds.email, creds.password)
       .then((user) => {
-        // console.log(user.user.uid);
         firebase.firestore().collection("users").doc(user.user.uid).set({
           fname: creds.fname,
           lname: creds.lname,
@@ -23,6 +22,11 @@ export function signUp(creds) {
           .get()
           .then((data) => {
             dispatch({ type: "SIGN_IN", payload: { user: data.data() } });
+            dispatch({ type: "CLEAR_CART" });
+            dispatch({
+              type: "INITIALISE_CART",
+              payload: { cart: data.data().cart },
+            });
           });
       })
       .catch((err) => {
@@ -46,6 +50,11 @@ export function login(creds) {
           .get()
           .then((data) => {
             dispatch({ type: "LOG_IN", payload: { user: data.data() } });
+            dispatch({ type: "CLEAR_CART" });
+            dispatch({
+              type: "INITIALISE_CART",
+              payload: { cart: data.data().cart },
+            });
           });
       })
       .catch((err) => {
@@ -63,7 +72,6 @@ export function logout() {
       .auth()
       .signOut()
       .then(() => {
-        toast("User Signed Out");
         dispatch({ type: "SIGNED_OUT" });
       })
       .catch((err) => {
