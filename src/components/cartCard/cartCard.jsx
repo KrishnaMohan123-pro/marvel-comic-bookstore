@@ -6,17 +6,17 @@ export default function CartCard(props) {
   return (
     <div className="container">
       <div className="cart-item row">
-        <div className="book col-4">
+        <div className="book col-md-4">
           <Link to={"/book/" + props.id}>
             <img className="book-image" src={props.img} />
           </Link>
         </div>
-        <div className="book book-title col-5 align-self-center">
+        <div className="book book-title col-md-5 align-self-center">
           <Link to={"/book/" + props.id}>
             <p>{props.title}</p>
           </Link>
         </div>
-        <div className="book book-price col-3">
+        <div className="book book-price col-md-3">
           <p>{"$ " + props.price}</p>
           <div>
             <CartButton id={props.id} />

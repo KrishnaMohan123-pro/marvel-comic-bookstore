@@ -25,7 +25,7 @@ export default function ProfileCard(props) {
             top: "15%",
           }}
         >
-          <img />
+          <img src="../../images/userImage.png" alt="display picture" />
         </div>
       </div>
       <div

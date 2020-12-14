@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function addToCart(book) {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -46,6 +48,22 @@ export function removeFromCart(book) {
               payload: { cart: cartData },
             });
           });
+      });
+  };
+}
+
+export function initialiseCart() {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    const uid = getState().auth.uid;
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .get()
+      .then((doc) => {
+        var cartData = doc.data().cart;
+        dispatch({ type: "INITIALISE_CART", payload: { cart: cartData } });
       });
   };
 }

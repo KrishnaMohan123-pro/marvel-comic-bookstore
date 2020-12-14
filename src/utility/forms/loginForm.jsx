@@ -10,16 +10,12 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export default function LoginForm() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
-  const User = useSelector((state) => state.auth.user);
-  console.log(User);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ email: "", password: "" });
-  console.log(User);
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(login(user));
     setUser(user);
-    if (loggedIn) dispatch({ type: "CLOSE_MODAL" });
   }
   function handleChange(e) {
     let id = e.target.id;

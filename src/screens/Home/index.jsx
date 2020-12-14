@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 export default function Home() {
   return (
     <section className="home-body" style={{ marginTop: "4.25%" }}>
@@ -18,7 +17,7 @@ export default function Home() {
       <section id="links">
         <div className="container">
           <div className="row no-gutters p-2">
-            <div className="col-4">
+            <div className="links-col col-sm-4 ">
               <Link to="/books">
                 <p>
                   <i className="fas fa-book-open fa-3x"></i>
@@ -26,7 +25,7 @@ export default function Home() {
                 <p className="link-text">World of comics</p>
               </Link>
             </div>
-            <div className="col-4">
+            <div className="links-col col-sm-4">
               <Link to="/characters">
                 <p>
                   <i className="fas fa-user fa-3x"></i>
@@ -38,7 +37,7 @@ export default function Home() {
                 </p>
               </Link>
             </div>
-            <div className="col-4">
+            <div className="links-col col-sm-4">
               <Link to="/search">
                 <p>
                   <i className="fas fa-search fa-3x"></i>

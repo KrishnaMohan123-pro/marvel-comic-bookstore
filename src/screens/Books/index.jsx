@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import characterNames from "../../utility/characters/data";
 import "./styles.css";
 import CarouselList from "../../components/carousel/Carousel";

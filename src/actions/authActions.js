@@ -1,5 +1,3 @@
-import { toast } from "react-toastify";
-
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -21,7 +19,10 @@ export function signUp(creds) {
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({ type: "SIGN_IN", payload: { user: data.data() } });
+            dispatch({
+              type: "SIGN_IN",
+              payload: { user: data.data(), uid: user.user.uid },
+            });
             dispatch({ type: "CLEAR_CART" });
             dispatch({
               type: "INITIALISE_CART",
@@ -42,19 +43,22 @@ export function login(creds) {
       .auth()
       .signInWithEmailAndPassword(creds.email, creds.password)
       .then((user) => {
-        console.log(user.user.uid);
         firebase
           .firestore()
           .collection("users")
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({ type: "LOG_IN", payload: { user: data.data() } });
+            dispatch({
+              type: "LOG_IN",
+              payload: { user: data.data(), uid: user.user.uid },
+            });
             dispatch({ type: "CLEAR_CART" });
             dispatch({
               type: "INITIALISE_CART",
               payload: { cart: data.data().cart },
             });
+            dispatch({ type: "CLOSE_MODAL" });
           });
       })
       .catch((err) => {

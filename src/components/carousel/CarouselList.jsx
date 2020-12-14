@@ -11,9 +11,11 @@ export default function CarouselList(props) {
   if (data.length === 0) {
     return <Loader />;
   }
+  let slidesToShow =
+    window.innerWidth > 1000 ? 3 : window.innerWidth > 700 ? 2 : 1;
   return (
     <Carousel
-      slidesToShow={3}
+      slidesToShow={slidesToShow}
       speed={1000}
       dragging={false}
       autoGenerateStyleTag={true}

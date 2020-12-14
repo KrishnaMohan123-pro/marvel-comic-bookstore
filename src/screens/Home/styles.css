@@ -19,7 +19,7 @@
   background-color: honeydew;
 }
 
-#links .col-4 {
+#links .links-col {
   background-color: black;
   color: white;
   padding-top: 1rem;
@@ -33,4 +33,21 @@
 }
 #links a {
   text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+  .primary-col {
+    font-size: 5rem;
+  }
+  .secondary-col {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 374px) {
+  .primary-col {
+    font-size: 4rem;
+  }
+  .secondary-col {
+    font-size: 2.5rem;
+  }
 }

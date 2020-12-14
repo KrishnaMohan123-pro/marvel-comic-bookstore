@@ -1,14 +1,15 @@
 import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartCard from "../../components/cartCard/cartCard";
-import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import "./styles.css";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
+  const dispatch = useDispatch();
   // const doc = useSelector((state) => state);
   const cartItems = useSelector((state) => state.cart.cart);
-  console.log(cartItems);
+  const user = useSelector((state) => state.auth);
+
   // const userID = doc.firebase.auth.uid;
   // useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
   // const data = useSelector(
@@ -17,13 +18,14 @@ export default function Cart() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   if (!loggedIn) {
     return (
-      <p
-        style={{ fontFamily: "Goldman", fontSize: "2rem", marginTop: "4.25%" }}
-      >
-        Please Login First
-      </p>
+      <div className="cart-body">
+        <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
+          Please Login First
+        </p>
+      </div>
     );
   }
+
   // if (!isLoaded(data)) {
   //   return (
   //     <div class="spinner-grow text-warning" role="status">
@@ -36,7 +38,7 @@ export default function Cart() {
 
   if (Items.length === 0) {
     return (
-      <div style={{ marginTop: "25%" }}>
+      <div className="cart-body">
         <p>Ooops.....No items in cart</p>
         <Link to="/books">Lets go to the world of comics</Link>
       </div>
@@ -47,7 +49,7 @@ export default function Cart() {
     total = total + parseFloat(Items[i].price);
   }
   return (
-    <div style={{ marginTop: "6%" }}>
+    <div className="cart-body">
       <h1>Cart Items</h1>
       {Items.map((Item) => {
         return (
@@ -61,11 +63,11 @@ export default function Cart() {
         );
       })}
       <div className="container" style={{ fontSize: "1.25rem" }}>
-        <p className="book float-left">
+        <p className="book book-number float-left">
           <span style={{ textDecoration: "underline" }}>Number of Books</span>:{" "}
           {Items.length}
         </p>
-        <p className="book float-right">
+        <p className="book book-total float-right">
           <span style={{ textDecoration: "underline" }}>Total</span>: ${" "}
           {total.toFixed(2)}
         </p>

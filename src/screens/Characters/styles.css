@@ -1,0 +1,5 @@
+@media screen and (max-width: 767px) {
+  form {
+    width: 400px;
+  }
+}

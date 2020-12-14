@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -28,15 +27,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  console.log(auth);
   const modalVisible = useSelector((state) => state.modal);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
-  const userID = useSelector((state) => state.firebase.auth.uid);
-  useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
-  const data = useSelector(
-    ({ firestore: { data } }) => data.users && data.users[userID]
-  );
 
   return (
     <AppBar color="secondary">

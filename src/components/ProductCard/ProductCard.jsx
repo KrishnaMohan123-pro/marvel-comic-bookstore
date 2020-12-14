@@ -37,6 +37,7 @@ export default function ProductCard(props) {
         <CardContent>
           <div className="series-image">
             <img
+              className="series-image"
               src={props.img}
               style={{ width: "200px", height: "200px", marginBottom: "5px" }}
             />
