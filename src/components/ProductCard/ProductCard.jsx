@@ -35,9 +35,9 @@ export default function ProductCard(props) {
     <Card className={classes.root}>
       <Link to={"/" + props.type + "/" + props.id}>
         <CardContent>
-          <div className="series-image">
+          <div className="card-image">
             <img
-              className="series-image"
+              className="card-image"
               src={props.img}
               style={{ width: "200px", height: "200px", marginBottom: "5px" }}
             />
