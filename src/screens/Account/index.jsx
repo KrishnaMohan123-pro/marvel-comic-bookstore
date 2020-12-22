@@ -2,6 +2,7 @@ import React from "react";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import ProfileCard from "../../components/profileCard/ProfileCard";
+import "./styles.css";
 
 export default function Account() {
   const doc = useSelector((state) => state);
@@ -29,7 +30,7 @@ export default function Account() {
 
   console.log(data);
   return (
-    <div>
+    <div className="profile-body">
       <ProfileCard
         fname={data.fname}
         lname={data.lname}

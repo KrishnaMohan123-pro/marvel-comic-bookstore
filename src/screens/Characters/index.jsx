@@ -28,6 +28,7 @@ export default function Characters() {
   return (
     <Fragment>
       <Paper
+        className="search-form"
         component="form"
         style={{
           padding: "2px 4px",

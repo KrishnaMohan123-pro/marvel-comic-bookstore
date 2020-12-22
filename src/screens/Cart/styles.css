@@ -6,7 +6,7 @@
   width: 10rem;
 }
 
-.book-title {
+.cart-title {
   font-size: larger;
 }
 .cart-body {
@@ -30,5 +30,8 @@
 @media screen and (max-width: 424px) {
   .book-total {
     float: left !important;
+  }
+  .cart-body {
+    margin-top: 18%;
   }
 }

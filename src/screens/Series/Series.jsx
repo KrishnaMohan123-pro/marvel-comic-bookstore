@@ -19,22 +19,21 @@ export default function Series(props) {
   console.log(result);
 
   return (
-    <section id="series-description" style={{ marginTop: "5%" }}>
+    <section id="series-description">
       <div className="series-title">{result.title}</div>
-      <Grid container spacing={3} style={{ marginTop: "2rem" }}>
-        <Grid item lg={4}>
+      <Grid container spacing={3} className="series-container">
+        <Grid item lg={4} md={12} sm={12} xs={12}>
           <img
+            className="series-image"
             src={result.thumbnail.path + "." + result.thumbnail.extension}
-            style={{ width: "200px", height: "300px" }}
           />
         </Grid>
-        <Grid item lg={5}>
-          <span style={{ fontFamily: "Sacramento", fontSize: "3rem" }}>
-            Description
-          </span>
+        <Grid item lg={5} md={6} sm={12} xs={12}>
+          <span className="section-title">Description</span>
           <Typography
+            className="series-content"
             color="wheat"
-            style={{ margin: "2px auto", width: "500px" }}
+            style={{ margin: "2px auto", width: "80%" }}
           >
             {result.description === null
               ? "No description available"
@@ -52,7 +51,7 @@ export default function Series(props) {
             {result.endYear}
           </Typography>
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={3} md={6} sm={12} xs={12} className="series-content">
           <Typography
             color="wheat"
             style={{
@@ -72,8 +71,13 @@ export default function Series(props) {
           </div>
         </Grid>
       </Grid>
-      <Grid container spacing={2} style={{ marginTop: "2rem" }}>
-        <Grid item lg={3}>
+      <Grid
+        container
+        spacing={2}
+        style={{ marginTop: "2rem" }}
+        className="series-content"
+      >
+        <Grid item lg={3} md={6} sm={12} xs={12}>
           <Typography
             color="wheat"
             style={{
@@ -94,7 +98,7 @@ export default function Series(props) {
             })}
           </div>
         </Grid>
-        <Grid item lg={4}>
+        <Grid item lg={4} md={6} sm={12} xs={12}>
           <Typography
             color="wheat"
             style={{

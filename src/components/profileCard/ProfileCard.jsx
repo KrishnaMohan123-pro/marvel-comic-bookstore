@@ -1,67 +1,37 @@
-import React from "react";
+import React, { Fragment } from "react";
 export default function ProfileCard(props) {
   return (
-    <div className="profile" style={{ marginTop: "4.3%" }}>
-      <div
-        className="profile-pic"
-        style={{
-          backgroundImage: "linear-gradient(tomato,red)",
-          height: "20rem",
-          width: "100%",
-          borderTopRightRadius: "25%",
-          borderBottomLeftRadius: "25%",
-          position: "relative",
-        }}
-      >
-        <div
+    <Fragment>
+      <div className="profile-pic-section">
+        <img
           className="profile-img"
-          style={{
-            borderRadius: "100%",
-            height: "15rem",
-            width: "15rem",
-            border: "white solid 0.5rem",
-            position: "absolute",
-            left: "40%",
-            top: "15%",
-          }}
-        >
-          <img src="../../images/userImage.png" alt="display picture" />
-        </div>
+          src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+          alt="display picture"
+        />
       </div>
-      <div
-        className="profile-card container d-flex justify-content-center"
-        style={{ textAlign: "left" }}
-      >
-        <div
-          className="row bg-danger py-5 d-flex justify-content-lest"
-          style={{
-            width: "60%",
-            backgroundImage: "linear-gradient(red, tomato)",
-          }}
-        >
-          <div className="col-4">
-            <p>
-              <h6>Name: </h6>
-              <h3>{props.fname}</h3>
-              <h3>{props.lname}</h3>
-            </p>
+      <div className="profile-card container d-flex justify-content-center">
+        <div className="profile-card-row row bg-danger py-5 d-flex">
+          <div className="profile-name col-lg-4">
+            <p className="section-label">Name: </p>
+            <p className="section-details profile-fname">{props.fname}</p>
+            <p className="section-details profile-lname">{props.lname}</p>
           </div>
-          <div className="col-8">
-            <p>
-              <h6>Email: </h6>
-              <h4>{props.email}</h4>
-            </p>
-            <p>
-              <h6>Phone Number: </h6>
-              <h4>{props.phone}</h4>
-            </p>
-            <p>
-              <h6>Address: </h6>
-              <h4>{props.address}</h4>
-            </p>
+          <div className="profile-details col-lg-8">
+            <div className="profile-email">
+              <p className="section-label">Email: </p>
+              <p className="section-details email">{props.email}</p>
+            </div>
+            <div className="profile-phone">
+              <p className="section-title">Phone Number: </p>
+              <p className="section-details phone">{props.phone}</p>
+            </div>
+            <div className="profile-address">
+              <p className="section-label">Address: </p>
+              <p className="section-details address">{props.address}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }

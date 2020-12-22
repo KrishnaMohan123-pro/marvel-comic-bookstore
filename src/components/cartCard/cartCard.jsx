@@ -11,12 +11,12 @@ export default function CartCard(props) {
             <img className="book-image" src={props.img} />
           </Link>
         </div>
-        <div className="book book-title col-md-5 align-self-center">
+        <div className="book cart-title col-md-5 align-self-center">
           <Link to={"/book/" + props.id}>
             <p>{props.title}</p>
           </Link>
         </div>
-        <div className="book book-price col-md-3">
+        <div className="book cart-price col-md-3">
           <p>{"$ " + props.price}</p>
           <div>
             <CartButton id={props.id} />

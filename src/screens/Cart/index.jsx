@@ -1,20 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CartCard from "../../components/cartCard/cartCard";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import LoggedInPage from "./loggedInPage";
 
 export default function Cart() {
-  const dispatch = useDispatch();
-  // const doc = useSelector((state) => state);
   const cartItems = useSelector((state) => state.cart.cart);
-  const user = useSelector((state) => state.auth);
-
-  // const userID = doc.firebase.auth.uid;
-  // useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
-  // const data = useSelector(
-  //   ({ firestore: { data } }) => data.users && data.users[userID]
-  // );
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   if (!loggedIn) {
     return (
@@ -26,17 +17,7 @@ export default function Cart() {
     );
   }
 
-  // if (!isLoaded(data)) {
-  //   return (
-  //     <div class="spinner-grow text-warning" role="status">
-  //       <span class="sr-only">Loading...</span>
-  //     </div>
-  //   );
-  // }
-  let Items = cartItems;
-  // data.cart;
-
-  if (Items.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="cart-body">
         <p>Ooops.....No items in cart</p>
@@ -44,34 +25,5 @@ export default function Cart() {
       </div>
     );
   }
-  let total = 0;
-  for (let i = 0; i < Items.length; i = i + 1) {
-    total = total + parseFloat(Items[i].price);
-  }
-  return (
-    <div className="cart-body">
-      <h1>Cart Items</h1>
-      {Items.map((Item) => {
-        return (
-          <CartCard
-            key={Item.id}
-            id={Item.id}
-            img={Item.img}
-            price={Item.price}
-            title={Item.title}
-          />
-        );
-      })}
-      <div className="container" style={{ fontSize: "1.25rem" }}>
-        <p className="book book-number float-left">
-          <span style={{ textDecoration: "underline" }}>Number of Books</span>:{" "}
-          {Items.length}
-        </p>
-        <p className="book book-total float-right">
-          <span style={{ textDecoration: "underline" }}>Total</span>: ${" "}
-          {total.toFixed(2)}
-        </p>
-      </div>
-    </div>
-  );
+  return <LoggedInPage />;
 }

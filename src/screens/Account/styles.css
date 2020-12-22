@@ -1,0 +1,93 @@
+.profile-body {
+  margin-top: 4.2%;
+}
+.profile-card {
+  text-align: left;
+}
+.profile-card-row {
+  width: 65%;
+  background-image: linear-gradient(red, tomato);
+}
+.profile-img {
+  border-radius: 100%;
+  height: 15rem;
+  width: 15rem;
+  border: white solid 0.75rem;
+  margin: 2% auto;
+  position: relative;
+}
+.profile-pic-section {
+  background-image: linear-gradient(tomato, red);
+  height: 20rem;
+  width: 100%;
+  border-top-right-radius: 25%;
+  border-bottom-left-radius: 25%;
+}
+.section-label {
+  font-size: 1rem;
+}
+.section-details {
+  font-size: 1.65rem;
+  line-height: 30px;
+}
+
+@media screen and (max-width: 1200px) {
+  .profile-body {
+    margin-top: 5.5%;
+  }
+  .profile-card-row {
+    width: 55%;
+  }
+  .profile-img {
+    height: 13rem;
+    width: 13rem;
+    border: white solid 0.75rem;
+    margin: 4% auto;
+  }
+  .section-details {
+    font-size: 1.4rem;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .profile-body {
+    margin-top: 8%;
+  }
+  .profile-img {
+    height: 11rem;
+    width: 11rem;
+    border: white solid 0.6rem;
+    margin: 5% auto;
+  }
+  .profile-pic-section {
+    height: 17rem;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .section-label {
+    font-size: 0.65rem;
+  }
+  .section-details {
+    font-size: 1.2rem;
+    line-height: 30px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .profile-body {
+    margin-top: 13%;
+  }
+  .profile-img {
+    height: 9rem;
+    width: 9rem;
+    border: white solid 0.4rem;
+    margin: 8% auto;
+  }
+  .section-label {
+    font-size: 0.65rem;
+  }
+  .section-details {
+    font-size: 1rem;
+    line-height: 20px;
+  }
+}

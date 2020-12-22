@@ -1,0 +1,28 @@
+#character-body {
+  margin-top: 5%;
+}
+.character-name {
+  font-family: "Goldman" !important;
+  font-size: 3.5rem !important;
+}
+.character-description {
+  width: 70%;
+  margin: 2px auto !important;
+}
+
+@media screen and (max-width: 800px) {
+  #character-body {
+    margin-top: 10%;
+  }
+  .character-name {
+    font-size: 3rem !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .character-name {
+    font-size: 2rem !important;
+  }
+  #character-body {
+    margin-top: 15%;
+  }
+}

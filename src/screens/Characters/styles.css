@@ -1,5 +1,10 @@
 @media screen and (max-width: 767px) {
-  form {
-    width: 400px;
+  .search-form {
+    width: 400px !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .search-form {
+    width: 300px !important;
   }
 }
