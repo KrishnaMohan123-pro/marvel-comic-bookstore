@@ -1,7 +1,10 @@
 import React from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function Home() {
+  const loginModal = useSelector((state) => state.modal.loginModalVisible);
+  console.log(loginModal);
   return (
     <section className="home-body" style={{ marginTop: "4.25%" }}>
       <section id="home-message">

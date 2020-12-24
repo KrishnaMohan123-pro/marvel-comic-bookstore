@@ -77,6 +77,7 @@ export function logout() {
       .signOut()
       .then(() => {
         dispatch({ type: "SIGNED_OUT" });
+        dispatch({ type: "CLEAR_CART" });
       })
       .catch((err) => {
         dispatch({ type: "SIGNOUT_ERROR", payload: { error: err } });

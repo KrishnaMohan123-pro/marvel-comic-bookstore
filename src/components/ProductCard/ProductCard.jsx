@@ -35,13 +35,10 @@ export default function ProductCard(props) {
     <Card className={classes.root}>
       <Link to={"/" + props.type + "/" + props.id}>
         <CardContent>
-          <div className="card-image">
-            <img
-              className="card-image"
-              src={props.img}
-              style={{ width: "200px", height: "200px", marginBottom: "5px" }}
-            />
-          </div>
+          <img
+            src={props.img}
+            style={{ width: "200px", height: "200px", marginBottom: "5px" }}
+          />
 
           <Typography
             className={classes.title}
