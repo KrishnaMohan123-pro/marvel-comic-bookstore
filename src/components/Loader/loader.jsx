@@ -1,6 +1,11 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 export default function Loader() {
-  return <CircularProgress color="secondary" style={{ marginTop: "25%" }} />;
+  return (
+    <LinearProgress
+      color="secondary"
+      style={{ margin: "15% auto 0", width: "25%" }}
+    />
+  );
 }

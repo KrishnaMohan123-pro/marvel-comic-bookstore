@@ -4,7 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   modal: {

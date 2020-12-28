@@ -1,34 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import "./styles.css";
 import { Link } from "react-router-dom";
-import firebase from "../../services/firebase/index";
-import Loader from "../../components/Loader/loader";
 import CartCard from "../../components/cartCard/cartCard";
+import Loader from "../../components/Loader/loader";
 
 export default function Cart() {
-  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cart);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
-  const uid = useSelector((state) => state.auth.uid);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (loggedIn) {
-      setLoading(true);
-      firebase
-        .firestore()
-        .collection("users")
-        .doc(uid)
-        .get()
-        .then((doc) => {
-          dispatch({
-            type: "INITIALISE_CART",
-            payload: { cart: doc.data().cart },
-          });
-        });
-      setLoading(false);
-    }
-  }, []);
+  const loader = useSelector((state) => state.loader);
+  if (loader) {
+    return <Loader />;
+  }
+
   if (!loggedIn) {
     return (
       <div className="cart-body">
@@ -37,9 +21,6 @@ export default function Cart() {
         </p>
       </div>
     );
-  }
-  if (loading) {
-    return <Loader />;
   }
 
   if (cartItems.length === 0) {

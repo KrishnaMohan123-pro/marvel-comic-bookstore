@@ -1,3 +1,9 @@
+.edit-button {
+  color: white !important;
+  position: absolute !important;
+  top: 90% !important;
+  left: 90% !important;
+}
 .profile-body {
   margin-top: 4.2%;
 }

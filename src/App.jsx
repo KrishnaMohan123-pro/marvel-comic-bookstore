@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import firebase from "./services/firebase/index";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./screens/Home/index";
 import Navbar from "./components/navbar/Navbar";
@@ -10,6 +12,7 @@ import Character from "./screens/Character/index";
 import Characters from "./screens/Characters/index";
 import Search from "./screens/Search";
 import Series from "./screens/Series/Series";
+import Loader from "./components/Loader/loader";
 
 function bookDetail({ match }) {
   return <Book id={match.params.book_id} />;
@@ -22,6 +25,51 @@ function characterDetail({ match }) {
 }
 
 function App() {
+  // const dispatch = useDispatch();
+  // const loggedIn = useSelector((state) => state.auth.loggedIn);
+  // const uid = useSelector((state) => state.auth.uid);
+  // console.log(loggedIn, uid);
+  // const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     setLoading(true);
+  //     firebase
+  //       .firestore()
+  //       .collection("users")
+  //       .doc(uid)
+  //       .get()
+  //       .then((doc) => {
+  //         dispatch({
+  //           type: "INITIALISE_USER",
+  //           payload: {
+  //             user: {
+  //               fname: doc.data().fname,
+  //               lname: doc.data().lname,
+  //               email: doc.data().email,
+  //               phone: doc.data().phone,
+  //               address: doc.data().address,
+  //             },
+  //             uid: uid,
+  //           },
+  //         });
+  //       });
+  //     firebase
+  //       .firestore()
+  //       .collection("users")
+  //       .doc(uid)
+  //       .get()
+  //       .then((doc) => {
+  //         dispatch({
+  //           type: "INITIALISE_CART",
+  //           payload: { cart: doc.data().cart },
+  //         });
+  //       });
+  //     setLoading(false);
+  //   }
+  // }, []);
+  // if (loading) {
+  //   return <Loader />;
+  // }
   return (
     <Router>
       <Navbar />

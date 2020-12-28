@@ -1,5 +1,10 @@
 import React, { Fragment } from "react";
+import InputDialog from "../../components/Dialog/inputDialog";
+import { useSelector } from "react-redux";
+import AddAddressForm from "../../utility/forms/addAddressForm";
+import AddPhoneForm from "../../utility/forms/addPhoneForm";
 export default function ProfileCard(props) {
+  const dialog = useSelector((state) => state.dialog);
   return (
     <Fragment>
       <div className="profile-pic-section">
@@ -22,12 +27,34 @@ export default function ProfileCard(props) {
               <p className="section-details email">{props.email}</p>
             </div>
             <div className="profile-phone">
-              <p className="section-title">Phone Number: </p>
-              <p className="section-details phone">{props.phone}</p>
+              <p className="section-label">Phone Number: </p>
+              <p className="section-details phone">
+                {props.phone.length === 0 ? (
+                  <InputDialog
+                    childComponent={<AddPhoneForm />}
+                    dialogName={"Phone"}
+                    dialogLabel={"Add Phone Number"}
+                    dialogVisible={dialog.addPhoneDialogVisible}
+                  />
+                ) : (
+                  props.phone
+                )}
+              </p>
             </div>
             <div className="profile-address">
               <p className="section-label">Address: </p>
-              <p className="section-details address">{props.address}</p>
+              <p className="section-details address">
+                {props.address.length === 0 ? (
+                  <InputDialog
+                    childComponent={<AddAddressForm />}
+                    dialogName={"Address"}
+                    dialogLabel={"Add Address"}
+                    dialogVisible={dialog.addAddressDialogVisibile}
+                  />
+                ) : (
+                  props.address
+                )}
+              </p>
             </div>
           </div>
         </div>

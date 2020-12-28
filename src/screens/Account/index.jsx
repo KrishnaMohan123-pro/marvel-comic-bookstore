@@ -1,17 +1,16 @@
 import React from "react";
-import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import ProfileCard from "../../components/profileCard/ProfileCard";
+import InputDialog from "../../components/Dialog/inputDialog";
+import EditProfileForm from "../../utility/forms/editProfileForm";
 import "./styles.css";
 
 export default function Account() {
-  const doc = useSelector((state) => state);
-  const userID = doc.firebase.auth.uid;
-  useFirestoreConnect(() => [{ collection: "users", doc: userID }]);
-  const data = useSelector(
-    ({ firestore: { data } }) => data.users && data.users[userID]
-  );
-  if (doc.firebase.auth.isEmpty) {
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const user = useSelector((state) => state.auth.user);
+  const dialog = useSelector((state) => state.dialog);
+  console.log(dialog);
+  if (!loggedIn) {
     return (
       <p
         style={{ fontFamily: "Goldman", fontSize: "2rem", marginTop: "4.25%" }}
@@ -20,23 +19,22 @@ export default function Account() {
       </p>
     );
   }
-  if (!isLoaded(data)) {
-    return (
-      <div class="spinner-grow text-warning" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    );
-  }
 
-  console.log(data);
   return (
     <div className="profile-body">
       <ProfileCard
-        fname={data.fname}
-        lname={data.lname}
-        email={data.email}
-        address={data.address}
-        phone={data.phone}
+        fname={user.fname}
+        lname={user.lname}
+        email={user.email}
+        address={user.address}
+        phone={user.phone}
+      />
+      <InputDialog
+        childComponent={<EditProfileForm />}
+        dialogName={"Edit"}
+        dialogLabel={"Edit Profile"}
+        dialogVisible={dialog.editProfileDialogVisible}
+        className="edit-button"
       />
     </div>
   );

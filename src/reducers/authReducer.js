@@ -1,9 +1,15 @@
 import { toast } from "react-toastify";
 
-const initialState = { user: {}, loggedIn: false };
+const initialState = { user: {}, loggedIn: false, uid: "" };
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
+    case "INITIALISE_USER":
+      return {
+        user: action.payload.user,
+        loggedIn: true,
+        uid: action.payload.uid,
+      };
     case "SIGN_IN":
       toast.success("SignIn Successful");
       return {

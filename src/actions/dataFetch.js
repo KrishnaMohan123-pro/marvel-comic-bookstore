@@ -14,6 +14,12 @@ export const fetchComicsByCharacterId = async (id) => {
   return json;
 };
 
+export const fetchComicsByName = async (name) => {
+  const doc = await fetchIdByName(name);
+  const id = doc.data.results[0].id;
+  const comics = await fetchComicsByCharacterId(id);
+  return comics;
+};
 export const fetchComicsByComicsId = async (id) => {
   const endPoint = `comics/${id}?`;
   const response = await fetchApi(endPoint);
@@ -42,6 +48,10 @@ export const fetchWithStartName = async (name) => {
   return json;
 };
 
+export const fetchSeriesByStartName = async (name) => {
+  const response = await fetchWithStartName(name);
+  const results = await response.data.results;
+};
 export const fetchCharacterByCharacterId = async (id) => {
   const endPoint = `characters/${id}?`;
   const response = await fetchApi(endPoint);

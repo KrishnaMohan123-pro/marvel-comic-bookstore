@@ -180,7 +180,7 @@ export default function LoginForm() {
           Login
         </Button>
       </form>
-      <p style={{ margin: "1rem auto" }}>---OR---</p>
+      <p style={{ margin: "1rem auto", color: "black" }}>---OR---</p>
       <ButtonGroup>
         <Button
           color="secondary"

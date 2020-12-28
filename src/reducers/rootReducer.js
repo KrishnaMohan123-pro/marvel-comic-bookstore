@@ -5,20 +5,24 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authReducer";
 import cartReducer from "./cartReducer";
+import dialogReducer from "./dialogReducers";
+import loaderReducer from "./loaderReducer";
 import modalReducer from "./modalReducer";
 import searchReducer from "./searchReducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart"],
+  whitelist: ["auth"],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
+  dialog: dialogReducer,
   firebase: firebaseReducer,
   firestore: firestoreReducer,
+  loader: loaderReducer,
   modal: modalReducer,
   search: searchReducer,
 });
