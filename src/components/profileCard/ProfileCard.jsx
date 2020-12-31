@@ -10,7 +10,11 @@ export default function ProfileCard(props) {
       <div className="profile-pic-section">
         <img
           className="profile-img"
-          src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+          src={
+            props.photoURL.length === 0
+              ? "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+              : props.photoURL
+          }
           alt="display picture"
         />
       </div>
@@ -44,7 +48,7 @@ export default function ProfileCard(props) {
             <div className="profile-address">
               <p className="section-label">Address: </p>
               <p className="section-details address">
-                {props.address.length === 0 ? (
+                {props.address.addressLine1.length === 0 ? (
                   <InputDialog
                     childComponent={<AddAddressForm />}
                     dialogName={"Address"}
@@ -52,7 +56,20 @@ export default function ProfileCard(props) {
                     dialogVisible={dialog.addAddressDialogVisibile}
                   />
                 ) : (
-                  props.address
+                  <Fragment>
+                    {props.address.addressLine1}
+                    <br />
+                    {props.address.addressLine2}
+                    <br />
+                    {props.address.pin}
+                    <br />
+                    {props.address.city}
+                    <br />
+                    {props.address.state}
+                    <br />
+                    {props.address.country}
+                    <br />
+                  </Fragment>
                 )}
               </p>
             </div>

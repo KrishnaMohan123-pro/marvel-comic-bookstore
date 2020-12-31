@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import Loader from "../../components/Loader/loader";
 import Typography from "@material-ui/core/Typography";
 import { fetchSeriesBySeriesID } from "../../actions/dataFetch";
 import "./styles.css";
@@ -13,7 +13,7 @@ export default function Series(props) {
   }, []);
   //   When Data not loaded
   if (Object.keys(data).length === 0) {
-    return <CircularProgress color="secondary" style={{ marginTop: "25%" }} />;
+    return <Loader />;
   }
   let result = data.data.results[0];
   console.log(result);

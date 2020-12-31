@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import DebounceInput from "react-debounce-input";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
 import SearchIcon from "@material-ui/icons/Search";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +12,10 @@ export default function Characters() {
   const [search, setSearch] = useState("");
   function handleChange(e) {
     let value = e.target.value;
-    setSearch(value);
+    setTimeout(() => {
+      setSearch(value);
+    }, 500);
+    console.log(search, value);
     dispatch({ type: "CLEAR_SEARCH" });
     if (value.length !== 0)
       dispatch({ type: "SEARCH_START_WITH", payload: { name: value } });

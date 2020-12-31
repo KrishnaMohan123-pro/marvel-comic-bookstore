@@ -5,14 +5,25 @@ export function signUp(creds) {
       .auth()
       .createUserWithEmailAndPassword(creds.email, creds.password)
       .then((user) => {
-        firebase.firestore().collection("users").doc(user.user.uid).set({
-          fname: creds.fname,
-          lname: creds.lname,
-          email: creds.email,
-          phone: creds.phone,
-          cart: [],
-          address: "",
-        });
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.user.uid)
+          .set({
+            fname: creds.fname,
+            lname: creds.lname,
+            email: creds.email,
+            phone: creds.phone,
+            cart: [],
+            address: {
+              addressLine1: "",
+              addressLine2: "",
+              pin: "",
+              city: "",
+              state: "",
+              country: "",
+            },
+          });
         firebase
           .firestore()
           .collection("users")

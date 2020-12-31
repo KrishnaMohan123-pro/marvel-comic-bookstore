@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import TextField from "@material-ui/core/TextField";
+import FacebookLoginButton from "../../components/Buttons/facebookLoginButton";
+import GoogleSignInButton from "../../components/Buttons/googleSignInButton";
 import { signUp } from "../../actions/authActions";
+import TextField from "@material-ui/core/TextField";
 
 export default function SignupForm() {
   const [user, setUser] = useState({
@@ -131,18 +132,13 @@ export default function SignupForm() {
           color="primary"
           variant="contained"
         >
-          Login
+          Sign up
         </Button>
       </form>
-      <p style={{ margin: "1rem auto" }}>---OR---</p>
-      <ButtonGroup>
-        <Button color="secondary" variant="contained">
-          <i class="fab fa-google mr-1"></i>Google
-        </Button>
-        <Button color="primary" variant="contained">
-          <i class="fab fa-facebook mr-1"></i>Facebook
-        </Button>
-      </ButtonGroup>
+      <p style={{ margin: "1rem auto", color: "black" }}>---OR---</p>
+      <GoogleSignInButton />
+      <br />
+      <FacebookLoginButton />
       <br />
       <Button
         onClick={() => {

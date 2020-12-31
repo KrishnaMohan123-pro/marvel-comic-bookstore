@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
+import DebounceInput from "react-debounce-input";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
@@ -14,6 +15,10 @@ export default function Search() {
   function handleChange(e) {
     let value = e.target.value;
     setSearch(value);
+    dispatch({ type: "CLEAR_SEARCH" });
+    if (value.length > 2) {
+      dispatch({ type: "SEARCH_START_WITH", payload: { name: value } });
+    }
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,11 +40,17 @@ export default function Search() {
         }}
         onSubmit={handleSubmit}
       >
-        <InputBase
-          placeholder="Search Series of you favourite Marvel Character"
-          inputProps={{ "aria-label": "search google maps" }}
-          style={{ width: "90%", marginLeft: "5px" }}
+        <DebounceInput
+          debounceTimeout={300}
           onChange={handleChange}
+          placeholder="Search for your favourite Marvel Character"
+          style={{
+            width: "90%",
+            marginLeft: "5px",
+            border: "none",
+            outline: "none",
+          }}
+          minLength={3}
           value={search}
         />
         <IconButton type="submit" aria-label="search">

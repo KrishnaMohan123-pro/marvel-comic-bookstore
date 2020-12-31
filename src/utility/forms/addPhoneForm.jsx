@@ -29,6 +29,7 @@ export default function AddAddressForm() {
               fname: user.fname,
               lname: user.lname,
               phone: phone,
+              photoURL: user.photoURL,
               address: user.address,
             },
             uid: uid,

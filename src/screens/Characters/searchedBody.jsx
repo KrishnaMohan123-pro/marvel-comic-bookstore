@@ -15,7 +15,6 @@ export default function SearchedBody() {
   if (Object.keys(data).length === 0) {
     return <Loader />;
   }
-  console.log(data);
   if (data.data.count === 0) {
     return <p style={{ marginTop: "20%" }}>No Character Available</p>;
   }

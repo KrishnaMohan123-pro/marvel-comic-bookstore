@@ -56,6 +56,13 @@ export default function ProductCard(props) {
               <b> Price - ${props.price}</b>
             </Typography>
           )}
+          {props.type === "series" && (
+            <Typography className={classes.title} color="textPrimary">
+              <b>Start Year - {props.startYear}</b>
+              <br />
+              <b>End Year - {props.endYear}</b>
+            </Typography>
+          )}
         </CardContent>
       </Link>
       <CardActions style={{ margin: "0px auto" }}>
