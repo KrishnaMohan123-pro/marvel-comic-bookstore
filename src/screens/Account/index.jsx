@@ -9,7 +9,6 @@ export default function Account() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const user = useSelector((state) => state.auth.user);
   const dialog = useSelector((state) => state.dialog);
-  console.log(user);
   if (!loggedIn) {
     return (
       <p
@@ -30,13 +29,13 @@ export default function Account() {
         phone={user.phone}
         photoURL={user.photoURL}
       />
-      {/* <InputDialog
+      <InputDialog
         childComponent={<EditProfileForm />}
         dialogName={"Edit"}
         dialogLabel={"Edit Profile"}
         dialogVisible={dialog.editProfileDialogVisible}
         className="edit-button"
-      /> */}
+      />
     </div>
   );
 }

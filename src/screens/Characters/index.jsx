@@ -15,7 +15,6 @@ export default function Characters() {
     setTimeout(() => {
       setSearch(value);
     }, 500);
-    console.log(search, value);
     dispatch({ type: "CLEAR_SEARCH" });
     if (value.length !== 0)
       dispatch({ type: "SEARCH_START_WITH", payload: { name: value } });

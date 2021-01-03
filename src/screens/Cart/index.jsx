@@ -4,7 +4,7 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import CartCard from "../../components/cartCard/cartCard";
 import Loader from "../../components/Loader/loader";
-
+import PayButton from "../../services/razorPay/frontend/index";
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.cart);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
@@ -60,6 +60,7 @@ export default function Cart() {
           {total.toFixed(2)}
         </p>
       </div>
+      <PayButton />
     </div>
   );
 }

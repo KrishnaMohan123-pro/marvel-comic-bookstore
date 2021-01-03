@@ -16,7 +16,6 @@ export default function Series(props) {
     return <Loader />;
   }
   let result = data.data.results[0];
-  console.log(result);
 
   return (
     <section id="series-description">

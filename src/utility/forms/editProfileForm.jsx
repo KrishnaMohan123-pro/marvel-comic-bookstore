@@ -1,89 +1,32 @@
-import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
-import firebase from "../../services/firebase/index";
-import { useSelector, useDispatch } from "react-redux";
+import React, { Fragment } from "react";
+import InputDialog from "../../components/Dialog/inputDialog";
+import AddAddressForm from "./addAddressForm";
+import AddPhoneForm from "./addPhoneForm";
+import { useSelector } from "react-redux";
 
 export default function EditProfileForm() {
-  const dispatch = useDispatch();
-  const [newUserData, setNewUserData] = useState({ phone: "", address: "" });
-  const user = useSelector((state) => state.auth.user);
-  console.log(user);
-  const uid = useSelector((state) => state.auth.uid);
-  function handleChange(e) {
-    let id = e.target.id;
-    let value = e.target.value;
-    setNewUserData((prevValue) => {
-      switch (id) {
-        case "phone":
-          return {
-            phone: value,
-            address: prevValue.address,
-          };
-        case "address":
-          return {
-            phone: prevValue.phone,
-            address: value,
-          };
-        default:
-          return prevValue;
-      }
-    });
-  }
-  function handleSubmit(e) {
-    e.preventDefault();
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(uid)
-      .update({ address: newUserData.address, phone: newUserData.phone })
-      .then(() => {
-        dispatch({ type: "CLOSE_DIALOG" });
-        dispatch({
-          type: "INITIALISE_USER",
-          payload: {
-            user: {
-              email: user.email,
-              fname: user.fname,
-              lname: user.lname,
-              phone: newUserData.phone,
-              address: newUserData.address,
-            },
-            uid: uid,
-          },
-        });
-      });
-  }
+  const dialog = useSelector((state) => state.dialog);
+  const phone = useSelector((state) => state.auth.user.phone);
+  const address = useSelector((state) => state.auth.user.address);
   return (
-    <form
-      style={{ width: "25rem", padding: "1rem", margin: "1rem" }}
-      onSubmit={handleSubmit}
-    >
-      <TextField
-        className="mt-2"
-        color="primary"
-        id="phone"
-        label="Phone"
-        style={{ width: "100%" }}
-        variant="outlined"
-        onChange={handleChange}
-        type="number"
+    <Fragment>
+      <InputDialog
+        childComponent={<AddAddressForm />}
+        dialogName={"Address"}
+        dialogLabel={
+          address.addressLine1.length === 0 ? "Add Address" : "Edit Address"
+        }
+        dialogVisible={dialog.addAddressDialogVisibile}
       />
-      <TextField
-        className="mt-2"
-        color="primary"
-        id="address"
-        label="Address"
-        style={{ width: "100%" }}
-        variant="outlined"
-        onChange={handleChange}
-        type="text"
-      />
-
       <br />
-      <Button variant="contained" color="primary" type="submit">
-        Add
-      </Button>
-    </form>
+      <InputDialog
+        childComponent={<AddPhoneForm />}
+        dialogName={"Phone"}
+        dialogLabel={
+          phone.length === 0 ? "Add Phone Number" : "Edit Phone Number"
+        }
+        dialogVisible={dialog.addPhoneDialogVisible}
+      />
+    </Fragment>
   );
 }
