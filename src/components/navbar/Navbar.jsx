@@ -12,6 +12,7 @@ import LoginForm from "../../utility/forms/loginForm";
 import SignupForm from "../../utility/forms/signupForm";
 import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
+import SearchBar from "../SearchBar/searchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,7 @@ export default function Navbar() {
         <Link to="/" style={{ color: "inherit" }}>
           <Typography variant="h6">Marvel</Typography>
         </Link>
+        <SearchBar />
         <ButtonGroup style={{ marginLeft: "auto" }}>
           {loggedIn ? (
             <Fragment>

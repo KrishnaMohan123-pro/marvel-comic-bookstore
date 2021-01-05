@@ -1,5 +1,9 @@
 const app = require("express")();
 const razorPay = require("razorpay");
+const bodyParser = require("body-parser");
+// const firebase = require("firebase/app");
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // const cors = require("cors");
 
 // app.use(cors);
@@ -7,7 +11,14 @@ const razorPayInstance = new razorPay({
   key_id: "rzp_test_6t62OWKYnDac78",
   key_secret: "hE3Csmz8s4RJOAfuAVNri1t4",
 });
+
+// app.get("/razorpay"),
+//   async (req, res) => {
+//     const totalAmount = req.body.book - total;
+//   };
 app.post("/razorpay", async (req, res) => {
+  // const total = await firebase.firestore().collection("users");
+  // console.log(total);
   const payment_capture = 1;
   const amount = 500;
   const options = {

@@ -42,7 +42,7 @@ export const fetchSeriesBySeriesID = async (id) => {
 };
 
 export const fetchWithStartName = async (name) => {
-  const endPoint = `characters?nameStartsWith=${name}&limit=100`;
+  const endPoint = `characters?nameStartsWith=${name}&orderBy=modified&limit=100`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;

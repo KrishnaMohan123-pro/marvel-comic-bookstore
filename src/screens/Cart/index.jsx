@@ -55,7 +55,7 @@ export default function Cart() {
           <span style={{ textDecoration: "underline" }}>Number of Books</span>:{" "}
           {cartItems.length}
         </p>
-        <p className="book book-total float-right">
+        <p className="book book-total float-right" name="total">
           <span style={{ textDecoration: "underline" }}>Total</span>: ${" "}
           {total.toFixed(2)}
         </p>

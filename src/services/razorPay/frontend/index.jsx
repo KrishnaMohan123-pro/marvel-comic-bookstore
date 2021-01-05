@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import config from "../config/config";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 export default function RazorPay() {
   const name = useSelector((state) => state.auth.user.fname);
   const email = useSelector((state) => state.auth.user.email);
@@ -40,9 +41,10 @@ export default function RazorPay() {
         "https://upload.wikimedia.org/wikipedia/commons/0/04/MarvelLogo.svg",
 
       handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+        toast.success("Payment Successful");
       },
       prefill: {
         name: name,
@@ -52,13 +54,14 @@ export default function RazorPay() {
     };
     const paymentObject = new window.Razorpay(options);
     paymentObject.on("payment.failed", function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
+      // alert(response.error.code);
+      // alert(response.error.description);
+      // alert(response.error.source);
+      // alert(response.error.step);
+      // alert(response.error.reason);
+      // alert(response.error.metadata.order_id);
+      // alert(response.error.metadata.payment_id);
+      toast.error("Payment Failed");
     });
     paymentObject.open();
   }
