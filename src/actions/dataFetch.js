@@ -55,8 +55,8 @@ export const fetchSeriesByCharacterId = async (id) => {
   return json;
 };
 
-export const fetchSeriesByStartName = async (name) => {
-  const endPoint = `series?titleStartsWith=${name}&limit=100`;
+export const fetchSeriesByStartName = async (name, limit) => {
+  const endPoint = `series?titleStartsWith=${name}&limit=${limit}`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;

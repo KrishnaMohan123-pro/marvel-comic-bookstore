@@ -9,11 +9,16 @@ import Loader from "../../components/Loader/loader";
 export default function Characters({ match }) {
   console.log(match.params.query);
   const [doc, setDoc] = useState([]);
+  const [mountComponent, setMountComponent] = useState(false);
   useEffect(() => {
+    setMountComponent(true);
     fetchWithStartName(match.params.query).then((res) => {
       setDoc(res.data.results);
     });
   }, []);
+  if (!mountComponent) {
+    return null;
+  }
   if (doc.length === 0) {
     return <Loader />;
   }
