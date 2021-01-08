@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import SelectSearch from "react-select-search/dist/cjs/index.js";
 export default function Home() {
   return (
     <section className="home-body" style={{ marginTop: "4.25%" }}>

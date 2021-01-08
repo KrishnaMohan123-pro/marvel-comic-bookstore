@@ -1,18 +1,20 @@
 import React from "react";
-import { Button, ButtonGroup } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {
-  addToCart,
-  removeFromCart,
-  increaseItem,
-  decreaseItem,
-} from "../../actions/cartActions";
+import { addToCart, removeFromCart } from "../../actions/cartActions";
 
 export default function CartButton(props) {
   const cartItems = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
+  // const isEmpty = useSelector((state) => state.firebase.auth.isEmpty);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
+  // const userId = useSelector((state) => state.firebase.auth.uid);
+  // useFirestoreConnect(() => [{ collection: "users", doc: userId }]);
+  // const data = useSelector(
+  //   ({ firestore: { data } }) => data.users && data.users[userId]
+  // );
   if (!loggedIn) {
     return (
       <Button
@@ -26,20 +28,20 @@ export default function CartButton(props) {
         }}
         style={{ margin: "0px auto" }}
       >
-        Add
+        Add to cart
       </Button>
     );
   }
+  // if (!isLoaded(data)) {
+  //   return <p>Loading</p>;
+  // }
   const cartItemsIds = [];
+  // data.cart.forEach((item) => cartItemsIds.push(item.id));
   cartItems.forEach((item) => cartItemsIds.push(item.id));
   let included = false;
+  // if (cartItemsIds.includes(props.id)) included = true;
   if (cartItemsIds.includes(props.id)) included = true;
-  for (let i = 0; i < cartItems.length; i = i + 1) {
-    if (cartItems[i].id === props.id) var quantity = cartItems[i].quantity;
-  }
-  if (quantity === 0) {
-    dispatch(removeFromCart({ id: props.id }));
-  }
+
   function handleAdd() {
     dispatch(
       addToCart({
@@ -47,7 +49,6 @@ export default function CartButton(props) {
         img: props.img,
         price: props.price,
         title: props.title,
-        quantity: 1,
       })
     );
   }
@@ -58,42 +59,14 @@ export default function CartButton(props) {
     if (included) handleRemove();
     else handleAdd();
   }
-  function handleIncrement() {
-    dispatch(increaseItem(props.id));
-  }
-  function handleDecrement() {
-    dispatch(decreaseItem(props.id));
-  }
   return (
-    <ButtonGroup style={{ margin: "0px auto" }}>
-      {included ? (
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={handleIncrement}
-        >
-          +
-        </Button>
-      ) : null}
-      <Button
-        onClick={onButtonClick}
-        color={included ? "secondary" : "primary"}
-        variant="contained"
-        size="small"
-      >
-        {included ? "Remove" : "Add"}
-      </Button>
-      {included ? (
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={handleDecrement}
-        >
-          -
-        </Button>
-      ) : null}
-    </ButtonGroup>
+    <Button
+      onClick={onButtonClick}
+      color={included ? "secondary" : "primary"}
+      variant="contained"
+      style={{ margin: "0px auto" }}
+    >
+      {included ? "Remove from cart" : "Add to Cart"}
+    </Button>
   );
 }

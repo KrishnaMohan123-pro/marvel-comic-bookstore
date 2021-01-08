@@ -38,7 +38,7 @@ export default function Series(props) {
               ? "No description available"
               : result.description}
           </Typography>
-          <Typography style={{ margin: "50px auto" }}>
+          <Typography color="wheat" style={{ margin: "50px auto" }}>
             <span style={{ fontFamily: "Goldman", fontSize: "1.15rem" }}>
               Start Year -
             </span>
@@ -52,6 +52,7 @@ export default function Series(props) {
         </Grid>
         <Grid item lg={3} md={6} sm={12} xs={12} className="series-content">
           <Typography
+            color="wheat"
             style={{
               margin: "2px auto",
               fontFamily: "Goldman",
@@ -77,6 +78,7 @@ export default function Series(props) {
       >
         <Grid item lg={3} md={6} sm={12} xs={12}>
           <Typography
+            color="wheat"
             style={{
               margin: "2px auto",
               fontFamily: "Goldman",
@@ -97,6 +99,7 @@ export default function Series(props) {
         </Grid>
         <Grid item lg={4} md={6} sm={12} xs={12}>
           <Typography
+            color="wheat"
             style={{
               margin: "2px auto",
               fontFamily: "Goldman",
@@ -106,21 +109,17 @@ export default function Series(props) {
             Comics
           </Typography>
           <div
-            className="comic-link"
             style={{ height: "250px", overflowY: "scroll", margin: "2px auto" }}
           >
             {result.comics.items.map((comic) => {
               return (
-                <Link
-                  to={"/book/" + comic.resourceURI.slice(43)}
-                  key={comic.name}
-                >
-                  <p>
+                <p key={comic.name}>
+                  <Link to={"/book/" + comic.resourceURI.slice(43)}>
                     {comic.name.length > 30
                       ? comic.name.slice(0, 30) + "..."
                       : comic.name}
-                  </p>
-                </Link>
+                  </Link>
+                </p>
               );
             })}
           </div>

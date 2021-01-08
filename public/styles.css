@@ -17,21 +17,3 @@ a:hover {
 button:focus {
   outline: none;
 }
-#footer {
-  background-color: grey;
-  font-size: smaller;
-  height: 2rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-.light-theme {
-  background-color: #f5f4f4 !important;
-  color: black !important;
-}
-.light-theme-comic-link {
-  color: black !important;
-}
-.product-card:hover {
-  margin: 0px auto 10px;
-}

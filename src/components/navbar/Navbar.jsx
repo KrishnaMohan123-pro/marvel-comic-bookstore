@@ -13,7 +13,6 @@ import SignupForm from "../../utility/forms/signupForm";
 import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
-import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,7 +86,6 @@ export default function Navbar() {
             </Fragment>
           )}
         </ButtonGroup>
-        <ThemeSwitch />
       </Toolbar>
     </AppBar>
   );

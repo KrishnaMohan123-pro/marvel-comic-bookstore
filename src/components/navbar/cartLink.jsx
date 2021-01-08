@@ -8,6 +8,7 @@ export default function CartLink() {
   const cartItems = useSelector((state) => state.cart.cart);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const uid = useSelector((state) => state.auth.uid);
+  const loader = useSelector((state) => state.loader);
   let length = cartItems.length;
 
   useEffect(() => {

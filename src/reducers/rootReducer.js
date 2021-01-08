@@ -9,8 +9,6 @@ import dialogReducer from "./dialogReducers";
 import loaderReducer from "./loaderReducer";
 import modalReducer from "./modalReducer";
 import searchReducer from "./searchReducer";
-import seriesNameReducer from "./seriesReducers/seriesNameReducer";
-import totalSeriesReducer from "./seriesReducers/totalSeriesReducer";
 
 const persistConfig = {
   key: "root",
@@ -27,7 +25,5 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   modal: modalReducer,
   search: searchReducer,
-  seriesName: seriesNameReducer,
-  totalSeries: totalSeriesReducer,
 });
 export default persistReducer(persistConfig, rootReducer);
