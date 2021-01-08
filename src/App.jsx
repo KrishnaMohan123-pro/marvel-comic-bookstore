@@ -10,6 +10,8 @@ import Character from "./screens/Character/index";
 import Characters from "./screens/Characters/index";
 import Search from "./screens/Search";
 import Series from "./screens/Series/Series";
+import Footer from "./components/Footer/footer";
+import BackdropLoader from "./components/BackdropLoader/backdropLoader";
 
 function bookDetail({ match }) {
   return <Book id={match.params.book_id} />;
@@ -40,6 +42,8 @@ function App() {
       {/* <Route exact strict path="/characters" render={() => <Characters />} /> */}
       <Route exact strict path="/search" render={() => <Search />} />
       <Route exact strict path="/series/:series_id" component={seriesDetail} />
+      <Footer />
+      <BackdropLoader />
     </Router>
   );
 }

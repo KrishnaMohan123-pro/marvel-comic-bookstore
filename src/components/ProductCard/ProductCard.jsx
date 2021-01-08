@@ -32,7 +32,7 @@ export default function ProductCard(props) {
   let enablePurcahse = false;
   if (props.type === "book") enablePurcahse = true;
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root + " product-card"}>
       <Link to={"/" + props.type + "/" + props.id}>
         <CardContent>
           <img

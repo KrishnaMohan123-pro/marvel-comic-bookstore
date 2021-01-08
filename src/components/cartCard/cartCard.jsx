@@ -17,7 +17,8 @@ export default function CartCard(props) {
           </Link>
         </div>
         <div className="book cart-price col-md-3">
-          <p>{"$ " + props.price}</p>
+          <p>{"$ " + props.price * props.quantity}</p>
+          <p>{`Quantity:${props.quantity}`}</p>
           <div>
             <CartButton id={props.id} />
           </div>

@@ -1,13 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Table, TableBody, TableRow, TableCell } from "@material-ui/core";
 import { fetchWithStartName } from "../../actions/dataFetch";
-import Link from "react-browser-router";
 export default function DropDownOptions(props) {
   const [doc, setDoc] = useState({});
   console.log(props.name);
   useEffect(() => {
-    fetchWithStartName(props.name).then((res) => setDoc(res));
-  }, []);
+    fetchWithStartName(props.name, "").then((res) => setDoc(res));
+  }, [props.name]);
   if (Object.keys(doc).length === 0) {
     return null;
   }

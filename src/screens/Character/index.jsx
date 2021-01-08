@@ -49,7 +49,10 @@ export default function Character(props) {
         </Grid>
         <Grid item lg={3} md={12} sm={12} xs={12}>
           <h3 style={{ fontFamily: "Goldman" }}>Comics</h3>
-          <div style={{ height: "250px", overflowY: "scroll" }}>
+          <div
+            className="comic-link"
+            style={{ height: "250px", overflowY: "scroll" }}
+          >
             {result.comics.items.map((comic) => {
               return (
                 <Link

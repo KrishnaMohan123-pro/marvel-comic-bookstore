@@ -3,16 +3,12 @@ import { useSelector } from "react-redux";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import CartCard from "../../components/cartCard/cartCard";
-import Loader from "../../components/Loader/loader";
+
 import PayButton from "../../services/razorPay/frontend/index";
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.cart);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const loader = useSelector((state) => state.loader);
-  if (loader) {
-    return <Loader />;
-  }
-
   if (!loggedIn) {
     return (
       <div className="cart-body">
@@ -34,7 +30,11 @@ export default function Cart() {
 
   let total = 0;
   for (let i = 0; i < cartItems.length; i = i + 1) {
-    total = total + parseFloat(cartItems[i].price);
+    total = total + parseFloat(cartItems[i].price) * cartItems[i].quantity;
+  }
+  let quantities = 0;
+  for (let i = 0; i < cartItems.length; i = i + 1) {
+    quantities = quantities + cartItems[i].quantity;
   }
   return (
     <div className="cart-body">
@@ -47,13 +47,14 @@ export default function Cart() {
             img={Item.img}
             price={Item.price}
             title={Item.title}
+            quantity={Item.quantity}
           />
         );
       })}
       <div className="container" style={{ fontSize: "1.25rem" }}>
         <p className="book book-number float-left">
           <span style={{ textDecoration: "underline" }}>Number of Books</span>:{" "}
-          {cartItems.length}
+          {quantities}
         </p>
         <p className="book book-total float-right" name="total">
           <span style={{ textDecoration: "underline" }}>Total</span>: ${" "}

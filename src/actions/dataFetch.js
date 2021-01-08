@@ -41,8 +41,12 @@ export const fetchSeriesBySeriesID = async (id) => {
   return json;
 };
 
-export const fetchWithStartName = async (name) => {
-  const endPoint = `characters?nameStartsWith=${name}&orderBy=modified&limit=100`;
+export const fetchWithStartName = async (name, sort) => {
+  let orderBy = "";
+  if (sort.length !== 0) {
+    orderBy = `&orderBy=${sort}`;
+  }
+  const endPoint = `characters?nameStartsWith=${name}${orderBy}&limit=100`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;
@@ -55,8 +59,16 @@ export const fetchSeriesByCharacterId = async (id) => {
   return json;
 };
 
-export const fetchSeriesByStartName = async (name, limit) => {
-  const endPoint = `series?titleStartsWith=${name}&limit=${limit}`;
+export const fetchSeriesByStartName = async (name, offset, sort, filter) => {
+  let orderBy = "";
+  let contains = "";
+  if (sort.length !== 0) {
+    orderBy = `&orderBy=${sort}`;
+  }
+  if (filter.length !== 0) {
+    contains = `&&contains=${filter}`;
+  }
+  const endPoint = `series?titleStartsWith=${name}${contains}${orderBy}&limit=9&offset=${offset}`;
   const response = await fetchApi(endPoint);
   const json = await response.json();
   return json;

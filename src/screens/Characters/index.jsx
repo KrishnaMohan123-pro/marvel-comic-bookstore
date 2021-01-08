@@ -1,47 +1,76 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Grid } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Button, Grid } from "@material-ui/core";
 import ProductCard from "../../components/ProductCard/ProductCard";
-
+import Selector from "../../components/Selector/selector";
 import "./styles.css";
-
 import { fetchWithStartName } from "../../actions/dataFetch";
 import Loader from "../../components/Loader/loader";
+
 export default function Characters({ match }) {
-  console.log(match.params.query);
   const [doc, setDoc] = useState([]);
-  const [mountComponent, setMountComponent] = useState(false);
+  const [sort, setSort] = useState("");
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
-    setMountComponent(true);
-    fetchWithStartName(match.params.query).then((res) => {
+    setLoader(true);
+    fetchWithStartName(match.params.query, sort).then((res) => {
       setDoc(res.data.results);
+      setLoader(false);
     });
-  }, []);
-  if (!mountComponent) {
-    return null;
-  }
-  if (doc.length === 0) {
+  }, [match.params.query, sort]);
+  if (doc.length === 0 || loader) {
     return <Loader />;
   }
-  console.log(doc);
+  const characterSortOptions = [
+    { name: "Name", value: "name" },
+    { name: "Modified", value: "modified" },
+  ];
+  function handleSortChange(e) {
+    setSort(e.target.value);
+  }
+  function clearSortAndFilter() {
+    setSort("");
+  }
   return (
-    <div style={{ marginTop: "10%" }}>
-      <Grid container spacing={4}>
-        {doc.map((item) => {
-          return (
-            <Grid item key={item.id} xl={3} lg={4} md={6} sm={12} xs={12}>
-              <ProductCard
-                type="character"
-                endYear={item.endYear}
-                id={item.id}
-                img={item.thumbnail.path + "." + item.thumbnail.extension}
-                title={item.name}
-                startYear={item.startYear}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+    <section id="searched-body">
+      <div className="sort-and-filter">
+        <span className="selector">
+          <Selector
+            options={characterSortOptions}
+            onChange={handleSortChange}
+            value={sort}
+            label="SORT"
+          />
+        </span>
+        {sort.length === 0 ? null : (
+          <Button
+            className="clear-filter-sort-button"
+            size="small"
+            onClick={clearSortAndFilter}
+            variant="contained"
+          >
+            Remove Sort
+          </Button>
+        )}
+      </div>
+      <div style={{ marginTop: "10%" }}>
+        <Grid container spacing={4}>
+          {doc.map((item) => {
+            return (
+              <Grid item key={item.id} xl={3} lg={4} md={6} sm={12} xs={12}>
+                <ProductCard
+                  type="character"
+                  endYear={item.endYear}
+                  id={item.id}
+                  img={item.thumbnail.path + "." + item.thumbnail.extension}
+                  title={item.name}
+                  startYear={item.startYear}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </div>
+    </section>
   );
   // const dispatch = useDispatch();
   // const showSearchBody = useSelector((state) => state.search.showSearchBody);

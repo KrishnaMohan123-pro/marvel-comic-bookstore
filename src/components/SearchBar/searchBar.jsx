@@ -1,22 +1,27 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import Dropdown from "./dropdownOptions";
 import DebounceInput from "react-debounce-input";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import SearchIcon from "@material-ui/icons/Search";
-import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 export default function SearchBar() {
+  const history = useHistory();
   const [search, setSearch] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [redirect, setRedirect] = useState(false);
-  console.log(redirect);
-  if (redirect) {
-    return <Redirect to={"/characters/q=" + search} />;
+  const [formSubmit, setFormSubmit] = useState(false);
+  function onFormSubmit(e) {
+    e.preventDefault();
+    setFormSubmit(true);
+    if (search.length < 2) toast.error("Please add more letters");
+    else {
+      history.push(`/characters/q=${search}`);
+    }
   }
   return (
-    <Fragment style={{ position: "relative" }}>
+    <span style={{ position: "relative" }}>
       <Paper
         className="search-form"
         component="form"
@@ -30,13 +35,13 @@ export default function SearchBar() {
           height: "35px",
         }}
         onSubmit={(e) => {
-          if (search.length < 2) toast.error("Please add more letters");
-          setRedirect(true);
+          onFormSubmit(e);
         }}
       >
         <DebounceInput
           debounceTimeout={300}
           onChange={(event) => {
+            setFormSubmit(false);
             setShowResult(false);
             setSearch(event.target.value);
             setShowResult(true);
@@ -56,7 +61,9 @@ export default function SearchBar() {
         </IconButton>
       </Paper>
 
-      {showResult && search.length > 2 ? <Dropdown name={search} /> : null}
-    </Fragment>
+      {formSubmit ? null : showResult && search.length > 2 ? (
+        <Dropdown name={search} />
+      ) : null}
+    </span>
   );
 }
