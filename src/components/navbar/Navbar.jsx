@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,25 +15,22 @@ import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 3,
-  },
-}));
-
 export default function Navbar() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const modalVisible = useSelector((state) => state.modal);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 
   return (
-    <AppBar color="secondary">
+    <AppBar
+      className="app-bar"
+      position="sticky"
+      elevation={0}
+      style={{
+        backgroundColor: "#654062",
+        color: "#eff8ff",
+      }}
+    >
       <Toolbar>
         <Link to="/" style={{ color: "inherit" }}>
           <Typography variant="h6">Marvel</Typography>
@@ -56,6 +53,7 @@ export default function Navbar() {
                 variant="text"
                 onClick={() => {
                   dispatch(logout());
+                  history.push("/");
                 }}
               >
                 SIGNOUT

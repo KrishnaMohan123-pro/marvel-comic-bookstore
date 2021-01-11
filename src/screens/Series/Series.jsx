@@ -4,28 +4,31 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/loader";
 import Typography from "@material-ui/core/Typography";
 import { fetchSeriesBySeriesID } from "../../actions/dataFetch";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSeries } from "../../actions/FetchActions/seriesFetchAction";
 import "./styles.css";
 
 export default function Series(props) {
-  const [data, setData] = useState({});
+  const series = useSelector((state) => state.series);
+  const loader = useSelector((state) => state.loader.data);
+  console.log(series);
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchSeriesBySeriesID(props.id).then((doc) => setData(doc));
+    dispatch(fetchSeries(props.id));
   }, []);
   //   When Data not loaded
-  if (Object.keys(data).length === 0) {
-    return <Loader />;
+  if (loader) return <Loader />;
+
+  if (series.error) {
+    return <p>{series.error}</p>;
   }
-  let result = data.data.results[0];
 
   return (
     <section id="series-description">
-      <div className="series-title">{result.title}</div>
+      <div className="series-title">{series.title}</div>
       <Grid container spacing={3} className="series-container">
         <Grid item lg={4} md={12} sm={12} xs={12}>
-          <img
-            className="series-image"
-            src={result.thumbnail.path + "." + result.thumbnail.extension}
-          />
+          <img className="series-image" src={series.image} />
         </Grid>
         <Grid item lg={5} md={6} sm={12} xs={12}>
           <span className="section-title">Description</span>
@@ -34,20 +37,20 @@ export default function Series(props) {
             color="wheat"
             style={{ margin: "2px auto", width: "80%" }}
           >
-            {result.description === null
+            {series.description === null
               ? "No description available"
-              : result.description}
+              : series.description}
           </Typography>
           <Typography style={{ margin: "50px auto" }}>
             <span style={{ fontFamily: "Goldman", fontSize: "1.15rem" }}>
               Start Year -
             </span>
-            {result.startYear}
+            {series.startYear}
             <br />
             <span style={{ fontFamily: "Goldman", fontSize: "1.15rem" }}>
               End Year -{" "}
             </span>
-            {result.endYear}
+            {series.endYear}
           </Typography>
         </Grid>
         <Grid item lg={3} md={6} sm={12} xs={12} className="series-content">
@@ -63,7 +66,7 @@ export default function Series(props) {
           <div
             style={{ height: "250px", overflowY: "scroll", margin: "2px auto" }}
           >
-            {result.characters.items.map((character) => {
+            {series.characters.map((character) => {
               return <p key={character.name}>{character.name}</p>;
             })}
           </div>
@@ -88,7 +91,7 @@ export default function Series(props) {
           <div
             style={{ height: "250px", overflowY: "scroll", margin: "2px auto" }}
           >
-            {result.creators.items.map((creator) => {
+            {series.creators.map((creator) => {
               return (
                 <p key={creator.name}>{creator.name + "-" + creator.role}</p>
               );
@@ -109,7 +112,7 @@ export default function Series(props) {
             className="comic-link"
             style={{ height: "250px", overflowY: "scroll", margin: "2px auto" }}
           >
-            {result.comics.items.map((comic) => {
+            {series.comics.map((comic) => {
               return (
                 <Link
                   to={"/book/" + comic.resourceURI.slice(43)}

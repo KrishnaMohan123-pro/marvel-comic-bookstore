@@ -1,12 +1,3 @@
-body {
-  background-color: #121221;
-  color: wheat;
-  text-align: center;
-}
-.navbar {
-  background-color: gold;
-  font-family: "Noto Sans JP", sans-serif;
-}
 a {
   color: wheat;
 }
@@ -14,6 +5,20 @@ a:hover {
   color: gold;
   text-decoration: none;
 }
+.app-bar {
+  background-color: #654062;
+  color: #eff8ff;
+}
+body {
+  background-color: #121221;
+  color: white;
+  text-align: center;
+}
+.navbar {
+  background-color: gold;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
 button:focus {
   outline: none;
 }

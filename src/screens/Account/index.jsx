@@ -11,9 +11,7 @@ export default function Account() {
   const dialog = useSelector((state) => state.dialog);
   if (!loggedIn) {
     return (
-      <p
-        style={{ fontFamily: "Goldman", fontSize: "2rem", marginTop: "4.25%" }}
-      >
+      <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
         Please LOGIN or SIGNUP first...
       </p>
     );

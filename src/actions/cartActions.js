@@ -2,7 +2,7 @@ export function addToCart(book) {
   return (dispatch, getState, { getFirebase }) => {
     dispatch({ type: "START_LOADING" });
     const firebase = getFirebase();
-    const uid = getState().firebase.auth.uid;
+    const uid = getState().auth.uid;
     firebase
       .firestore()
       .collection("users")

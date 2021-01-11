@@ -23,7 +23,7 @@ export default function Cart() {
     return (
       <div className="cart-body">
         <p>Ooops.....No items in cart</p>
-        <Link to="/books">Lets go to the world of comics</Link>
+        <Link to="/popular">Lets go to the world of comics</Link>
       </div>
     );
   }

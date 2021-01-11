@@ -1,9 +1,10 @@
 import React from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 export default function Home() {
   return (
-    <section className="home-body" style={{ marginTop: "4.25%" }}>
+    <section className="home-body">
       <section id="home-message">
         <div className="row no-gutters">
           <div className="secondary-col col-xl-5 col-lg-12">
@@ -18,7 +19,7 @@ export default function Home() {
         <div className="container">
           <div className="row no-gutters p-2">
             <div className="links-col col-sm-4 ">
-              <Link to="/books">
+              <Link to="/popular">
                 <p>
                   <i className="fas fa-book-open fa-3x"></i>
                 </p>
@@ -26,7 +27,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="links-col col-sm-4">
-              <Link to="/characters">
+              <Link to="/">
                 <p>
                   <i className="fas fa-user fa-3x"></i>
                 </p>
@@ -38,7 +39,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="links-col col-sm-4">
-              <Link to="/search">
+              <Link to="/">
                 <p>
                   <i className="fas fa-search fa-3x"></i>
                 </p>
