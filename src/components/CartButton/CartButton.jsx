@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
   addToCart,
   removeFromCart,
-  increaseItem,
-  decreaseItem,
+  changeQuantity,
 } from "../../actions/cartActions";
 
 export default function CartButton(props) {
-  const cartItems = useSelector((state) => state.cart.cart);
+  const cartItems = useSelector((state) => state.cart).cart;
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = useSelector((state) => state.loggedIn);
   if (!loggedIn) {
     return (
       <Button
@@ -59,10 +58,10 @@ export default function CartButton(props) {
     else handleAdd();
   }
   function handleIncrement() {
-    dispatch(increaseItem(props.id));
+    dispatch(changeQuantity("INCREASE", props.id));
   }
   function handleDecrement() {
-    dispatch(decreaseItem(props.id));
+    dispatch(changeQuantity("DECREASE", props.id));
   }
   return (
     <ButtonGroup style={{ margin: "0px auto" }}>

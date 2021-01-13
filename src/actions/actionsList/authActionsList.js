@@ -1,0 +1,1 @@
+export const _INITIALISE_USER = "INITIALISE_USER";

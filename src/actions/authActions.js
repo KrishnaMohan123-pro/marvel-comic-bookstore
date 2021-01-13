@@ -1,3 +1,6 @@
+import { _INITIALISE_USER } from "./actionsList/authActionsList";
+import { _FIREBASE_LOAD, _STOP_LOAD } from "./actionsList/loadActionsList";
+
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -93,5 +96,30 @@ export function logout() {
       .catch((err) => {
         dispatch({ type: "SIGNOUT_ERROR", payload: { error: err } });
       });
+  };
+}
+
+export function initialiseUser(uid) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: _FIREBASE_LOAD });
+    const firebase = getFirebase();
+    const res = await firebase.firestore().collection("users").doc(uid).get();
+    const userData = await res.data();
+    dispatch({
+      type: _INITIALISE_USER,
+      payload: {
+        user: {
+          address: userData.address,
+          email: userData.email,
+          fname: userData.fname,
+          lname: userData.lname,
+          phone: userData.phone,
+          photoURL: userData.photoURL,
+          role: userData.role,
+        },
+        uid: uid,
+      },
+    });
+    dispatch({ type: _STOP_LOAD });
   };
 }

@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
 import { firebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import authReducer from "./authReducer";
 import cartReducer from "./cartReducer";
 import characterReducer from "./marvelDataFetchReducers/characterReducer";
@@ -11,16 +9,11 @@ import dialogReducer from "./dialogReducers";
 import dropDownOptionsReducer from "./dropDownOptionsReducer";
 import genericSearchReducer from "./genericSeachReducer";
 import loaderReducer from "./loaderReducer";
+import loggedInReducer from "./loggedInReducer";
 import modalReducer from "./modalReducer";
 import seriesReducer from "./marvelDataFetchReducers/seriesReducer";
 import seriesNameReducer from "./seriesReducers/seriesNameReducer";
 import totalSeriesReducer from "./seriesReducers/totalSeriesReducer";
-
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["auth"],
-};
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,9 +26,11 @@ const rootReducer = combineReducers({
   firestore: firestoreReducer,
   genericSearch: genericSearchReducer,
   loader: loaderReducer,
+  loggedIn: loggedInReducer,
   modal: modalReducer,
   series: seriesReducer,
   seriesName: seriesNameReducer,
   totalSeries: totalSeriesReducer,
 });
-export default persistReducer(persistConfig, rootReducer);
+
+export default rootReducer;

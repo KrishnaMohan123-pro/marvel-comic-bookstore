@@ -36,7 +36,7 @@ export default function TransitionsModal(props) {
   };
 
   return (
-    <div>
+    <span>
       <Button variant="text" color="inherit" type="button" onClick={handleOpen}>
         {props.linkName}
       </Button>
@@ -61,6 +61,6 @@ export default function TransitionsModal(props) {
           </div>
         </Fade>
       </Modal>
-    </div>
+    </span>
   );
 }

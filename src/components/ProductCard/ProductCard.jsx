@@ -30,7 +30,6 @@ const useStyles = makeStyles({
 export default function ProductCard(props) {
   const classes = useStyles();
   let enablePurcahse = false;
-  console.log(props.type);
 
   if (props.type === "book") enablePurcahse = true;
   return (

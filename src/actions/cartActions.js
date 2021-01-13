@@ -1,131 +1,92 @@
+import { _FIREBASE_LOAD, _STOP_LOAD } from "./actionsList/loadActionsList";
+import {
+  _ADD,
+  _REMOVE,
+  _INCREASE,
+  _DECREASE,
+  _INITIALISE_CART,
+} from "./actionsList/cartActionsList";
+function updatedCart(actionType, newCartData) {
+  return { type: actionType, payload: { cart: newCartData } };
+}
 export function addToCart(book) {
-  return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_LOADING" });
-    const firebase = getFirebase();
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: _FIREBASE_LOAD });
     const uid = getState().auth.uid;
-    firebase
+    const firebase = getFirebase();
+    const cart = getState().cart.cart;
+    cart.push(book);
+    dispatch({ type: _ADD, payload: { cart: cart } });
+    const token = await firebase
       .firestore()
       .collection("users")
       .doc(uid)
-      .get()
-      .then((doc) => {
-        var cartData = doc.data().cart;
-        cartData.push(book);
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(getState().firebase.auth.uid)
-          .update({ cart: cartData })
-          .then(() => {
-            dispatch({ type: "ADDED_TO_CART", payload: { cart: cartData } });
-            dispatch({ type: "STOP_LOADING" });
-          })
-          .catch((err) => console.log(err));
+      .update({ cart: cart })
+      .then(() => {
+        return true;
       })
       .catch((err) => console.log(err));
+    if (token) dispatch({ type: _STOP_LOAD });
   };
 }
+
 export function removeFromCart(book) {
-  return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_LOADING" });
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: _FIREBASE_LOAD });
     const firebase = getFirebase();
+    const cart = getState().cart.cart;
     const uid = getState().firebase.auth.uid;
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(getState().firebase.auth.uid)
-      .get()
-      .then((doc) => {
-        var cartData = doc.data().cart.filter((item) => item.id !== book.id);
-
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .update({ cart: cartData })
-          .then(() => {
-            dispatch({
-              type: "REMOVED_FROM_CART",
-              payload: { cart: cartData },
-            });
-            dispatch({ type: "STOP_LOADING" });
-          });
-      });
-  };
-}
-
-export function increaseItem(bookId) {
-  return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_LOADING" });
-    const uid = getState().auth.uid;
-    const firebase = getFirebase();
-    firebase
+    let newCartData = cart.filter((item) => item.id != book.id);
+    dispatch(updatedCart(_REMOVE, newCartData));
+    const token = firebase
       .firestore()
       .collection("users")
       .doc(uid)
-      .get()
-      .then((res) => {
-        var newCart = res.data().cart;
-        for (let i = 0; i < newCart.length; i = i + 1) {
-          if (newCart[i].id === bookId) {
-            newCart[i].quantity += 1;
-          }
-        }
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .update({ cart: newCart })
-          .then(() => {
-            dispatch({ type: "INCREASE_ITEM", payload: { cart: newCart } });
-            dispatch({ type: "STOP_LOADING" });
-          });
+      .update({ cart: newCartData })
+      .then(() => {
+        return true;
       });
+    if (token) {
+      dispatch({ type: _STOP_LOAD });
+    }
   };
 }
 
-export function decreaseItem(bookId) {
-  return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_LOADING" });
+export function changeQuantity(type, bookId) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: _FIREBASE_LOAD });
     const uid = getState().auth.uid;
     const firebase = getFirebase();
-    firebase
+    const cart = getState().cart.cart;
+    for (let i = 0; i < cart.length; i += 1) {
+      if (cart[i].id === bookId) {
+        if (type === "INCREASE") cart[i].quantity += 1;
+        else if (type === "DECREASE") cart[i].quantity -= 1;
+      }
+    }
+    updatedCart(type === "INCREASE" ? _INCREASE : _DECREASE, cart);
+    const token = await firebase
       .firestore()
       .collection("users")
       .doc(uid)
-      .get()
-      .then((res) => {
-        var newCart = res.data().cart;
-        for (let i = 0; i < newCart.length; i = i + 1) {
-          if (newCart[i].id === bookId) {
-            newCart[i].quantity -= 1;
-          }
-        }
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .update({ cart: newCart })
-          .then(() => {
-            dispatch({ type: "DECREASE_ITEM", payload: { cart: newCart } });
-            dispatch({ type: "STOP_LOADING" });
-          });
+      .update({ cart: cart })
+      .then(() => {
+        return true;
       });
+    if (token) {
+      dispatch({ type: _STOP_LOAD });
+    }
   };
 }
-
-export function initialiseCart() {
-  return (dispatch, getState, { getFirebase }) => {
+export function initialiseCart(uid) {
+  return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    const uid = getState().auth.uid;
-    firebase
+    const firebaseResponse = await firebase
       .firestore()
       .collection("users")
       .doc(uid)
-      .get()
-      .then((doc) => {
-        var cartData = doc.data().cart;
-        dispatch({ type: "INITIALISE_CART", payload: { cart: cartData } });
-      });
+      .get();
+    const cartData = await firebaseResponse.data().cart;
+    dispatch({ type: _INITIALISE_CART, payload: { cart: cartData } });
   };
 }

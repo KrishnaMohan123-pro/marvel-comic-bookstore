@@ -14,31 +14,37 @@ import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { Avatar } from "@material-ui/core";
 
 export default function Navbar() {
   const history = useHistory();
   const dispatch = useDispatch();
   const modalVisible = useSelector((state) => state.modal);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = useSelector((state) => state.loggedIn);
+  const userName = useSelector((state) => state.auth.user.fname);
+  const userImage = useSelector((state) => state.auth.user.photoURL);
 
   return (
-    <AppBar
-      className="app-bar"
-      position="sticky"
-      elevation={0}
-      style={{
-        backgroundColor: "#654062",
-        color: "#eff8ff",
-      }}
-    >
+    <AppBar className="app-bar" position="sticky" elevation={0}>
       <Toolbar>
         <Link to="/" style={{ color: "inherit" }}>
           <Typography variant="h6">Marvel</Typography>
         </Link>
         <SearchBar />
-        <ButtonGroup style={{ marginLeft: "auto" }}>
+        <div style={{ marginLeft: "auto" }}>
           {loggedIn ? (
             <Fragment>
+              <Button
+                color="inherit"
+                variant="text"
+                onClick={() => {
+                  dispatch({ type: "LOGGED_OUT" });
+                  dispatch(logout());
+                  history.push("/");
+                }}
+              >
+                SIGNOUT
+              </Button>
               <Link to="/cart" style={{ color: "inherit" }}>
                 <Button
                   color="inherit"
@@ -48,19 +54,17 @@ export default function Navbar() {
                   <CartLink />
                 </Button>
               </Link>
-              <Button
-                color="inherit"
-                variant="text"
-                onClick={() => {
-                  dispatch(logout());
-                  history.push("/");
-                }}
+
+              <Link
+                to="/account"
+                style={{ color: "inherit", marginLeft: "5px" }}
               >
-                SIGNOUT
-              </Button>
-              <Link to="/account" style={{ color: "inherit" }}>
                 <Button color="inherit" variant="text">
-                  ACCOUNT
+                  <Avatar
+                    alt={userName}
+                    src={userImage}
+                    // style={{ width: "1.5rem", height: "1.5rem" }}
+                  />
                 </Button>
               </Link>
             </Fragment>
@@ -84,8 +88,7 @@ export default function Navbar() {
               />
             </Fragment>
           )}
-        </ButtonGroup>
-        <ThemeSwitch />
+        </div>
       </Toolbar>
     </AppBar>
   );

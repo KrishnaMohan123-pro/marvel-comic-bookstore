@@ -6,9 +6,8 @@ import { createFirestoreInstance } from "redux-firestore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import { PersistGate } from "redux-persist/integration/react";
 import firebase from "./services/firebase/index";
-import { store, persistor } from "./reducers/store/store";
+import { store } from "./reducers/store/store";
 
 const rrfProps = {
   firebase,
@@ -20,9 +19,7 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
+      <App />
       <ToastContainer
         position="bottom-left"
         autoClose={2000}

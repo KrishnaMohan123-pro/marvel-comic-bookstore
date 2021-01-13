@@ -7,7 +7,7 @@ import CartCard from "../../components/cartCard/cartCard";
 import PayButton from "../../services/razorPay/frontend/index";
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.cart);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const loader = useSelector((state) => state.loader);
   if (!loggedIn) {
     return (

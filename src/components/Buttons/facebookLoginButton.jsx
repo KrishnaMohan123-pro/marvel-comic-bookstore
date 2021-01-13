@@ -35,6 +35,7 @@ export default function FacebookLogin() {
               phone: "",
               photoURL: result.user.photoURL,
             });
+          firebase.firestore().collection("cart").doc(user.uid).set({});
           dispatch({
             type: "SIGN_IN",
             payload: {
