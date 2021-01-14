@@ -3,7 +3,7 @@ import "./styles.css";
 import StarIcon from "@material-ui/icons/Star";
 import { Link } from "react-router-dom";
 import Carousel from "nuka-carousel";
-import { Grid, Container } from "@material-ui/core";
+import { Grid, Container } from "x@material-ui/core";
 import { useSelector } from "react-redux";
 export default function Home() {
   const cart = useSelector((state) => state.cart);
@@ -89,7 +89,7 @@ export default function Home() {
         </Container>
       </section>
       <section id="links">
-        <div className="container">
+        <div className="container/">
           <div className="row no-gutters p-2">
             <div className="links-col col-sm-4 ">
               <Link to="/popular">
