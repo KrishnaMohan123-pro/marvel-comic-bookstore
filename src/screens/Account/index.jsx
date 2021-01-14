@@ -5,12 +5,13 @@ import AddAddressForm from "../../utility/forms/addAddressForm";
 import AddPhoneForm from "../../utility/forms/addPhoneForm";
 import "./styles.css";
 import { Container, Grid } from "@material-ui/core";
+import AddNewBookForm from "../../utility/forms/addNewBookForm";
 
 export default function Account() {
   const loggedIn = useSelector((state) => state.loggedIn);
   const user = useSelector((state) => state.auth.user);
   const dialog = useSelector((state) => state.dialog);
-  console.log(dialog);
+  const role = useSelector((state) => state.auth.user.role);
   if (!loggedIn) {
     return (
       <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
@@ -124,6 +125,16 @@ export default function Account() {
                     dialogVisible={dialog.addAddressDialogVisibile}
                   />
                 )}
+              </Grid>
+              <Grid item>
+                {role === "admin" ? (
+                  <InputDialog
+                    childComponent={<AddNewBookForm />}
+                    dialogName="New_Book"
+                    dialogLabel="Add New Book"
+                    dialogVisible={dialog.addBookDialogVisible}
+                  />
+                ) : null}
               </Grid>
             </Grid>
           </Grid>

@@ -79,7 +79,6 @@ export default function AddAddressForm() {
       }
     });
   }
-  console.log(address);
   function handleSubmit(e) {
     e.preventDefault();
     firebase

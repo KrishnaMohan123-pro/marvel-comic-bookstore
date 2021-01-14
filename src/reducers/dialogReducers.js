@@ -1,7 +1,7 @@
 const initialState = {
   addAddressDialogVisibile: false,
   addPhoneDialogVisible: false,
-  editProfileDialogVisible: false,
+  addBookDialogVisible: false,
 };
 export default function dialogReducer(state = initialState, action) {
   switch (action.type) {
@@ -11,19 +11,19 @@ export default function dialogReducer(state = initialState, action) {
       return {
         addAddressDialogVisibile: true,
         addPhoneDialogVisible: false,
-        editProfileDialogVisible: false,
+        addBookDialogVisible: false,
       };
     case "OPEN_PHONE_DIALOG":
       return {
         addAddressDialogVisibile: false,
         addPhoneDialogVisible: true,
-        editProfileDialogVisible: false,
+        addBookDialogVisible: false,
       };
-    case "OPEN_EDIT_DIALOG":
+    case "OPEN_NEW_BOOK_DIALOG":
       return {
         addAddressDialogVisibile: false,
         addPhoneDialogVisible: false,
-        editProfileDialogVisible: true,
+        addBookDialogVisible: true,
       };
 
     default:

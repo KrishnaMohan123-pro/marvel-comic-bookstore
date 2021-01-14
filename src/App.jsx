@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import { initialiseUser } from "./actions/authActions";
 import { initialiseCart } from "./actions/cartActions";
+import { fetchNewBooks } from "./actions/newBookAdditionActions";
 import HourglassFullTwoToneIcon from "@material-ui/icons/HourglassFullTwoTone";
 
 function bookDetail({ match }) {
@@ -57,6 +58,7 @@ function App() {
     dispatch({ type: "LOGGED_IN" });
     dispatch(initialiseUser(uid));
     dispatch(initialiseCart(uid));
+    dispatch(fetchNewBooks());
   }
   if (!isLoaded) {
     return (

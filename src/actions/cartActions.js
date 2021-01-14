@@ -17,16 +17,36 @@ export function addToCart(book) {
     const cart = getState().cart.cart;
     cart.push(book);
     dispatch({ type: _ADD, payload: { cart: cart } });
-    const token = await firebase
+    firebase
       .firestore()
-      .collection("users")
+      .collection("cart")
       .doc(uid)
-      .update({ cart: cart })
-      .then(() => {
-        return true;
+      .collection("books")
+      .doc(book.id.toString())
+      .set({
+        id: book.id,
+        title: book.title,
+        image: book.img,
+        price: book.price,
+        quantity: book.quantity,
       })
-      .catch((err) => console.log(err));
-    if (token) dispatch({ type: _STOP_LOAD });
+      .then(() => {
+        console.log("added");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // const token = await firebase
+    //   .firestore()
+    //   .collection("users")
+    //   .doc(uid)
+    //   .update({ cart: cart })
+    //   .then(() => {
+    //     return true;
+    //   })
+    //   .catch((err) => console.log(err));
+    // if (token)
+    dispatch({ type: _STOP_LOAD });
   };
 }
 
@@ -38,17 +58,18 @@ export function removeFromCart(book) {
     const uid = getState().firebase.auth.uid;
     let newCartData = cart.filter((item) => item.id != book.id);
     dispatch(updatedCart(_REMOVE, newCartData));
-    const token = firebase
+    firebase
       .firestore()
-      .collection("users")
+      .collection("cart")
       .doc(uid)
-      .update({ cart: newCartData })
+      .collection("books")
+      .doc(book.id.toString())
+      .delete()
       .then(() => {
-        return true;
+        console.log("deleted");
       });
-    if (token) {
-      dispatch({ type: _STOP_LOAD });
-    }
+
+    dispatch({ type: _STOP_LOAD });
   };
 }
 
@@ -58,35 +79,43 @@ export function changeQuantity(type, bookId) {
     const uid = getState().auth.uid;
     const firebase = getFirebase();
     const cart = getState().cart.cart;
+    let newQuantity = 0;
     for (let i = 0; i < cart.length; i += 1) {
       if (cart[i].id === bookId) {
-        if (type === "INCREASE") cart[i].quantity += 1;
-        else if (type === "DECREASE") cart[i].quantity -= 1;
+        if (type === "INCREASE") {
+          cart[i].quantity += 1;
+          newQuantity = cart[i].quantity;
+        } else if (type === "DECREASE") {
+          cart[i].quantity -= 1;
+          newQuantity = cart[i].quantity;
+        }
       }
     }
     updatedCart(type === "INCREASE" ? _INCREASE : _DECREASE, cart);
-    const token = await firebase
+    firebase
       .firestore()
-      .collection("users")
+      .collection("cart")
       .doc(uid)
-      .update({ cart: cart })
-      .then(() => {
-        return true;
-      });
-    if (token) {
-      dispatch({ type: _STOP_LOAD });
-    }
+      .collection("books")
+      .doc(bookId.toString())
+      .update({ quantity: newQuantity });
+    dispatch({ type: _STOP_LOAD });
   };
 }
 export function initialiseCart(uid) {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    const cartDataArray = [];
     const firebaseResponse = await firebase
       .firestore()
-      .collection("users")
+      .collection("cart")
       .doc(uid)
+      .collection("books")
       .get();
-    const cartData = await firebaseResponse.data().cart;
-    dispatch({ type: _INITIALISE_CART, payload: { cart: cartData } });
+    firebaseResponse.forEach((doc) => cartDataArray.push(doc.data()));
+
+    // const ids = Object.keys(cartData);
+    // ids.forEach((id) => cartDataArray.push(cartData[id]));
+    dispatch({ type: _INITIALISE_CART, payload: { cart: cartDataArray } });
   };
 }
