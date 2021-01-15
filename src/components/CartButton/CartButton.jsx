@@ -29,7 +29,6 @@ export default function CartButton(props) {
       </Button>
     );
   }
-  console.log(cartItems);
   const cartItemsIds = [];
   cartItems.forEach((item) => cartItemsIds.push(item.id));
   let included = false;
@@ -37,7 +36,6 @@ export default function CartButton(props) {
   for (let i = 0; i < cartItems.length; i = i + 1) {
     if (cartItems[i].id === props.id) var quantity = cartItems[i].quantity;
   }
-  console.log(quantity);
   if (quantity === 0) {
     dispatch(removeFromCart({ id: props.id }));
   }

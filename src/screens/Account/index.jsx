@@ -10,6 +10,8 @@ import AddNewBookForm from "../../utility/forms/addNewBookForm";
 export default function Account() {
   const loggedIn = useSelector((state) => state.loggedIn);
   const user = useSelector((state) => state.auth.user);
+  const auth = useSelector((state) => state.auth);
+
   const dialog = useSelector((state) => state.dialog);
   const role = useSelector((state) => state.auth.user.role);
   if (!loggedIn) {
@@ -19,7 +21,9 @@ export default function Account() {
       </p>
     );
   }
-
+  if (auth.uid.length === 0) {
+    return <p>Loading...</p>;
+  }
   return (
     <div
       className="profile-body"

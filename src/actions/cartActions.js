@@ -16,8 +16,8 @@ export function addToCart(book) {
     const firebase = getFirebase();
     const cart = getState().cart.cart;
     cart.push(book);
-    dispatch({ type: _ADD, payload: { cart: cart } });
-    firebase
+
+    const token = await firebase
       .firestore()
       .collection("cart")
       .doc(uid)
@@ -26,27 +26,20 @@ export function addToCart(book) {
       .set({
         id: book.id,
         title: book.title,
-        image: book.img,
+        img: book.img,
         price: book.price,
         quantity: book.quantity,
       })
       .then(() => {
-        console.log("added");
+        return true;
       })
       .catch((e) => {
-        console.log(e);
+        return false;
       });
-    // const token = await firebase
-    //   .firestore()
-    //   .collection("users")
-    //   .doc(uid)
-    //   .update({ cart: cart })
-    //   .then(() => {
-    //     return true;
-    //   })
-    //   .catch((err) => console.log(err));
-    // if (token)
-    dispatch({ type: _STOP_LOAD });
+    if (token) {
+      dispatch(updatedCart(_ADD, cart));
+      dispatch({ type: _STOP_LOAD });
+    }
   };
 }
 
@@ -57,8 +50,8 @@ export function removeFromCart(book) {
     const cart = getState().cart.cart;
     const uid = getState().firebase.auth.uid;
     let newCartData = cart.filter((item) => item.id != book.id);
-    dispatch(updatedCart(_REMOVE, newCartData));
-    firebase
+
+    const token = await firebase
       .firestore()
       .collection("cart")
       .doc(uid)
@@ -66,10 +59,15 @@ export function removeFromCart(book) {
       .doc(book.id.toString())
       .delete()
       .then(() => {
-        console.log("deleted");
+        return true;
+      })
+      .catch((error) => {
+        return false;
       });
-
-    dispatch({ type: _STOP_LOAD });
+    if (token) {
+      dispatch(updatedCart(_REMOVE, newCartData));
+      dispatch({ type: _STOP_LOAD });
+    }
   };
 }
 
@@ -91,15 +89,24 @@ export function changeQuantity(type, bookId) {
         }
       }
     }
-    updatedCart(type === "INCREASE" ? _INCREASE : _DECREASE, cart);
-    firebase
+
+    const token = await firebase
       .firestore()
       .collection("cart")
       .doc(uid)
       .collection("books")
       .doc(bookId.toString())
-      .update({ quantity: newQuantity });
-    dispatch({ type: _STOP_LOAD });
+      .update({ quantity: newQuantity })
+      .then(() => {
+        return true;
+      })
+      .catch((error) => {
+        return false;
+      });
+    if (token) {
+      dispatch(updatedCart(type === "INCREASE" ? _INCREASE : _DECREASE, cart));
+      dispatch({ type: _STOP_LOAD });
+    }
   };
 }
 export function initialiseCart(uid) {

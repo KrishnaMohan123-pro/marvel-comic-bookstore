@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CartButton from "../CartButton/CartButton";
 
 export default function CartCard(props) {
+  console.log(props);
   return (
     <div className="container">
       <div className="cart-item row">
