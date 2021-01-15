@@ -16,7 +16,6 @@ export function addToCart(book) {
     const firebase = getFirebase();
     const cart = getState().cart.cart;
     cart.push(book);
-
     const token = await firebase
       .firestore()
       .collection("cart")

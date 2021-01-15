@@ -9,7 +9,7 @@ import Book from "./screens/Book";
 import Character from "./screens/Character/index";
 import Characters from "./screens/Characters/index";
 import Series from "./screens/Series/Series";
-import Footer from "./components/Footer/footer";
+// import Footer from "./components/Footer/footer";
 import BackdropLoader from "./components/BackdropLoader/backdropLoader";
 import { useSelector, useDispatch } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
@@ -98,7 +98,7 @@ function App() {
             }}
           />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
         <BackdropLoader />
       </Router>
     );

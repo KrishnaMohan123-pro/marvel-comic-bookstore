@@ -5,6 +5,7 @@ import developerRoutes from "./utility/Routes/developerRoutes";
 import adminRoutes from "./utility/Routes/adminRoutes";
 import { toast } from "react-toastify";
 export default function ProtectedRoute({ component: Component, ...rest }) {
+  console.log(rest);
   const loggedIn = useSelector((state) => state.loggedIn);
   const role = useSelector((state) => state.auth.user.role);
   console.log(role);

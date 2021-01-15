@@ -25,10 +25,11 @@ export default function CartButton(props) {
         }}
         style={{ margin: "0px auto" }}
       >
-        Add
+        Add to cart
       </Button>
     );
   }
+
   const cartItemsIds = [];
   cartItems.forEach((item) => cartItemsIds.push(item.id));
   let included = false;
@@ -39,6 +40,7 @@ export default function CartButton(props) {
   if (quantity === 0) {
     dispatch(removeFromCart({ id: props.id }));
   }
+
   function handleAdd() {
     dispatch(
       addToCart({

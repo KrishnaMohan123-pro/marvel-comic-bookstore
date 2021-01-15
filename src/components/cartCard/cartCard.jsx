@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartButton from "../CartButton/CartButton";
+import { useSelector } from "react-redux";
 
 export default function CartCard(props) {
-  console.log(props);
+  const cart = useSelector((state) => state.cart).cart;
+  let quantity = 0;
+  for (let i = 0; i < cart.length; i += 1) {
+    if (cart[i].id === props.id) {
+      quantity = cart[i].quantity;
+    }
+  }
   return (
     <div className="container">
       <div className="cart-item row">
@@ -18,8 +25,8 @@ export default function CartCard(props) {
           </Link>
         </div>
         <div className="book cart-price col-md-3">
-          <p>{"$ " + props.price * props.quantity}</p>
-          <p>{`Quantity:${props.quantity}`}</p>
+          <p>{"$ " + props.price}</p>
+          <p>{`Quantity : ${quantity}`}</p>
           <div>
             <CartButton id={props.id} />
           </div>

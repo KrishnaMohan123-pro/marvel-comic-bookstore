@@ -13,7 +13,6 @@ import SignupForm from "../../utility/forms/signupForm";
 import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
-import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { Avatar } from "@material-ui/core";
 
 export default function Navbar() {
