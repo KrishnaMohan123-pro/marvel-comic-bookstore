@@ -3,12 +3,11 @@ import { Redirect, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import developerRoutes from "./utility/Routes/developerRoutes";
 import adminRoutes from "./utility/Routes/adminRoutes";
+import userRoutes from "./utility/Routes/userRoutes";
 import { toast } from "react-toastify";
 export default function ProtectedRoute({ component: Component, ...rest }) {
-  console.log(rest);
   const loggedIn = useSelector((state) => state.loggedIn);
   const role = useSelector((state) => state.auth.user.role);
-  console.log(role);
   const dispatch = useDispatch();
 
   if (!loggedIn) {
@@ -16,17 +15,11 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
     dispatch({ type: "OPEN_SIGNUP_MODAL" });
     return <Redirect to="/" />;
   }
-  if (
-    role &&
-    role === "developer" &&
-    !developerRoutes.includes({ ...rest }.path)
-  ) {
+  if (role && role === "developer" && !developerRoutes.includes(rest.path)) {
     return <Redirect to="/restricted" />;
-  } else if (
-    role &&
-    role === "admin" &&
-    !adminRoutes.includes({ ...rest }.path)
-  ) {
+  } else if (role && role === "admin" && !adminRoutes.includes(rest.path)) {
+    return <Redirect to="/restricted" />;
+  } else if (role && role === "user" && !userRoutes.includes(rest.path)) {
     return <Redirect to="/restricted" />;
   }
   return (

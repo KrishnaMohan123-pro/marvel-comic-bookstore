@@ -6,7 +6,6 @@ export function fetchComics(id) {
     dispatch({ type: "START_DATA_LOADING" });
     fetchComicsByComicsId(id)
       .then((res) => {
-        console.log(res);
         dispatch({
           type: "COMICS_DATA_LOAD",
           payload: {

@@ -6,8 +6,6 @@ import Carousel from "nuka-carousel";
 import { Grid, Container } from "@material-ui/core";
 import { useSelector } from "react-redux";
 export default function Home() {
-  const cart = useSelector((state) => state.cart);
-  console.log(cart);
   const topCharacters = [
     {
       name: "Winter Soldier",

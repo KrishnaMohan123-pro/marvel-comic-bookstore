@@ -26,6 +26,7 @@ export function signUp(creds) {
               state: "",
               country: "",
             },
+            photoURL: "",
           });
         firebase
           .firestore()

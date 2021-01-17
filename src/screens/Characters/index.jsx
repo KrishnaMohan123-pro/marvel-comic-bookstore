@@ -13,7 +13,6 @@ export default function Characters({ match }) {
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("characters");
   const genericSearchResult = useSelector((state) => state.genericSearch);
-  console.log(genericSearchResult);
   useEffect(() => {
     dispatch(search(match.params.query, sort, filter));
   }, [match.params.query, sort, filter]);
@@ -67,7 +66,6 @@ export default function Characters({ match }) {
   if (genericSearchResult.total === 0) {
     return <p>No Data found</p>;
   }
-  console.log(genericSearchResult.results[0]);
 
   return (
     <section id="searched-body" style={{ marginTop: "1.5rem" }}>

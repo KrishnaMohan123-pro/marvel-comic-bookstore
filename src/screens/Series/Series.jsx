@@ -11,7 +11,6 @@ import "./styles.css";
 export default function Series(props) {
   const series = useSelector((state) => state.series);
   const loader = useSelector((state) => state.loader.data);
-  console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchSeries(props.id));

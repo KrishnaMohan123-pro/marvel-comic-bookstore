@@ -12,7 +12,6 @@ export default function Character(props) {
   const dispatch = useDispatch();
   const character = useSelector((state) => state.character);
   const loader = useSelector((state) => state.loader.data);
-  console.log(loader);
   useEffect(() => {
     dispatch(fetchCharacter(props.id));
   }, [props.id]);

@@ -48,7 +48,7 @@ export function removeFromCart(book) {
     const firebase = getFirebase();
     const cart = getState().cart.cart;
     const uid = getState().firebase.auth.uid;
-    let newCartData = cart.filter((item) => item.id != book.id);
+    let newCartData = cart.filter((item) => item.id !== book.id);
 
     const token = await firebase
       .firestore()

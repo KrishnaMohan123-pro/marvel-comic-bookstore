@@ -51,8 +51,6 @@ function App() {
   const isLoaded = useSelector((state) => state.firebase.auth.isLoaded);
   const uid = useSelector((state) => state.firebase.auth.uid);
   const user = useSelector((state) => state.firebase.auth);
-  console.log(user);
-  console.log(isLoaded);
   const dispatch = useDispatch();
   if (!emptyUser) {
     dispatch({ type: "LOGGED_IN" });
