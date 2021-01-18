@@ -9,6 +9,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 
 export default function Books() {
   const newBooks = useSelector((state) => state.newBooks);
+  console.log(newBooks);
 
   return (
     <div>

@@ -2,8 +2,9 @@ export function addNewBook(book) {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     const newBooks = getState().newBooks;
-    newBooks.push(book);
-    dispatch({ type: "NEW_BOOK_ADDED", payload: book });
+    newBooks.push({ book: book });
+
+    dispatch({ type: "NEW_BOOK_ADDED", payload: newBooks });
     firebase
       .firestore()
       .collection("new-books")

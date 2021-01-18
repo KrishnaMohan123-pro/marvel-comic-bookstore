@@ -27,6 +27,7 @@ export function signUp(creds) {
               country: "",
             },
             photoURL: "",
+            role: "user",
           });
         firebase
           .firestore()
