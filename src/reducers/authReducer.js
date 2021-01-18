@@ -33,6 +33,12 @@ export default function authReducer(state = initialState, action) {
     case "SIGNEDOUT_ERROR":
       toast.error("Error while signing out : " + action.payload.error);
       return state;
+    case "UPDATE_IMAGE":
+      toast.success("Profile picture updated");
+      return {
+        user: { ...state.user, photoURL: action.payload.photoURL },
+        uid: state.uid,
+      };
     default:
       return state;
   }

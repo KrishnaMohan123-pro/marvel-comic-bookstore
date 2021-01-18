@@ -1,19 +1,21 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import InputDialog from "../../components/Dialog/inputDialog";
 import AddAddressForm from "../../utility/forms/addAddressForm";
 import AddPhoneForm from "../../utility/forms/addPhoneForm";
 import "./styles.css";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, IconButton, Input } from "@material-ui/core";
 import AddNewBookForm from "../../utility/forms/addNewBookForm";
+import ChangeProfileImageForm from "../../utility/forms/changeProfileImageForm";
 
 export default function Account() {
+  const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.loggedIn);
   const user = useSelector((state) => state.auth.user);
   const auth = useSelector((state) => state.auth);
-
   const dialog = useSelector((state) => state.dialog);
   const role = useSelector((state) => state.auth.user.role);
+
   if (!loggedIn) {
     return (
       <p style={{ fontFamily: "Goldman", fontSize: "2rem" }}>
@@ -49,7 +51,16 @@ export default function Account() {
                       ? "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
                       : user.photoURL
                   }
+                  style={{ height: "7rem", width: "6rem" }}
                 />
+                <Grid item>
+                  <InputDialog
+                    childComponent={<ChangeProfileImageForm />}
+                    dialogName={"New_profile_image"}
+                    dialogLabel={"Change Profile Picture"}
+                    dialogVisible={dialog.changeProfileImageDialogVisible}
+                  />
+                </Grid>
               </Grid>
               <Grid item style={{ lineHeight: "0.15rem" }}>
                 <h6>Name:</h6>
