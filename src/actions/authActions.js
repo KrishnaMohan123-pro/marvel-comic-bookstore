@@ -1,5 +1,14 @@
-import { _INITIALISE_USER } from "./actionsList/authActionsList";
+import {
+  _INITIALISE_USER,
+  _LOG_IN,
+  _SIGN_IN,
+  _SIGNED_OUT,
+  _SIGNOUT_ERROR,
+  _SIGN_IN_ERR,
+  _LOG_IN_ERR,
+} from "./actionsList/authActionsList";
 import { _FIREBASE_LOAD, _STOP_LOAD } from "./actionsList/loadActionsList";
+import { _CLEAR_CART, _INITIALISE_CART } from "./actionsList/cartActionsList";
 
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
@@ -36,18 +45,18 @@ export function signUp(creds) {
           .get()
           .then((data) => {
             dispatch({
-              type: "SIGN_IN",
+              type: _SIGN_IN,
               payload: { user: data.data(), uid: user.user.uid },
             });
-            dispatch({ type: "CLEAR_CART" });
+            dispatch({ type: _CLEAR_CART });
             dispatch({
-              type: "INITIALISE_CART",
+              type: _INITIALISE_CART,
               payload: { cart: data.data().cart },
             });
           });
       })
       .catch((err) => {
-        dispatch({ type: "SIGN_IN_ERR", payload: { error: err } });
+        dispatch({ type: _SIGN_IN_ERR, payload: { error: err } });
       });
   };
 }
@@ -66,12 +75,12 @@ export function login(creds) {
           .get()
           .then((data) => {
             dispatch({
-              type: "LOG_IN",
+              type: _LOG_IN,
               payload: { user: data.data(), uid: user.user.uid },
             });
-            dispatch({ type: "CLEAR_CART" });
+            dispatch({ type: _CLEAR_CART });
             dispatch({
-              type: "INITIALISE_CART",
+              type: _INITIALISE_CART,
               payload: { cart: data.data().cart },
             });
             dispatch({ type: "CLOSE_MODAL" });
@@ -79,7 +88,7 @@ export function login(creds) {
       })
       .catch((err) => {
         dispatch({
-          type: "LOG_IN_ERR",
+          type: _LOG_IN_ERR,
           payload: { error: "Incorrect Email or Password" },
         });
       });
@@ -92,11 +101,11 @@ export function logout() {
       .auth()
       .signOut()
       .then(() => {
-        dispatch({ type: "SIGNED_OUT" });
+        dispatch({ type: _SIGNED_OUT });
         dispatch({ type: "CLEAR_CART" });
       })
       .catch((err) => {
-        dispatch({ type: "SIGNOUT_ERROR", payload: { error: err } });
+        dispatch({ type: _SIGNOUT_ERROR, payload: { error: err } });
       });
   };
 }

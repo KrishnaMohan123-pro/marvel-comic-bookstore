@@ -1,0 +1,19 @@
+.side-drawer-button {
+  display: none;
+}
+.side-drawer {
+  height: 100%;
+}
+.side-drawer-options {
+  background-color: #555555 !important;
+  position: absolute;
+  padding: 1rem;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+}
+@media screen and (max-width: 1000px) {
+  .side-drawer-button {
+    display: block;
+  }
+}

@@ -14,6 +14,7 @@ export default function Characters({ match }) {
   const [filter, setFilter] = useState("characters");
   const genericSearchResult = useSelector((state) => state.genericSearch);
   useEffect(() => {
+    dispatch({ type: "QUERY_SEARCHED", payload: match.params.query });
     dispatch(search(match.params.query, sort, filter));
   }, [match.params.query, sort, filter]);
   const characterSortOptions = [
@@ -153,57 +154,4 @@ export default function Characters({ match }) {
       </Container>
     </section>
   );
-  // const dispatch = useDispatch();
-  // const showSearchBody = useSelector((state) => state.search.showSearchBody);
-  // const [search, setSearch] = useState("");
-  // function handleChange(e) {
-  //   let value = e.target.value;
-  //   setTimeout(() => {
-  //     setSearch(value);
-  //   }, 500);
-  //   dispatch({ type: "CLEAR_SEARCH" });
-  //   if (value.length !== 0)
-  //     dispatch({ type: "SEARCH_START_WITH", payload: { name: value } });
-  // }
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   dispatch({ type: "CLEAR_SEARCH" });
-  //   setTimeout(() => {
-  //     dispatch({ type: "SEARCH_START_WITH", payload: { name: search } });
-  //   }, 50);
-  // }
-  // return (
-  //   <Fragment>
-  //     <Paper
-  //       className="search-form"
-  //       component="form"
-  //       style={{
-  //         padding: "2px 4px",
-  //         display: "flex",
-  //         alignItems: "center",
-  //         width: "500px",
-  //         margin: "100px auto",
-  //       }}
-  //       onSubmit={handleSubmit}
-  //     >
-  //       <DebounceInput
-  //         debounceTimeout={500}
-  //         onChange={handleChange}
-  //         placeholder="Search for your favourite Marvel Character"
-  //         style={{
-  //           width: "90%",
-  //           marginLeft: "5px",
-  //           border: "none",
-  //           outline: "none",
-  //         }}
-  //         minLength={3}
-  //         value={search}
-  //       />
-  //       <IconButton type="submit" aria-label="search">
-  //         <SearchIcon />
-  //       </IconButton>
-  //     </Paper>
-  //     {showSearchBody ? <SearchedBody /> : null}
-  //   </Fragment>
-  // );
 }

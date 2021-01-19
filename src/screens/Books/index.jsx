@@ -13,7 +13,7 @@ export default function Books() {
 
   return (
     <div>
-      <section className="New Arrivals">
+      <section className="New Arrivals" style={{ margin: "3rem 0" }}>
         <p>New Arrivals</p>
         <Container>
           <Grid container>

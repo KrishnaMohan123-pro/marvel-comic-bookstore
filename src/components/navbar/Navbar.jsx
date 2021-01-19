@@ -1,12 +1,10 @@
 import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TransitionModal from "../Modal/modal";
 import LoginForm from "../../utility/forms/loginForm";
 import SignupForm from "../../utility/forms/signupForm";
@@ -14,6 +12,8 @@ import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
 import { Avatar } from "@material-ui/core";
+import SideDrawer from "../SideDrawer/sideDrawer";
+import "./styles.css";
 
 export default function Navbar() {
   const history = useHistory();
@@ -26,11 +26,14 @@ export default function Navbar() {
   return (
     <AppBar className="app-bar" position="sticky" elevation={0}>
       <Toolbar>
+        <SideDrawer />
         <Link to="/" style={{ color: "inherit" }}>
           <Typography variant="h6">Marvel</Typography>
         </Link>
-        <SearchBar />
-        <div style={{ marginLeft: "auto" }}>
+        <div className="app-bar-links">
+          <SearchBar />
+        </div>
+        <div className="app-bar-links" style={{ marginLeft: "auto" }}>
           {loggedIn ? (
             <Fragment>
               <Button
@@ -44,28 +47,25 @@ export default function Navbar() {
               >
                 SIGNOUT
               </Button>
-              <Link to="/cart" style={{ color: "inherit" }}>
-                <Button
-                  color="inherit"
-                  variant="text"
-                  style={{ position: "relative" }}
-                >
-                  <CartLink />
-                </Button>
-              </Link>
-
-              <Link
-                to="/account"
-                style={{ color: "inherit", marginLeft: "5px" }}
+              <Button
+                color="inherit"
+                variant="text"
+                style={{ position: "relative" }}
+                onClick={() => {
+                  history.push("/cart");
+                }}
               >
-                <Button color="inherit" variant="text">
-                  <Avatar
-                    alt={userName}
-                    src={userImage}
-                    // style={{ width: "1.5rem", height: "1.5rem" }}
-                  />
-                </Button>
-              </Link>
+                <CartLink />
+              </Button>
+              <Button
+                color="inherit"
+                variant="text"
+                onClick={() => {
+                  history.push("/account");
+                }}
+              >
+                <Avatar alt={userName} src={userImage} />
+              </Button>
             </Fragment>
           ) : (
             <Fragment>

@@ -13,8 +13,7 @@ import loggedInReducer from "./loggedInReducer";
 import modalReducer from "./modalReducer";
 import newBooksReducer from "./newBooksReducer";
 import seriesReducer from "./marvelDataFetchReducers/seriesReducer";
-// import seriesNameReducer from "./seriesReducers/seriesNameReducer";
-// import totalSeriesReducer from "./seriesReducers/totalSeriesReducer";
+import queryReducer from "./queryReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -31,8 +30,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   newBooks: newBooksReducer,
   series: seriesReducer,
-  // seriesName: seriesNameReducer,
-  // totalSeries: totalSeriesReducer,
+  query: queryReducer,
 });
 
 export default rootReducer;

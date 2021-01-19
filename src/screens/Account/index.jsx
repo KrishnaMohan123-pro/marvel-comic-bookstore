@@ -5,6 +5,7 @@ import AddAddressForm from "../../utility/forms/addAddressForm";
 import AddPhoneForm from "../../utility/forms/addPhoneForm";
 import "./styles.css";
 import { Container, Grid, IconButton, Input } from "@material-ui/core";
+import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import AddNewBookForm from "../../utility/forms/addNewBookForm";
 import ChangeProfileImageForm from "../../utility/forms/changeProfileImageForm";
 
@@ -33,7 +34,7 @@ export default function Account() {
     >
       <Container>
         <Grid container spacing={3}>
-          <Grid item lg={4}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <Grid
               container
               direction="column"
@@ -57,7 +58,7 @@ export default function Account() {
                   <InputDialog
                     childComponent={<ChangeProfileImageForm />}
                     dialogName={"New_profile_image"}
-                    dialogLabel={"Change Profile Picture"}
+                    dialogLabel={<CameraAltIcon />}
                     dialogVisible={dialog.changeProfileImageDialogVisible}
                   />
                 </Grid>
@@ -73,6 +74,9 @@ export default function Account() {
           <Grid
             item
             lg={6}
+            md={6}
+            sm={12}
+            xs={12}
             style={{
               backgroundColor: "white",
               textAlign: "left",
@@ -119,14 +123,14 @@ export default function Account() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item lg={2}>
+          <Grid item lg={2} md={2} sm={12} xs={12}>
             <Grid container spacing={4} direction="column">
               <Grid item>
                 {user.phone.length === 0 ? null : (
                   <InputDialog
                     childComponent={<AddPhoneForm />}
                     dialogName={"Phone"}
-                    dialogLabel={"Edit Phone Number"}
+                    dialogLabel={"Edit Phone"}
                     dialogVisible={dialog.addPhoneDialogVisible}
                   />
                 )}

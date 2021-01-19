@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DebounceInput from "react-debounce-input";
 import {
   IconButton,
@@ -9,9 +9,8 @@ import {
   TableCell,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import {
-  search,
   dropDown,
   clearDropDown,
 } from "../../actions/FetchActions/searchAction";
@@ -19,10 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
+
   const history = useHistory();
-  const [name, setName] = useState("");
+
   const [showDropDown, setShowDropDown] = useState(false);
   const dropDownOptions = useSelector((state) => state.dropDown);
+  const query = useSelector((state) => state.query);
+  const [name, setName] = useState("");
+  console.log(`name:${name}`, `query:${query}`);
   function onInputChange(event) {
     setName(event.target.value);
     setShowDropDown(true);
