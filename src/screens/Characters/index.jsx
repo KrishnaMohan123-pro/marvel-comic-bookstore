@@ -10,12 +10,16 @@ import { search } from "../../actions/FetchActions/searchAction";
 export default function Characters({ match }) {
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.loader.data);
-  const [sort, setSort] = useState("");
+
   const [filter, setFilter] = useState("characters");
+  const [sort, setSort] = useState("name");
   const genericSearchResult = useSelector((state) => state.genericSearch);
   useEffect(() => {
     dispatch({ type: "QUERY_SEARCHED", payload: match.params.query });
     dispatch(search(match.params.query, sort, filter));
+    return () => {
+      dispatch({ type: "QUERY_SEARCHED", payload: "" });
+    };
   }, [match.params.query, sort, filter]);
   const characterSortOptions = [
     { name: "Name", value: "name" },

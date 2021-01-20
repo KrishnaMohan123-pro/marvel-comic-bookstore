@@ -1,17 +1,17 @@
-import { _FIREBASE_LOAD, _STOP_LOAD } from "./actionsList/loadActionsList";
 import {
-  _ADD,
-  _REMOVE,
-  _INCREASE,
-  _DECREASE,
-  _INITIALISE_CART,
-} from "./actionsList/cartActionsList";
-function updatedCart(actionType, newCartData) {
-  return { type: actionType, payload: { cart: newCartData } };
-}
+  addItemAction,
+  removeItemAction,
+  increaseItemAction,
+  decreaseItemAction,
+  initialiseCartAction,
+} from "./actionCreators/cartActionCreators";
+import {
+  firebaseLoadingAction,
+  stopLoadingAction,
+} from "../actions/actionCreators/loadActionCreators";
 export function addToCart(book) {
   return async (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: _FIREBASE_LOAD });
+    dispatch(firebaseLoadingAction());
     const uid = getState().auth.uid;
     const firebase = getFirebase();
     const cart = getState().cart.cart;
@@ -36,15 +36,15 @@ export function addToCart(book) {
         return false;
       });
     if (token) {
-      dispatch(updatedCart(_ADD, cart));
-      dispatch({ type: _STOP_LOAD });
+      dispatch(addItemAction(cart));
+      dispatch(stopLoadingAction());
     }
   };
 }
 
 export function removeFromCart(book) {
   return async (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: _FIREBASE_LOAD });
+    dispatch(firebaseLoadingAction());
     const firebase = getFirebase();
     const cart = getState().cart.cart;
     const uid = getState().firebase.auth.uid;
@@ -64,15 +64,15 @@ export function removeFromCart(book) {
         return false;
       });
     if (token) {
-      dispatch(updatedCart(_REMOVE, newCartData));
-      dispatch({ type: _STOP_LOAD });
+      dispatch(removeItemAction(newCartData));
+      dispatch(stopLoadingAction());
     }
   };
 }
 
 export function changeQuantity(type, bookId) {
   return async (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: _FIREBASE_LOAD });
+    dispatch(firebaseLoadingAction());
     const uid = getState().auth.uid;
     const firebase = getFirebase();
     const cart = getState().cart.cart;
@@ -103,13 +103,21 @@ export function changeQuantity(type, bookId) {
         return false;
       });
     if (token) {
-      dispatch(updatedCart(type === "INCREASE" ? _INCREASE : _DECREASE, cart));
-      dispatch({ type: _STOP_LOAD });
+      switch (type) {
+        case "INCREASE":
+          dispatch(increaseItemAction(cart));
+          break;
+        case "DECREASE":
+          dispatch(decreaseItemAction(cart));
+          break;
+      }
+      dispatch(stopLoadingAction());
     }
   };
 }
 export function initialiseCart(uid) {
   return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
     const firebase = getFirebase();
     const cartDataArray = [];
     const firebaseResponse = await firebase
@@ -119,9 +127,7 @@ export function initialiseCart(uid) {
       .collection("books")
       .get();
     firebaseResponse.forEach((doc) => cartDataArray.push(doc.data()));
-
-    // const ids = Object.keys(cartData);
-    // ids.forEach((id) => cartDataArray.push(cartData[id]));
-    dispatch({ type: _INITIALISE_CART, payload: { cart: cartDataArray } });
+    dispatch(initialiseCartAction(cartDataArray));
+    dispatch(stopLoadingAction());
   };
 }

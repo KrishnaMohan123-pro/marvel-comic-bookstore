@@ -1,18 +1,26 @@
 import {
-  _INITIALISE_USER,
-  _LOG_IN,
-  _SIGN_IN,
-  _SIGNED_OUT,
-  _SIGNOUT_ERROR,
-  _SIGN_IN_ERR,
-  _LOG_IN_ERR,
-} from "./actionsList/authActionsList";
-import { _FIREBASE_LOAD, _STOP_LOAD } from "./actionsList/loadActionsList";
+  signupAction,
+  signupErrorAction,
+  loginAction,
+  loginErrorAction,
+  initialiseUserAction,
+  signoutAction,
+  signoutErrorAction,
+} from "./actionCreators/authActionCreators";
+import {
+  firebaseLoadingAction,
+  stopLoadingAction,
+} from "../actions/actionCreators/loadActionCreators";
 import { _CLEAR_CART, _INITIALISE_CART } from "./actionsList/cartActionsList";
+import {
+  clearCartAction,
+  initialiseCartAction,
+} from "./actionCreators/cartActionCreators";
 
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    dispatch(firebaseLoadingAction());
     firebase
       .auth()
       .createUserWithEmailAndPassword(creds.email, creds.password)
@@ -44,25 +52,22 @@ export function signUp(creds) {
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({
-              type: _SIGN_IN,
-              payload: { user: data.data(), uid: user.user.uid },
-            });
-            dispatch({ type: _CLEAR_CART });
-            dispatch({
-              type: _INITIALISE_CART,
-              payload: { cart: data.data().cart },
-            });
+            dispatch(signupAction(data.data(), user.user.uid));
+            dispatch(clearCartAction());
+            dispatch(initialiseCartAction(data.data().cart));
           });
+        dispatch(stopLoadingAction());
       })
       .catch((err) => {
-        dispatch({ type: _SIGN_IN_ERR, payload: { error: err } });
+        dispatch(signupErrorAction(err));
+        dispatch(stopLoadingAction());
       });
   };
 }
 
 export function login(creds) {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
     const firebase = getFirebase();
     firebase
       .auth()
@@ -74,52 +79,47 @@ export function login(creds) {
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({
-              type: _LOG_IN,
-              payload: { user: data.data(), uid: user.user.uid },
-            });
-            dispatch({ type: _CLEAR_CART });
-            dispatch({
-              type: _INITIALISE_CART,
-              payload: { cart: data.data().cart },
-            });
+            dispatch(loginAction(data.data(), user.user.uid));
+            dispatch(clearCartAction());
+            dispatch(initialiseCartAction(data.data().cart));
             dispatch({ type: "CLOSE_MODAL" });
+            dispatch(stopLoadingAction());
           });
       })
       .catch((err) => {
-        dispatch({
-          type: _LOG_IN_ERR,
-          payload: { error: "Incorrect Email or Password" },
-        });
+        dispatch(loginErrorAction(err));
+        dispatch(stopLoadingAction());
       });
   };
 }
 export function logout() {
   return (dispatch, getstate, { getFirebase }) => {
+    dispatch(firebaseLoadingAction);
     const firebase = getFirebase();
     firebase
       .auth()
       .signOut()
       .then(() => {
-        dispatch({ type: _SIGNED_OUT });
-        dispatch({ type: "CLEAR_CART" });
+        dispatch(signoutAction());
+        dispatch(stopLoadingAction());
+        dispatch(clearCartAction());
       })
       .catch((err) => {
-        dispatch({ type: _SIGNOUT_ERROR, payload: { error: err } });
+        dispatch(signoutErrorAction(err));
+        dispatch(stopLoadingAction());
       });
   };
 }
 
 export function initialiseUser(uid) {
   return async (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: _FIREBASE_LOAD });
+    dispatch(firebaseLoadingAction());
     const firebase = getFirebase();
     const res = await firebase.firestore().collection("users").doc(uid).get();
     const userData = await res.data();
-    dispatch({
-      type: _INITIALISE_USER,
-      payload: {
-        user: {
+    dispatch(
+      initialiseUserAction(
+        {
           address: userData.address,
           email: userData.email,
           fname: userData.fname,
@@ -128,9 +128,10 @@ export function initialiseUser(uid) {
           photoURL: userData.photoURL,
           role: userData.role,
         },
-        uid: uid,
-      },
-    });
-    dispatch({ type: _STOP_LOAD });
+        uid
+      )
+    );
+
+    dispatch(stopLoadingAction());
   };
 }

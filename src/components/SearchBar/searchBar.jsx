@@ -24,7 +24,10 @@ export default function SearchBar() {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropDownOptions = useSelector((state) => state.dropDown);
   const query = useSelector((state) => state.query);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(query);
+  useEffect(() => {
+    setName(query);
+  }, [query]);
   console.log(`name:${name}`, `query:${query}`);
   function onInputChange(event) {
     setName(event.target.value);

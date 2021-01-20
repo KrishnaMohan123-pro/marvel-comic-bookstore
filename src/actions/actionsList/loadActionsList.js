@@ -1,3 +1,3 @@
-export const _FIREBASE_LOAD = "START_FIREBASE_LOADING";
-export const _DATA_LOAD = "START_DATA_LOADING";
-export const _STOP_LOAD = "STOP_LOADING";
+export const _FIREBASE_LOADING = "_FIREBASE_LOADING";
+export const _DATA_LOADING = "_DATA_LOADING";
+export const _STOP_LOADING = "_LOADING";
