@@ -7,6 +7,7 @@ import {
   _SIGNOUT_ERROR,
   _SIGN_IN_ERR,
   _LOG_IN_ERR,
+  _UPDATE_PHOTO,
 } from "../actions/actionsList/authActionsList";
 
 const initialState = { user: {}, uid: "" };
@@ -42,7 +43,7 @@ export default function authReducer(state = initialState, action) {
     case _SIGNOUT_ERROR:
       toast.error("Error while signing out : " + action.payload.error);
       return state;
-    case "UPDATE_IMAGE":
+    case _UPDATE_PHOTO:
       toast.success("Profile picture updated");
       return {
         user: { ...state.user, photoURL: action.payload.photoURL },

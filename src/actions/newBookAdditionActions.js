@@ -1,10 +1,15 @@
+import {
+  addNewBookAction,
+  fetchNewBooksAction,
+} from "./actionCreators/newBookAdditionActionsCreator";
+
 export function addNewBook(book) {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     const newBooks = getState().newBooks;
     newBooks.push({ book: book });
 
-    dispatch({ type: "NEW_BOOK_ADDED", payload: newBooks });
+    dispatch(addNewBookAction(newBooks));
     firebase
       .firestore()
       .collection("new-books")
@@ -24,7 +29,7 @@ export function fetchNewBooks() {
         res.forEach((doc) => newBooks.push(doc.data()));
       })
       .then(() => {
-        dispatch({ type: "FETCHED_DATA", payload: newBooks });
+        dispatch(fetchNewBooksAction(newBooks));
       });
   };
 }

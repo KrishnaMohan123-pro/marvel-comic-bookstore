@@ -1,0 +1,3 @@
+export const _OPEN_LOGIN_MODAL = "OPEN_LOGIN_MODAL";
+export const _OPEN_SIGNUP_MODAL = "OPEN_SIGNUP_MODAL";
+export const _CLOSE_MODAL = "CLOSE_MODAL";

@@ -10,12 +10,12 @@ import AddNewBookForm from "../../utility/forms/addNewBookForm";
 import ChangeProfileImageForm from "../../utility/forms/changeProfileImageForm";
 
 export default function Account() {
-  const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.loggedIn);
   const user = useSelector((state) => state.auth.user);
   const auth = useSelector((state) => state.auth);
   const dialog = useSelector((state) => state.dialog);
   const role = useSelector((state) => state.auth.user.role);
+  console.log(user);
 
   if (!loggedIn) {
     return (

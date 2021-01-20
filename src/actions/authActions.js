@@ -11,7 +11,6 @@ import {
   firebaseLoadingAction,
   stopLoadingAction,
 } from "../actions/actionCreators/loadActionCreators";
-import { _CLEAR_CART, _INITIALISE_CART } from "./actionsList/cartActionsList";
 import {
   clearCartAction,
   initialiseCartAction,
@@ -133,5 +132,69 @@ export function initialiseUser(uid) {
     );
 
     dispatch(stopLoadingAction());
+  };
+}
+
+export function addAddress(address) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
+    const user = getState().auth.user;
+    const uid = getState().auth.uid;
+    const firebase = getFirebase();
+    const token = firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .update({ address: address })
+      .then(() => {
+        return true;
+      })
+      .catch((err) => console.log(err));
+    if (token) {
+      dispatch(
+        initialiseUserAction(
+          {
+            address: address,
+            email: user.email,
+            fname: user.fname,
+            lname: user.lname,
+            phone: user.phone,
+            photoURL: user.photoURL,
+          },
+          uid
+        )
+      );
+    }
+    dispatch(stopLoadingAction());
+  };
+}
+
+export function addPhone(phone) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
+    const firebase = getFirebase();
+    const uid = getState().auth.uid;
+    const user = getState().auth.user;
+    const token = firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .update({ phone: phone });
+    if (token) {
+      dispatch(
+        initialiseUserAction(
+          {
+            email: user.email,
+            fname: user.fname,
+            lname: user.lname,
+            phone: phone,
+            photoURL: user.photoURL,
+            address: user.address,
+          },
+          uid
+        )
+      );
+      dispatch(stopLoadingAction());
+    }
   };
 }

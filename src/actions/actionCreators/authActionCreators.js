@@ -6,6 +6,7 @@ import {
   _SIGNOUT_ERROR,
   _SIGN_IN_ERR,
   _LOG_IN_ERR,
+  _UPDATE_PHOTO,
 } from "../actionsList/authActionsList";
 
 export function signupAction(user, uid) {
@@ -31,4 +32,8 @@ export function signoutErrorAction(err) {
 }
 export function initialiseUserAction(user, uid) {
   return { type: _INITIALISE_USER, payload: { user: user, uid: uid } };
+}
+
+export function updatePhoto(url) {
+  return { type: _UPDATE_PHOTO, payload: { photoURL: url } };
 }

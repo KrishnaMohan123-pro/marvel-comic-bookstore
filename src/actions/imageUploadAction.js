@@ -1,3 +1,5 @@
+import { updatePhoto } from "./actionCreators/authActionCreators";
+
 export function uploadImage(image) {
   return async (dispatch, getState, { getFirebase }) => {
     const uid = getState().auth.uid;
@@ -32,7 +34,7 @@ export function uploadImage(image) {
                 return true;
               });
             if (token) {
-              dispatch({ type: "UPDATE_IMAGE", payload: { photoURL: url } });
+              dispatch(updatePhoto(url));
               dispatch({ type: "CLOSE_DIALOG" });
             }
           });

@@ -1,11 +1,16 @@
+import {
+  _NEW_BOOK_ADD,
+  _FETCH_NEW_BOOKS,
+} from "../actions/actionsList/newBooksActionsList";
+
 import { toast } from "react-toastify";
 const initialState = [];
 export default function newBooksReducer(state = initialState, action) {
   switch (action.type) {
-    case "NEW_BOOK_ADDED":
+    case _NEW_BOOK_ADD:
       toast.success("Book added Successfully");
       return action.payload;
-    case "FETCHED_DATA":
+    case _FETCH_NEW_BOOKS:
       return action.payload;
     default:
       return state;
