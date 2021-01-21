@@ -6,59 +6,39 @@ import "./styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../components/Loader/loader";
 import { search } from "../../actions/FetchActions/searchAction";
+import filterOptions from "../../utility/sortsAndFilters/filter";
+import {
+  seriesSortOptions,
+  comicsSortOptions,
+  characterSortOptions,
+} from "../../utility/sortsAndFilters/sort";
+import { querySearched } from "../../actions/queryActions";
 
 export default function Characters({ match }) {
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.loader.data);
 
   const [filter, setFilter] = useState("characters");
-  const [sort, setSort] = useState("name");
+  const [sort, setSort] = useState("modified");
   const genericSearchResult = useSelector((state) => state.genericSearch);
   useEffect(() => {
-    dispatch({ type: "QUERY_SEARCHED", payload: match.params.query });
+    dispatch(querySearched(match.params.query));
     dispatch(search(match.params.query, sort, filter));
     return () => {
-      dispatch({ type: "QUERY_SEARCHED", payload: "" });
+      dispatch(querySearched(""));
     };
   }, [match.params.query, sort, filter]);
-  const characterSortOptions = [
-    { name: "Name", value: "name" },
-    { name: "Modified", value: "modified" },
-    { name: "Name DESC", value: "-name" },
-    { name: "Modified DESC", value: "-modified" },
-  ];
-  const comicsSortOptions = [
-    { name: "Title", value: "title" },
-    { name: "Modified", value: "modified" },
-    { name: "On Sale Date", value: "onsaleDate" },
-    { name: "Title DESC", value: "-title" },
-    { name: "Modified DESC", value: "-modified" },
-    { name: "On Sale Date DESC", value: "-onsaleDate" },
-  ];
-  const seriesSortOptions = [
-    { name: "Title", value: "title" },
-    { name: "Modified", value: "modified" },
-    { name: "Start Year", value: "startYear" },
-    { name: "Title DESC", value: "-title" },
-    { name: "Modified DESC", value: "-modified" },
-    { name: "Start Year DESC", value: "-startYear" },
-  ];
   const sortOptions =
     filter === "characters"
       ? characterSortOptions
       : filter === "comics"
       ? comicsSortOptions
       : seriesSortOptions;
-  const filterOptions = [
-    { name: "Characters", value: "characters" },
-    { name: "Series", value: "series" },
-    { name: "Comics", value: "comics" },
-  ];
   function handleSortChange(e) {
     setSort(e.target.value);
   }
   function handleFilterChange(e) {
-    setSort("");
+    setSort("modified");
     setFilter(e.target.value);
   }
   function clearSortAndFilter() {
