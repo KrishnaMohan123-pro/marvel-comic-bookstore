@@ -1,3 +1,8 @@
+import {
+  _SERIES_DATA_LOAD,
+  _SERIES_DATA_LOAD_ERROR,
+} from "../../actions/actionsList/dataFetchActionsList";
+
 const initialState = {
   characters: [],
   comics: [],
@@ -12,9 +17,9 @@ const initialState = {
 
 export default function seriesReducer(state = initialState, action) {
   switch (action.type) {
-    case "SERIES_DATA_LOAD":
+    case _SERIES_DATA_LOAD:
       return action.payload;
-    case "SERIES_DATA_LOAD_ERROR":
+    case _SERIES_DATA_LOAD_ERROR:
       return action.payload;
     default:
       return state;

@@ -1,14 +1,21 @@
 import { fetchComicsByComicsId } from "../dataFetch";
 import { toast } from "react-toastify";
+import {
+  fetchComicsAction,
+  fetchComicsErrorAction,
+} from "../actionCreators/fetchDataActionCreators";
+import {
+  dataLoadingAction,
+  stopLoadingAction,
+} from "../actionCreators/loadActionCreators";
 
 export function fetchComics(id) {
   return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_DATA_LOADING" });
+    dispatch(dataLoadingAction());
     fetchComicsByComicsId(id)
       .then((res) => {
-        dispatch({
-          type: "COMICS_DATA_LOAD",
-          payload: {
+        dispatch(
+          fetchComicsAction({
             characters: res.data.results[0].characters.items,
             creators: res.data.results[0].creators.items,
             description: res.data.results[0].description,
@@ -20,17 +27,14 @@ export function fetchComics(id) {
             price: res.data.results[0].prices[0].price,
             publishDate: res.data.results[0].dates[0].date.slice(0, 10),
             title: res.data.results[0].title,
-          },
-        });
-        dispatch({ type: "STOP_LOADING" });
+          })
+        );
+        dispatch(stopLoadingAction());
       })
       .catch((e) => {
         toast.error("Somthing went wrong");
-        dispatch({ type: "STOP_LOADING" });
-        dispatch({
-          type: "COMICS_DATA_LOAD_ERROR",
-          payload: { error: "NO BOOK WITH THE ID AVAILABLE" },
-        });
+        dispatch(stopLoadingAction());
+        dispatch(fetchComicsErrorAction());
       });
   };
 }

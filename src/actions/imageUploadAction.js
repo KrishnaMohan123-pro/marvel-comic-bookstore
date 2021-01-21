@@ -1,7 +1,12 @@
 import { updatePhoto } from "./actionCreators/authActionCreators";
+import {
+  firebaseLoadingAction,
+  stopLoadingAction,
+} from "../actions/actionCreators/loadActionCreators";
 
 export function uploadImage(image) {
   return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
     const uid = getState().auth.uid;
     const firebase = getFirebase();
     var uploadTask = firebase
@@ -35,6 +40,7 @@ export function uploadImage(image) {
               });
             if (token) {
               dispatch(updatePhoto(url));
+              dispatch(stopLoadingAction());
               dispatch({ type: "CLOSE_DIALOG" });
             }
           });

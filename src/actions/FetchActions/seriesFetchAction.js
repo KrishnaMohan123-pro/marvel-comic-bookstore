@@ -1,14 +1,21 @@
 import { fetchSeriesBySeriesID } from "../dataFetch";
 import { toast } from "react-toastify";
+import {
+  fetchSeriesAction,
+  fetchSeriesErrorAction,
+} from "../actionCreators/fetchDataActionCreators";
+import {
+  dataLoadingAction,
+  stopLoadingAction,
+} from "../actionCreators/loadActionCreators";
 
 export function fetchSeries(id) {
   return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_DATA_LOADING" });
+    dispatch(dataLoadingAction());
     fetchSeriesBySeriesID(id)
       .then((res) => {
-        dispatch({
-          type: "SERIES_DATA_LOAD",
-          payload: {
+        dispatch(
+          fetchSeriesAction({
             characters: res.data.results[0].characters.items,
             comics: res.data.results[0].comics.items,
             creators: res.data.results[0].creators.items,
@@ -21,17 +28,14 @@ export function fetchSeries(id) {
               res.data.results[0].thumbnail.extension,
             startYear: res.data.results[0].startYear,
             title: res.data.results[0].title,
-          },
-        });
-        dispatch({ type: "STOP_LOADING" });
+          })
+        );
+        dispatch(stopLoadingAction());
       })
       .catch((e) => {
         toast.error("Something went Wrong");
-        dispatch({
-          type: "SERIES_DATA_LOAD_ERROR",
-          payload: { error: "NO SERIES WITH THE ID AVAILABLE" },
-        });
-        dispatch({ type: "STOP_LOADING" });
+        dispatch(fetchSeriesErrorAction(e));
+        dispatch(stopLoadingAction());
       });
   };
 }

@@ -3,37 +3,42 @@ import {
   fetchSeriesByStartName,
   fetchWithStartName,
 } from "../dataFetch";
-
+import {
+  searchAction,
+  dropDownAction,
+  clearDropDownAction,
+} from "../actionCreators/fetchDataActionCreators";
+import {
+  dataLoadingAction,
+  stopLoadingAction,
+} from "../actionCreators/loadActionCreators";
 export function search(name, sort, filter) {
   return (dispatch, getState, { getFirebase }) => {
-    dispatch({ type: "START_DATA_LOADING" });
+    dispatch(dataLoadingAction());
     switch (filter) {
       case "characters":
         fetchWithStartName(name, sort).then((res) => {
-          dispatch({
-            type: "DATA_LOAD",
-            payload: { total: res.data.total, results: res.data.results },
-          });
-          dispatch({ type: "STOP_LOADING" });
+          dispatch(
+            searchAction({ total: res.data.total, results: res.data.results })
+          );
+          dispatch(stopLoadingAction());
         });
         break;
       case "series":
         fetchSeriesByStartName(name, "", sort, "").then((res) => {
-          dispatch({
-            type: "DATA_LOAD",
-            payload: { total: res.data.total, results: res.data.results },
-          });
-          dispatch({ type: "STOP_LOADING" });
+          dispatch(
+            searchAction({ total: res.data.total, results: res.data.results })
+          );
+          dispatch(stopLoadingAction());
         });
         break;
       case "comics":
         fetchComicsWithStartName(name, sort).then((res) => {
           console.log(res);
-          dispatch({
-            type: "DATA_LOAD",
-            payload: { total: res.data.total, results: res.data.results },
-          });
-          dispatch({ type: "STOP_LOADING" });
+          dispatch(
+            searchAction({ total: res.data.total, results: res.data.results })
+          );
+          dispatch(stopLoadingAction());
         });
         break;
       default:
@@ -48,14 +53,13 @@ export function dropDown(startName) {
       res.data.results.forEach((result) => {
         characters.push({ name: result.name, id: result.id });
       });
-      dispatch({ type: "SEARCHED_NAMES", payload: { characters: characters } });
+      dispatch(dropDownAction(characters));
     });
   };
 }
 
 export function clearDropDown() {
   return (dispatch, getState, { getFirebase }) => {
-    console.log("cleared Search");
-    dispatch({ type: "CLEAR_SEARCH" });
+    dispatch(clearDropDownAction());
   };
 }

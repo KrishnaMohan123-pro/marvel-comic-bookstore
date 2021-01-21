@@ -1,3 +1,7 @@
+import {
+  _COMICS_DATA_LOAD,
+  _COMICS_DATA_LOAD_ERROR,
+} from "../../actions/actionsList/dataFetchActionsList";
 const initialState = {
   characters: [],
   creators: [],
@@ -11,9 +15,9 @@ const initialState = {
 
 export default function comicsReducer(state = initialState, action) {
   switch (action.type) {
-    case "COMICS_DATA_LOAD":
+    case _COMICS_DATA_LOAD:
       return action.payload;
-    case "COMICS_DATA_LOAD_ERROR":
+    case _COMICS_DATA_LOAD_ERROR:
       return action.payload;
     default:
       return state;
