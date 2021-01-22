@@ -1,4 +1,4 @@
-image: v12.18.3
+image: node:12.18.3
 
 cache:
   paths:
