@@ -1,5 +1,5 @@
 marvel-comic-bookstore:
-  tags: -Krishna
+  tags: - Krishna
   script: echo app started
 
 image: node:12.18.3
