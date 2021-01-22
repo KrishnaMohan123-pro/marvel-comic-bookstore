@@ -1,17 +1,11 @@
 import {
-  openLoginModalAction,
-  openSignupModalAction,
+  openModalAction,
   closeModalAction,
 } from "./actionCreators/modalActionCreators";
 
-export function openLoginModal() {
+export function openModal(name) {
   return (dispatch, getState, { getFirebase }) => {
-    dispatch(openLoginModalAction());
-  };
-}
-export function openSignupModal() {
-  return (dispatch, getState, { getFirebase }) => {
-    dispatch(openSignupModalAction());
+    dispatch(openModalAction(name));
   };
 }
 export function closeModal() {

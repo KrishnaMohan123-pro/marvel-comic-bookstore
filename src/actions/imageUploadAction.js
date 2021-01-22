@@ -41,7 +41,6 @@ export function uploadImage(image) {
             if (token) {
               dispatch(updatePhoto(url));
               dispatch(stopLoadingAction());
-              dispatch({ type: "CLOSE_DIALOG" });
             }
           });
       }

@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import Loader from "../Loader/loader";
 import { useDispatch, useSelector } from "react-redux";
+import { openModal, closeModal } from "../../actions/modalActions";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -30,11 +31,11 @@ export default function TransitionsModal(props) {
   const classes = useStyles();
 
   const handleOpen = () => {
-    dispatch({ type: "OPEN_" + props.modalName + "_MODAL" });
+    dispatch(openModal(props.modalName));
   };
 
   const handleClose = () => {
-    dispatch({ type: "CLOSE_MODAL" });
+    dispatch(closeModal());
   };
 
   return (
