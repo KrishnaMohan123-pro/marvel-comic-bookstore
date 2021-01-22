@@ -1,22 +1,51 @@
-import React, { useState, Fragment } from "react";
-import Dropdown from "./dropdownOptions";
+import React, { useState, useEffect } from "react";
 import DebounceInput from "react-debounce-input";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
+import {
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import {
+  dropDown,
+  clearDropDown,
+} from "../../actions/FetchActions/searchAction";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SearchBar() {
-  const [search, setSearch] = useState("");
-  const [showResult, setShowResult] = useState(false);
-  const [redirect, setRedirect] = useState(false);
-  console.log(redirect);
-  if (redirect) {
-    return <Redirect to={"/characters/q=" + search} />;
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const [showDropDown, setShowDropDown] = useState(false);
+  const dropDownOptions = useSelector((state) => state.dropDown);
+  const query = useSelector((state) => state.query);
+  const [name, setName] = useState(query);
+  useEffect(() => {
+    setName(query);
+  }, [query]);
+  console.log(`name:${name}`, `query:${query}`);
+  function onInputChange(event) {
+    setName(event.target.value);
+    setShowDropDown(true);
+    dispatch(clearDropDown());
+    if (event.target.value.length > 0) dispatch(dropDown(event.target.value));
   }
+  function onFormSubmit(e) {
+    e.preventDefault();
+    setShowDropDown(false);
+
+    if (name.length > 0) {
+      history.push(`/search/q=${name}`);
+    }
+  }
+
   return (
-    <Fragment style={{ position: "relative" }}>
+    <div style={{ position: "relative" }}>
       <Paper
         className="search-form"
         component="form"
@@ -30,16 +59,15 @@ export default function SearchBar() {
           height: "35px",
         }}
         onSubmit={(e) => {
-          if (search.length < 2) toast.error("Please add more letters");
-          setRedirect(true);
+          onFormSubmit(e);
         }}
       >
         <DebounceInput
           debounceTimeout={300}
           onChange={(event) => {
-            setShowResult(false);
-            setSearch(event.target.value);
-            setShowResult(true);
+            if (event.target.value.length === 0) {
+              dispatch(clearDropDown());
+            } else onInputChange(event);
           }}
           placeholder="Search"
           style={{
@@ -48,15 +76,47 @@ export default function SearchBar() {
             border: "none",
             outline: "none",
           }}
-          minLength={3}
-          value={search}
+          value={name}
         />
         <IconButton type="submit" aria-label="search">
           <SearchIcon />
         </IconButton>
       </Paper>
+      {showDropDown && dropDownOptions.characters.length !== 0 ? (
+        <span
+          style={{
+            height: "10rem",
+            overflowY: "scroll",
+            position: "absolute",
+            width: "30rem",
+            left: "6%",
+            backgroundColor: "white",
+          }}
+        >
+          <Table>
+            <TableBody>
+              {dropDownOptions.characters.map((character) => {
+                return (
+                  <TableRow key={character.id}>
+                    <TableCell component="th">
+                      <a
+                        href={"/character/" + character.id}
+                        style={{ color: "black" }}
+                      >
+                        {character.name}
+                      </a>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </span>
+      ) : null}
 
-      {showResult && search.length > 2 ? <Dropdown name={search} /> : null}
-    </Fragment>
+      {/* {formSubmit ? null : showResult && search.length > 2 ? (
+        <Dropdown name={search} />
+      ) : null} */}
+    </div>
   );
 }

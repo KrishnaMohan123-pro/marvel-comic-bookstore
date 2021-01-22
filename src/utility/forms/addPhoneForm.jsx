@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "../../services/firebase/index";
-
+import { addPhone } from "../../actions/authActions";
 export default function AddAddressForm() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -14,28 +14,7 @@ export default function AddAddressForm() {
   }
   function handleSumbit(e) {
     e.preventDefault();
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(uid)
-      .update({ phone: phone })
-      .then(() => {
-        dispatch({ type: "CLOSE_DIALOG" });
-        dispatch({
-          type: "INITIALISE_USER",
-          payload: {
-            user: {
-              email: user.email,
-              fname: user.fname,
-              lname: user.lname,
-              phone: phone,
-              photoURL: user.photoURL,
-              address: user.address,
-            },
-            uid: uid,
-          },
-        });
-      });
+    dispatch(addPhone(phone));
   }
   return (
     <form

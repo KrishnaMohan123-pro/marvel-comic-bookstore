@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Home from "./screens/Home/index";
 import Navbar from "./components/navbar/Navbar";
 import Cart from "./screens/Cart/index";
@@ -8,8 +8,15 @@ import Account from "./screens/Account/index";
 import Book from "./screens/Book";
 import Character from "./screens/Character/index";
 import Characters from "./screens/Characters/index";
-import Search from "./screens/Search";
 import Series from "./screens/Series/Series";
+// import Footer from "./components/Footer/footer";
+import BackdropLoader from "./components/BackdropLoader/backdropLoader";
+import { useSelector, useDispatch } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute";
+import { initialiseUser } from "./actions/authActions";
+import { initialiseCart } from "./actions/cartActions";
+import { fetchNewBooks } from "./actions/newBookAdditionActions";
+import HourglassFullTwoToneIcon from "@material-ui/icons/HourglassFullTwoTone";
 
 function bookDetail({ match }) {
   return <Book id={match.params.book_id} />;
@@ -21,27 +28,78 @@ function characterDetail({ match }) {
   return <Character id={match.params.character_id} />;
 }
 
-function App() {
+function Admin() {
   return (
-    <Router>
-      <Navbar />
-      <Route exact strict path="/" render={() => <Home />} />
-      <Route exact strict path="/account" render={() => <Account />} />
-      <Route exact strict path="/book/:book_id" component={bookDetail} />
-      <Route exact strict path="/books" render={() => <Books />} />
-      <Route
-        exact
-        strict
-        path="/character/:character_id"
-        component={characterDetail}
-      />
-      <Route exact strict path="/characters/q=:query" component={Characters} />
-      <Route exact strict path="/cart" render={() => <Cart />} />
-      {/* <Route exact strict path="/characters" render={() => <Characters />} /> */}
-      <Route exact strict path="/search" render={() => <Search />} />
-      <Route exact strict path="/series/:series_id" component={seriesDetail} />
-    </Router>
+    <p>
+      Admin<Link to="/developer">Developer</Link>
+    </p>
   );
 }
+function Developer() {
+  return (
+    <p>
+      Developer<Link to="/admin">Admin</Link>
+    </p>
+  );
+}
+function Restricted() {
+  return <p>Restricted</p>;
+}
 
+function App() {
+  const emptyUser = useSelector((state) => state.firebase.auth.isEmpty);
+  const isLoaded = useSelector((state) => state.firebase.auth.isLoaded);
+  const uid = useSelector((state) => state.firebase.auth.uid);
+  const user = useSelector((state) => state.firebase.auth);
+  const dispatch = useDispatch();
+  if (!emptyUser) {
+    dispatch({ type: "LOGGED_IN" });
+    dispatch(initialiseUser(uid));
+    dispatch(initialiseCart(uid));
+    dispatch(fetchNewBooks());
+  }
+  if (!isLoaded) {
+    return (
+      <HourglassFullTwoToneIcon className="page-loader" fontSize="large" />
+    );
+  } else {
+    return (
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact render={() => <Home />} />
+          <ProtectedRoute component={Account} path="/account" exact={true} />
+          <ProtectedRoute path="/admin" exact component={Admin} />
+          <Route exact path="/popular" render={() => <Books />} />
+          <Route exact path="/book/:book_id" component={bookDetail} />
+          <Route exact path="/search/q=:query" component={Characters} />
+          <Route
+            exact
+            path="/character/:character_id"
+            component={characterDetail}
+          />
+          <ProtectedRoute exact path="/developer" component={Developer} />
+          <ProtectedRoute component={Cart} path="/cart" exact={true} />
+          <Route exact path="/restricted" component={Restricted}></Route>
+          <Route exact path="/series/:series_id" component={seriesDetail} />
+          <Route
+            path="*"
+            exact
+            component={() => {
+              return (
+                <p>
+                  404!!
+                  <br />
+                  Page Not Found
+                </p>
+              );
+            }}
+          />
+        </Switch>
+        {/* <Footer /> */}
+        <BackdropLoader />
+      </Router>
+    );
+  }
+}
 export default App;

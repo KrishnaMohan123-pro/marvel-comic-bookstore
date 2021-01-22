@@ -4,7 +4,9 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
-import { useDispatch } from "react-redux";
+import Loader from "../Loader/loader";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal, closeModal } from "../../actions/modalActions";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,19 +26,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModal(props) {
+  const loader = useSelector((state) => state.loader.profile);
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleOpen = () => {
-    dispatch({ type: "OPEN_" + props.modalName + "_MODAL" });
+    dispatch(openModal(props.modalName));
   };
 
   const handleClose = () => {
-    dispatch({ type: "CLOSE_MODAL" });
+    dispatch(closeModal());
   };
 
   return (
-    <div>
+    <span>
       <Button variant="text" color="inherit" type="button" onClick={handleOpen}>
         {props.linkName}
       </Button>
@@ -58,9 +61,10 @@ export default function TransitionsModal(props) {
               {props.modalTitle}
             </h2>
             <div id="transition-modal-description">{props.childComponent}</div>
+            {loader ? <Loader /> : null}
           </div>
         </Fade>
       </Modal>
-    </div>
+    </span>
   );
 }

@@ -9,9 +9,6 @@
 .cart-title {
   font-size: larger;
 }
-.cart-body {
-  margin-top: 10%;
-}
 .cart-item {
   border: 2px grey solid;
 }
@@ -23,15 +20,9 @@
   font-size: 2rem;
 }
 @media screen and (max-width: 920px) {
-  .cart-body {
-    margin-top: 15%;
-  }
 }
 @media screen and (max-width: 424px) {
   .book-total {
     float: left !important;
-  }
-  .cart-body {
-    margin-top: 18%;
   }
 }

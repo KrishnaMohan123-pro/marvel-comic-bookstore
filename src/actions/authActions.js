@@ -1,6 +1,25 @@
+import {
+  signupAction,
+  signupErrorAction,
+  loginAction,
+  loginErrorAction,
+  initialiseUserAction,
+  signoutAction,
+  signoutErrorAction,
+} from "./actionCreators/authActionCreators";
+import {
+  firebaseLoadingAction,
+  stopLoadingAction,
+} from "../actions/actionCreators/loadActionCreators";
+import {
+  clearCartAction,
+  initialiseCartAction,
+} from "./actionCreators/cartActionCreators";
+
 export function signUp(creds) {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    dispatch(firebaseLoadingAction());
     firebase
       .auth()
       .createUserWithEmailAndPassword(creds.email, creds.password)
@@ -23,6 +42,8 @@ export function signUp(creds) {
               state: "",
               country: "",
             },
+            photoURL: "",
+            role: "user",
           });
         firebase
           .firestore()
@@ -30,25 +51,22 @@ export function signUp(creds) {
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({
-              type: "SIGN_IN",
-              payload: { user: data.data(), uid: user.user.uid },
-            });
-            dispatch({ type: "CLEAR_CART" });
-            dispatch({
-              type: "INITIALISE_CART",
-              payload: { cart: data.data().cart },
-            });
+            dispatch(signupAction(data.data(), user.user.uid));
+            dispatch(clearCartAction());
+            dispatch(initialiseCartAction(data.data().cart));
           });
+        dispatch(stopLoadingAction());
       })
       .catch((err) => {
-        dispatch({ type: "SIGN_IN_ERR", payload: { error: err } });
+        dispatch(signupErrorAction(err));
+        dispatch(stopLoadingAction());
       });
   };
 }
 
 export function login(creds) {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
     const firebase = getFirebase();
     firebase
       .auth()
@@ -60,38 +78,123 @@ export function login(creds) {
           .doc(user.user.uid)
           .get()
           .then((data) => {
-            dispatch({
-              type: "LOG_IN",
-              payload: { user: data.data(), uid: user.user.uid },
-            });
-            dispatch({ type: "CLEAR_CART" });
-            dispatch({
-              type: "INITIALISE_CART",
-              payload: { cart: data.data().cart },
-            });
+            dispatch(loginAction(data.data(), user.user.uid));
+            dispatch(clearCartAction());
+            dispatch(initialiseCartAction(data.data().cart));
             dispatch({ type: "CLOSE_MODAL" });
+            dispatch(stopLoadingAction());
           });
       })
       .catch((err) => {
-        dispatch({
-          type: "LOG_IN_ERR",
-          payload: { error: "Incorrect Email or Password" },
-        });
+        dispatch(loginErrorAction(err));
+        dispatch(stopLoadingAction());
       });
   };
 }
 export function logout() {
   return (dispatch, getstate, { getFirebase }) => {
+    dispatch(firebaseLoadingAction);
     const firebase = getFirebase();
     firebase
       .auth()
       .signOut()
       .then(() => {
-        dispatch({ type: "SIGNED_OUT" });
-        dispatch({ type: "CLEAR_CART" });
+        dispatch(signoutAction());
+        dispatch(stopLoadingAction());
+        dispatch(clearCartAction());
       })
       .catch((err) => {
-        dispatch({ type: "SIGNOUT_ERROR", payload: { error: err } });
+        dispatch(signoutErrorAction(err));
+        dispatch(stopLoadingAction());
       });
+  };
+}
+
+export function initialiseUser(uid) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
+    const firebase = getFirebase();
+    const res = await firebase.firestore().collection("users").doc(uid).get();
+    const userData = await res.data();
+    dispatch(
+      initialiseUserAction(
+        {
+          address: userData.address,
+          email: userData.email,
+          fname: userData.fname,
+          lname: userData.lname,
+          phone: userData.phone,
+          photoURL: userData.photoURL,
+          role: userData.role,
+        },
+        uid
+      )
+    );
+
+    dispatch(stopLoadingAction());
+  };
+}
+
+export function addAddress(address) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
+    const user = getState().auth.user;
+    const uid = getState().auth.uid;
+    const firebase = getFirebase();
+    const token = firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .update({ address: address })
+      .then(() => {
+        return true;
+      })
+      .catch((err) => console.log(err));
+    if (token) {
+      dispatch(
+        initialiseUserAction(
+          {
+            address: address,
+            email: user.email,
+            fname: user.fname,
+            lname: user.lname,
+            phone: user.phone,
+            photoURL: user.photoURL,
+          },
+          uid
+        )
+      );
+    }
+    dispatch(stopLoadingAction());
+  };
+}
+
+export function addPhone(phone) {
+  return async (dispatch, getState, { getFirebase }) => {
+    dispatch(firebaseLoadingAction());
+    const firebase = getFirebase();
+    const uid = getState().auth.uid;
+    const user = getState().auth.user;
+    const token = firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .update({ phone: phone });
+    if (token) {
+      dispatch(
+        initialiseUserAction(
+          {
+            email: user.email,
+            fname: user.fname,
+            lname: user.lname,
+            phone: phone,
+            photoURL: user.photoURL,
+            address: user.address,
+          },
+          uid
+        )
+      );
+      dispatch(stopLoadingAction());
+    }
   };
 }

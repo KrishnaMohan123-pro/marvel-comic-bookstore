@@ -1,3 +1,9 @@
+import {
+  _OPEN_LOGIN_MODAL,
+  _OPEN_SIGNUP_MODAL,
+  _CLOSE_MODAL,
+} from "../actions/actionsList/modalActionsList";
+
 const initialState = {
   loginModalVisible: false,
   signupModalVisible: false,
@@ -5,19 +11,19 @@ const initialState = {
 
 export default function modalReducer(state = initialState, action) {
   switch (action.type) {
-    case "OPEN_LOGIN_MODAL":
+    case _OPEN_LOGIN_MODAL:
       return {
         loginModalVisible: true,
         signupModalVisible: false,
       };
 
-    case "OPEN_SIGNUP_MODAL":
+    case _OPEN_SIGNUP_MODAL:
       return {
         loginModalVisible: false,
         signupModalVisible: true,
       };
 
-    case "CLOSE_MODAL":
+    case _CLOSE_MODAL:
       return initialState;
 
     default:

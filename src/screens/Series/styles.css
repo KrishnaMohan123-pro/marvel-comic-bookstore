@@ -1,7 +1,3 @@
-#series-description {
-  margin-top: 5%;
-}
-
 .section-title {
   font-family: "Sacramento", sans-serif;
   font-size: 3rem;
@@ -19,9 +15,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-  #series-description {
-    margin-top: 10%;
-  }
   .series-content {
     font-size: 0.8rem !important;
   }
@@ -38,9 +31,6 @@
   }
 }
 @media screen and (max-width: 500px) {
-  #series-description {
-    margin-top: 15%;
-  }
   .series-title {
     font-size: 2rem;
   }

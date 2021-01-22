@@ -1,41 +1,54 @@
 import { toast } from "react-toastify";
+import {
+  _INITIALISE_USER,
+  _LOG_IN,
+  _SIGN_IN,
+  _SIGNED_OUT,
+  _SIGNOUT_ERROR,
+  _SIGN_IN_ERR,
+  _LOG_IN_ERR,
+  _UPDATE_PHOTO,
+} from "../actions/actionsList/authActionsList";
 
-const initialState = { user: {}, loggedIn: false, uid: "" };
+const initialState = { user: {}, uid: "" };
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case "INITIALISE_USER":
+    case _INITIALISE_USER:
       return {
         user: action.payload.user,
-        loggedIn: true,
         uid: action.payload.uid,
       };
-    case "SIGN_IN":
+    case _SIGN_IN:
       toast.success("SignIn Successful");
       return {
         user: action.payload.user,
-        loggedIn: true,
         uid: action.payload.uid,
       };
-    case "SIGN_IN_ERR":
+    case _SIGN_IN_ERR:
       toast.error("Error is " + action.payload.error);
       return state;
-    case "LOG_IN":
+    case _LOG_IN:
       toast.success("Login Successful");
       return {
         user: action.payload.user,
-        loggedIn: true,
         uid: action.payload.uid,
       };
-    case "LOG_IN_ERR":
+    case _LOG_IN_ERR:
       toast.error("Cannot Login :: " + action.payload.error);
       return state;
-    case "SIGNED_OUT":
+    case _SIGNED_OUT:
       toast.success("User Signed Out");
       return initialState;
-    case "SIGNEDOUT_ERROR":
+    case _SIGNOUT_ERROR:
       toast.error("Error while signing out : " + action.payload.error);
       return state;
+    case _UPDATE_PHOTO:
+      toast.success("Profile picture updated");
+      return {
+        user: { ...state.user, photoURL: action.payload.photoURL },
+        uid: state.uid,
+      };
     default:
       return state;
   }

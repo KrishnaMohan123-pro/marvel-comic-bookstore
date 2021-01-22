@@ -3,92 +3,175 @@ import { fetchComicsByComicsId } from "../../actions/dataFetch";
 import "./styles.css";
 import Loader from "../../components/Loader/loader";
 import CartButton from "../../components/CartButton/CartButton";
+import { Container, Grid } from "@material-ui/core";
+import { fetchComics } from "../../actions/FetchActions/comicsFetch";
+import { useDispatch, useSelector } from "react-redux";
 export default function Book(props) {
-  const [data, setData] = useState({});
+  const dispatch = useDispatch();
+  const comics = useSelector((state) => state.comics);
+  const loader = useSelector((state) => state.loader.data);
   useEffect(() => {
-    fetchComicsByComicsId(props.id).then((doc) => {
-      setData(doc);
-    });
+    dispatch(fetchComics(props.id));
   }, []);
-  if (Object.keys(data).length === 0) {
+  if (loader) {
     return <Loader />;
   }
-
-  let info = data.data.results[0];
-  let creators = info.creators.items;
-  let characters = info.characters.items;
+  if (comics.error) {
+    return <p>{comics.error}</p>;
+  }
 
   return (
-    <div className="book-details">
-      <p className="book-title">{info.title}</p>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-4 book-img-container">
-            <img
-              className="book-img"
-              src={info.thumbnail.path + "." + info.thumbnail.extension}
-            />
-          </div>
-          <div className="col-lg-5 book-description">
-            <p className="description-title">Description</p>
-            <p className="description">
-              {info.description === null
-                ? "No Description Available"
-                : info.description}
-            </p>
-            <p className="publish-date" style={{ fontFamily: "Goldman" }}>
-              PUBLISHED ON -
-            </p>
-            <p>{info.dates[0].date.slice(0, 10)}</p>
-          </div>
-          <div className="col-lg-3">
-            <p className="price">{"$ " + info.prices[0].price}</p>
-            <CartButton
-              id={info.id}
-              price={info.prices[0].price}
-              img={info.thumbnail.path + "." + info.thumbnail.extension}
-              title={info.title}
-            />
-          </div>
-        </div>
-        <div className="row mt-5">
-          <div className="col-lg-6 creators" style={{ textAlign: "center" }}>
-            <p className="column-heading">Creators</p>
-            <table
-              className="table table-borderless table-responsive mx-auto"
+    <Container fixed style={{ marginTop: "1.5rem", marginBottom: "3rem " }}>
+      <Grid container>
+        <Grid item alignItems="center" lg={3}>
+          <Grid container direction="column">
+            <Grid
+              item
               style={{
-                textAlign: "left",
-                color: "wheat",
-                overflowY: "scroll",
-                height: "15rem",
-                width: "15rem",
+                border: "grey 0.1rem solid",
+                padding: "3rem 0rem",
+                backgroundColor: "white",
               }}
             >
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Role</th>
-              </tr>
-              {creators.map((creator) => {
-                return (
-                  <tr key={creator.name}>
-                    <td>{creator.name}</td>
-                    <td>{creator.role}</td>
-                  </tr>
-                );
-              })}
-            </table>
-          </div>
-          <div
-            className="col-lg-6 characters"
-            style={{ height: "15rem", overflowY: "scroll" }}
-          >
-            <p className="column-heading">Charactors</p>
-            {characters.map((character) => {
-              return <p key={character.name}>{character.name}</p>;
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+              <div>
+                <img className="book-img" src={comics.image} />
+              </div>
+            </Grid>
+            <Grid item>
+              <div>
+                <CartButton
+                  id={comics.id}
+                  img={comics.image}
+                  price={comics.price}
+                  title={comics.title}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          item
+          lg={9}
+          alignContent="center"
+          style={{
+            border: "grey 0.1rem solid",
+            backgroundColor: "white",
+          }}
+        >
+          <Grid container direction="column" spacing={2}>
+            <Grid item>
+              <div className="book-title">
+                <h2>{comics.title}</h2>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className="book-description">
+                <Grid container>
+                  <Grid item lg={3}>
+                    <div
+                      className="description-title"
+                      style={{ color: "#333333", fontFamily: "Roboto" }}
+                    >
+                      <h4>Price</h4>
+                    </div>
+                  </Grid>
+                  <Grid item lg={9}>
+                    <div className="description" style={{ textAlign: "left" }}>
+                      <h4>{"$ " + comics.price}</h4>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className="book-description">
+                <Grid container>
+                  <Grid item lg={3}>
+                    <div
+                      className="description-title"
+                      style={{ color: "#333333", fontFamily: "Roboto" }}
+                    >
+                      <h6>Description</h6>
+                    </div>
+                  </Grid>
+                  <Grid item lg={9}>
+                    <div className="description" style={{ textAlign: "left" }}>
+                      <p>
+                        {comics.description === null ||
+                        comics.description.length === 0
+                          ? "No Description Available"
+                          : comics.description}
+                      </p>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className="book-description">
+                <Grid container>
+                  <Grid item lg={3}>
+                    <div
+                      className="description-title"
+                      style={{ color: "#333333", fontFamily: "Roboto" }}
+                    >
+                      <h6>Published on</h6>
+                    </div>
+                  </Grid>
+                  <Grid item lg={9}>
+                    <div className="description" style={{ textAlign: "left" }}>
+                      <h6>{comics.publishDate}</h6>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+
+            <Grid item>
+              <div className="book-description">
+                <Grid container>
+                  <Grid item lg={3}>
+                    <div
+                      className="description-title"
+                      style={{ color: "#333333", fontFamily: "Roboto" }}
+                    >
+                      <h6>Creators</h6>
+                    </div>
+                  </Grid>
+                  <Grid item lg={9}>
+                    <div className="description" style={{ textAlign: "left" }}>
+                      {comics.creators.map((creator) => {
+                        return <h6 key={creator.name}>{creator.name}</h6>;
+                      })}
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className="book-description">
+                <Grid container>
+                  <Grid item lg={3}>
+                    <div
+                      className="description-title"
+                      style={{ color: "#333333", fontFamily: "Roboto" }}
+                    >
+                      <h6>Characters</h6>
+                    </div>
+                  </Grid>
+                  <Grid item lg={9}>
+                    <div className="description" style={{ textAlign: "left" }}>
+                      {comics.characters.map((creator) => {
+                        return <h6 key={creator.name}>{creator.name}</h6>;
+                      })}
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
