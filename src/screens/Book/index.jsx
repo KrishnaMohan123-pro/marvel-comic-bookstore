@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { fetchComicsByComicsId } from "../../actions/dataFetch";
+import React, { useEffect } from "react";
 import "./styles.css";
 import Loader from "../../components/Loader/loader";
 import CartButton from "../../components/CartButton/CartButton";
@@ -12,7 +11,7 @@ export default function Book(props) {
   const loader = useSelector((state) => state.loader.data);
   useEffect(() => {
     dispatch(fetchComics(props.id));
-  }, []);
+  }, [dispatch, props.id]);
   if (loader) {
     return <Loader />;
   }
@@ -34,7 +33,11 @@ export default function Book(props) {
               }}
             >
               <div>
-                <img className="book-img" src={comics.image} />
+                <img
+                  className="book-img"
+                  src={comics.image}
+                  alt={comics.title}
+                />
               </div>
             </Grid>
             <Grid item>

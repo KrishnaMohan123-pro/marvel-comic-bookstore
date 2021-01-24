@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import firebase from "../../services/firebase/index";
+import { useDispatch } from "react-redux";
 import { addPhone } from "../../actions/authActions";
 export default function AddAddressForm() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const uid = useSelector((state) => state.auth.uid);
   const [phone, setPhone] = useState("");
   function handleChange(e) {
     setPhone(e.target.value);

@@ -28,7 +28,7 @@ export function signoutAction() {
   return { type: _SIGNED_OUT };
 }
 export function signoutErrorAction(err) {
-  return { type: _SIGNED_OUT, payload: { error: err } };
+  return { type: _SIGNOUT_ERROR, payload: { error: err } };
 }
 export function initialiseUserAction(user, uid) {
   return { type: _INITIALISE_USER, payload: { user: user, uid: uid } };

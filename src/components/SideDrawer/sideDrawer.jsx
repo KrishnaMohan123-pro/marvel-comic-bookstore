@@ -4,9 +4,9 @@ import {
   IconButton,
   Button,
   ButtonGroup,
-  List,
-  ListItem,
-  Divider,
+  // List,
+  // ListItem,
+  // Divider,
 } from "@material-ui/core";
 import SearchBar from "../SearchBar/searchBar";
 import { useHistory } from "react-router-dom";
@@ -16,51 +16,51 @@ import "./styles.css";
 import { logout } from "../../actions/authActions";
 
 export default function SideDrawer() {
-  const list = () => {
-    <div>
-      <List>
-        <ListItem>
-          <Button
-            color="inherit"
-            variant="text"
-            onClick={() => {
-              history.push("/account");
-            }}
-          >
-            Account
-          </Button>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <Button
-            color="inherit"
-            variant="text"
-            style={{ position: "relative" }}
-            onClick={() => {
-              history.push("/cart");
-            }}
-          >
-            <CartLink />
-          </Button>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <Button
-            color="inherit"
-            variant="text"
-            onClick={() => {
-              dispatch({ type: "LOGGED_OUT" });
-              dispatch(logout());
-              history.push("/");
-            }}
-          >
-            SIGNOUT
-          </Button>
-        </ListItem>
-        <Divider />
-      </List>
-    </div>;
-  };
+  // const list = () => {
+  //   <div>
+  //     <List>
+  //       <ListItem>
+  //         <Button
+  //           color="inherit"
+  //           variant="text"
+  //           onClick={() => {
+  //             history.push("/account");
+  //           }}
+  //         >
+  //           Account
+  //         </Button>
+  //       </ListItem>
+  //       <Divider />
+  //       <ListItem>
+  //         <Button
+  //           color="inherit"
+  //           variant="text"
+  //           style={{ position: "relative" }}
+  //           onClick={() => {
+  //             history.push("/cart");
+  //           }}
+  //         >
+  //           <CartLink />
+  //         </Button>
+  //       </ListItem>
+  //       <Divider />
+  //       <ListItem>
+  //         <Button
+  //           color="inherit"
+  //           variant="text"
+  //           onClick={() => {
+  //             dispatch({ type: "LOGGED_OUT" });
+  //             dispatch(logout());
+  //             history.push("/");
+  //           }}
+  //         >
+  //           SIGNOUT
+  //         </Button>
+  //       </ListItem>
+  //       <Divider />
+  //     </List>
+  //   </div>;
+  // };
   const dispatch = useDispatch();
   const history = useHistory();
   const [showOptions, setShowOptions] = useState(false);

@@ -10,7 +10,7 @@ export default function Carosel(props) {
     fetchComicsByName(props.name).then((response) => {
       setDoc(response.data.results);
     });
-  }, []);
+  }, [props.name]);
   if (Object.keys(doc).length === 0) {
     return <Loader />;
   }

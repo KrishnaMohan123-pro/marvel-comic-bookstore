@@ -27,7 +27,7 @@ export default function Characters({ match }) {
     return () => {
       dispatch(querySearched(""));
     };
-  }, [match.params.query, sort, filter]);
+  }, [dispatch, match.params.query, sort, filter]);
   const sortOptions =
     filter === "characters"
       ? characterSortOptions

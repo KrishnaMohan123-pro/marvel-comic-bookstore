@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   dropDown,
   clearDropDown,

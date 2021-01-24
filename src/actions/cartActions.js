@@ -110,6 +110,8 @@ export function changeQuantity(type, bookId) {
         case "DECREASE":
           dispatch(decreaseItemAction(cart));
           break;
+        default:
+          console.log("default");
       }
       dispatch(stopLoadingAction());
     }

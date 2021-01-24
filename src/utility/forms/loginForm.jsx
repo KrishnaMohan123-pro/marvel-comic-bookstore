@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import FacebookLoginButton from "../../components/Buttons/facebookLoginButton";
 import GoogleSignInButton from "../../components/Buttons/googleSignInButton";
 import { login } from "../../actions/authActions";

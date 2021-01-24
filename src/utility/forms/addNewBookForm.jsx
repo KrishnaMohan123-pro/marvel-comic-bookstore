@@ -73,6 +73,8 @@ export default function AddNewBookForm() {
             price: value,
             title: prevValue.title,
           };
+        default:
+          return prevValue;
       }
     });
   }

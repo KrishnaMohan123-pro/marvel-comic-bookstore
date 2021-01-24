@@ -2,17 +2,6 @@ import React from "react";
 import { FormControl, MenuItem, Select, InputLabel } from "@material-ui/core";
 
 export default function Selector(props) {
-  let backgroundColor = {
-    formBackgroundColor: "#121221",
-    selectBackgroundColor: "none",
-  };
-  if (props.value.length !== 0) {
-    backgroundColor = {
-      formBackgroundColor: "white",
-      selectBackgroundColor: "white",
-    };
-  }
-
   return (
     <FormControl
       style={{

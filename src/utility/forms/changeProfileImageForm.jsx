@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Input, Button } from "@material-ui/core";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { toast } from "react-toastify";
 import { uploadImage } from "../../actions/imageUploadAction";
 import { useDispatch } from "react-redux";

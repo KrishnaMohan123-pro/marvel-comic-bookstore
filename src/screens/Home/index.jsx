@@ -37,7 +37,11 @@ export default function Home() {
                     >
                       <Grid container>
                         <Grid item lg={5}>
-                          <img src={character.image} style={{ width: "50%" }} />
+                          <img
+                            alt={character.name}
+                            src={character.image}
+                            style={{ width: "50%" }}
+                          />
                         </Grid>
                         <Grid item lg={7} style={{ padding: "2rem" }}>
                           <p

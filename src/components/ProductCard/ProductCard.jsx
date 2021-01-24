@@ -39,6 +39,11 @@ export default function ProductCard(props) {
           <img
             src={props.img}
             style={{ width: "200px", height: "200px", marginBottom: "5px" }}
+            alt={
+              props.title.length > 20
+                ? props.title.slice(0, 20) + "..."
+                : props.title
+            }
           />
 
           <Typography

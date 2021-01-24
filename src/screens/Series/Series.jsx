@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/loader";
 import Typography from "@material-ui/core/Typography";
-import { fetchSeriesBySeriesID } from "../../actions/dataFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSeries } from "../../actions/FetchActions/seriesFetchAction";
 import "./styles.css";
@@ -14,7 +13,7 @@ export default function Series(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchSeries(props.id));
-  }, []);
+  }, [dispatch, props.id]);
   //   When Data not loaded
   if (loader) return <Loader />;
 
@@ -27,7 +26,7 @@ export default function Series(props) {
       <div className="series-title">{series.title}</div>
       <Grid container spacing={3} className="series-container">
         <Grid item lg={4} md={12} sm={12} xs={12}>
-          <img className="series-image" src={series.image} />
+          <img alt={series.title} className="series-image" src={series.image} />
         </Grid>
         <Grid item lg={5} md={6} sm={12} xs={12}>
           <span className="section-title">Description</span>

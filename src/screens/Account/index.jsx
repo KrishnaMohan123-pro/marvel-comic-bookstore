@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import InputDialog from "../../components/Dialog/inputDialog";
 import AddAddressForm from "../../utility/forms/addAddressForm";
 import AddPhoneForm from "../../utility/forms/addPhoneForm";
 import "./styles.css";
-import { Container, Grid, IconButton, Input } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import AddNewBookForm from "../../utility/forms/addNewBookForm";
 import ChangeProfileImageForm from "../../utility/forms/changeProfileImageForm";
@@ -47,6 +47,7 @@ export default function Account() {
             >
               <Grid item style={{ marginBottom: "2rem" }}>
                 <img
+                  alt={user.fname}
                   src={
                     user.photoURL.length === 0
                       ? "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"

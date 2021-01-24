@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import CartButton from "../CartButton/CartButton";
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ export default function CartCard(props) {
       <div className="cart-item row">
         <div className="book col-md-4">
           <Link to={"/book/" + props.id}>
-            <img className="book-image" src={props.img} />
+            <img className="book-image" src={props.img} alt={props.title} />
           </Link>
         </div>
         <div className="book cart-title col-md-5 align-self-center">

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 
 import { fetchCharacter } from "../../actions/FetchActions/characterFetchAction";
 import Loader from "../../components/Loader/loader";
-import { Typography, Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,7 @@ export default function Character(props) {
   const loader = useSelector((state) => state.loader.data);
   useEffect(() => {
     dispatch(fetchCharacter(props.id));
-  }, [props.id]);
+  }, [dispatch, props.id]);
 
   if (loader) {
     return <Loader />;
@@ -41,6 +41,7 @@ export default function Character(props) {
                 }}
               >
                 <img
+                  alt={character.name}
                   className="character-image"
                   src={character.image}
                   style={{
