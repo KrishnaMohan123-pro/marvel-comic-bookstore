@@ -1,19 +1,51 @@
-body {
-  background-color: #121221;
-  color: wheat;
-  text-align: center;
-}
-.navbar {
-  background-color: gold;
-  font-family: "Noto Sans JP", sans-serif;
-}
 a {
-  color: wheat;
+  color: #706c61;
 }
 a:hover {
-  color: gold;
+  color: #333333;
   text-decoration: none;
 }
+.app-bar {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+body {
+  background-color: #e1f4f3;
+  color: black;
+  text-align: center;
+}
+
 button:focus {
   outline: none;
+}
+#footer {
+  background-color: grey;
+  font-size: smaller;
+  height: 2rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.light-theme {
+  background-color: #f5f4f4 !important;
+  color: black !important;
+}
+.light-theme-comic-link {
+  color: black !important;
+}
+@keyframes loading {
+  from {
+    rotate: (0deg);
+  }
+  to {
+    rotate: (359deg);
+  }
+}
+.page-loader {
+  margin-top: 15%;
+  animation-name: loading;
+  animation-duration: 4s;
+}
+.product-card:hover {
+  margin: 0px auto 10px;
 }

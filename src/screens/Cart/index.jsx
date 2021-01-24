@@ -3,15 +3,10 @@ import { useSelector } from "react-redux";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import CartCard from "../../components/cartCard/cartCard";
-import Loader from "../../components/Loader/loader";
 import PayButton from "../../services/razorPay/frontend/index";
 export default function Cart() {
-  const cartItems = useSelector((state) => state.cart.cart);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
-  const loader = useSelector((state) => state.loader);
-  if (loader) {
-    return <Loader />;
-  }
+  const cartItems = useSelector((state) => state.cart).cart;
+  const loggedIn = useSelector((state) => state.loggedIn);
 
   if (!loggedIn) {
     return (
@@ -27,7 +22,7 @@ export default function Cart() {
     return (
       <div className="cart-body">
         <p>Ooops.....No items in cart</p>
-        <Link to="/books">Lets go to the world of comics</Link>
+        <Link to="/popular">Lets go to the world of comics</Link>
       </div>
     );
   }

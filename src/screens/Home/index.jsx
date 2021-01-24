@@ -4,37 +4,8 @@ import StarIcon from "@material-ui/icons/Star";
 import { Link } from "react-router-dom";
 import Carousel from "nuka-carousel";
 import { Grid, Container } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import topCharacters from "../../utility/characters/homeScreenCharacters";
 export default function Home() {
-  const cart = useSelector((state) => state.cart);
-  console.log(cart);
-  const topCharacters = [
-    {
-      name: "Winter Soldier",
-      image: "http://i.annihil.us/u/prod/marvel/i/mg/d/03/5265478293c1e.jpg",
-      id: 1010740,
-    },
-    {
-      name: "Loki",
-      image: "http://i.annihil.us/u/prod/marvel/i/mg/d/90/526547f509313.jpg",
-      id: 1009407,
-    },
-    {
-      name: "Vision",
-      image: "http://i.annihil.us/u/prod/marvel/i/mg/9/d0/5111527040594.jpg",
-      id: 1009697,
-    },
-    {
-      name: "Falcon",
-      image: "http://i.annihil.us/u/prod/marvel/i/mg/f/b0/5111505fb7009.jpg",
-      id: 1009297,
-    },
-    {
-      name: "Scarlet Witch (Ultimate)",
-      image: "http://i.annihil.us/u/prod/marvel/i/mg/6/03/53177154d219d.jpg",
-      id: 1010971,
-    },
-  ];
   return (
     <section className="home-body">
       <section>
@@ -66,7 +37,11 @@ export default function Home() {
                     >
                       <Grid container>
                         <Grid item lg={5}>
-                          <img src={character.image} style={{ width: "50%" }} />
+                          <img
+                            alt={character.name}
+                            src={character.image}
+                            style={{ width: "50%" }}
+                          />
                         </Grid>
                         <Grid item lg={7} style={{ padding: "2rem" }}>
                           <p

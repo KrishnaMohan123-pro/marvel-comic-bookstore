@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
-import firebase from "../../services/firebase/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addAddress } from "../../actions/authActions";
 
 export default function AddAddressForm() {
   const [address, setAddress] = useState({
@@ -14,8 +14,6 @@ export default function AddAddressForm() {
     country: "",
   });
   const dispatch = useDispatch();
-  const uid = useSelector((state) => state.auth.uid);
-  const user = useSelector((state) => state.auth.user);
 
   function handleChange(e) {
     var id = e.target.id;
@@ -76,34 +74,14 @@ export default function AddAddressForm() {
             state: prevValue.state,
             country: value,
           };
+        default:
+          return prevValue;
       }
     });
   }
-  console.log(address);
   function handleSubmit(e) {
     e.preventDefault();
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(uid)
-      .update({ address: address })
-      .then(() => {
-        dispatch({ type: "CLOSE_DIALOG" });
-        dispatch({
-          type: "INITIALISE_USER",
-          payload: {
-            user: {
-              address: address,
-              email: user.email,
-              fname: user.fname,
-              lname: user.lname,
-              phone: user.phone,
-              photoURL: user.photoURL,
-            },
-            uid: uid,
-          },
-        });
-      });
+    dispatch(addAddress(address));
   }
   return (
     <form

@@ -1,0 +1,1 @@
+export const _QUERY_SEARCHED = "QUERY_SEARCHED";

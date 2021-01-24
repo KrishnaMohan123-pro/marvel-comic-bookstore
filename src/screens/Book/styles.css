@@ -1,12 +1,8 @@
-.book-details {
-  margin-top: 5%;
-}
 .book-img {
   height: 15rem;
   width: 12rem;
 }
 .book-title {
-  font-size: 3rem;
   font-family: "Goldman";
 }
 .description {
@@ -19,9 +15,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .book-details {
-    margin-top: 10%;
-  }
   .book-title {
     font-size: 2rem;
   }
@@ -36,9 +29,6 @@
   }
 }
 @media screen and (max-width: 700px) {
-  .book-details {
-    margin-top: 15%;
-  }
   .book-title {
     font-size: 1.75rem;
   }

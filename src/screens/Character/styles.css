@@ -1,6 +1,3 @@
-#character-body {
-  margin-top: 5%;
-}
 .character-name {
   font-family: "Goldman" !important;
   font-size: 3.5rem !important;
@@ -11,9 +8,6 @@
 }
 
 @media screen and (max-width: 800px) {
-  #character-body {
-    margin-top: 10%;
-  }
   .character-name {
     font-size: 3rem !important;
   }

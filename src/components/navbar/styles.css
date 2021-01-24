@@ -1,0 +1,8 @@
+.app-bar-links {
+  display: block;
+}
+@media screen and (max-width: 1000px) {
+  .app-bar-links {
+    display: none;
+  }
+}

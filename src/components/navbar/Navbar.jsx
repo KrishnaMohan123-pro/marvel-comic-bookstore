@@ -1,69 +1,71 @@
 import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link, useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TransitionModal from "../Modal/modal";
 import LoginForm from "../../utility/forms/loginForm";
 import SignupForm from "../../utility/forms/signupForm";
 import { logout } from "../../actions/authActions";
 import CartLink from "./cartLink";
 import SearchBar from "../SearchBar/searchBar";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 3,
-  },
-}));
+import { Avatar } from "@material-ui/core";
+import SideDrawer from "../SideDrawer/sideDrawer";
+import "./styles.css";
 
 export default function Navbar() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const modalVisible = useSelector((state) => state.modal);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = useSelector((state) => state.loggedIn);
+  const userName = useSelector((state) => state.auth.user.fname);
+  const userImage = useSelector((state) => state.auth.user.photoURL);
 
   return (
-    <AppBar color="secondary">
+    <AppBar className="app-bar" position="sticky" elevation={0}>
       <Toolbar>
+        <SideDrawer />
         <Link to="/" style={{ color: "inherit" }}>
           <Typography variant="h6">Marvel</Typography>
         </Link>
-        <SearchBar />
-        <ButtonGroup style={{ marginLeft: "auto" }}>
+        <div className="app-bar-links">
+          <SearchBar />
+        </div>
+        <div className="app-bar-links" style={{ marginLeft: "auto" }}>
           {loggedIn ? (
             <Fragment>
-              <Link to="/cart" style={{ color: "inherit" }}>
-                <Button
-                  color="inherit"
-                  variant="text"
-                  style={{ position: "relative" }}
-                >
-                  <CartLink />
-                </Button>
-              </Link>
               <Button
                 color="inherit"
                 variant="text"
                 onClick={() => {
+                  dispatch({ type: "LOGGED_OUT" });
                   dispatch(logout());
+                  history.push("/");
                 }}
               >
                 SIGNOUT
               </Button>
-              <Link to="/account" style={{ color: "inherit" }}>
-                <Button color="inherit" variant="text">
-                  ACCOUNT
-                </Button>
-              </Link>
+              <Button
+                color="inherit"
+                variant="text"
+                style={{ position: "relative" }}
+                onClick={() => {
+                  history.push("/cart");
+                }}
+              >
+                <CartLink />
+              </Button>
+              <Button
+                color="inherit"
+                variant="text"
+                onClick={() => {
+                  history.push("/account");
+                }}
+              >
+                <Avatar alt={userName} src={userImage} />
+              </Button>
             </Fragment>
           ) : (
             <Fragment>
@@ -85,7 +87,7 @@ export default function Navbar() {
               />
             </Fragment>
           )}
-        </ButtonGroup>
+        </div>
       </Toolbar>
     </AppBar>
   );

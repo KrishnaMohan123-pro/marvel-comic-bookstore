@@ -10,14 +10,14 @@ export default function Carosel(props) {
     fetchComicsByName(props.name).then((response) => {
       setDoc(response.data.results);
     });
-  }, []);
+  }, [props.name]);
   if (Object.keys(doc).length === 0) {
     return <Loader />;
   }
   let slidesToShow =
     window.innerWidth > 1000 ? 3 : window.innerWidth > 700 ? 2 : 1;
   return (
-    <div className="container d-flex justify-content-center">
+    <div className="container d-flex justify-content-center my-5">
       <Carousel
         slidesToShow={slidesToShow}
         speed={1000}

@@ -4,9 +4,7 @@
   top: 90% !important;
   left: 90% !important;
 }
-.profile-body {
-  margin-top: 4.2%;
-}
+
 .profile-card {
   text-align: left;
 }
@@ -38,9 +36,6 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .profile-body {
-    margin-top: 5.5%;
-  }
   .profile-card-row {
     width: 55%;
   }
@@ -57,9 +52,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .profile-body {
-    margin-top: 8%;
-  }
   .profile-img {
     height: 11rem;
     width: 11rem;
